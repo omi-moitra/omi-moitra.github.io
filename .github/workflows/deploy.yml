@@ -1,8 +1,16 @@
+# =============================================================================
+# deploy.yml — build and publish the Vite artifact to GitHub Pages
+# -----------------------------------------------------------------------------
+# 1. Release policy     main-only trigger, least privilege, and concurrency
+# 2. Deploy job         locked install, build, artifact upload, and deployment
+# =============================================================================
+
 name: Deploy to GitHub Pages
 
+# :warning: Only reviewed work on main may replace the public Pages release.
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
 
 permissions:
   contents: read
@@ -10,7 +18,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
