@@ -1,11 +1,12 @@
 // =============================================================================
-// src/App.jsx — setup-stage application route registry
+// src/App.jsx — application routes composed inside the shared Main layout
 // -----------------------------------------------------------------------------
-// 1. Imports & route metadata   required route paths and temporary labels
-// 2. App                        route registration and unknown-route fallback
+// 1. Imports & route metadata   layout, route views, and required paths
+// 2. App                        nested route registration and fallback
 // =============================================================================
 
 import { Navigate, Route, Routes } from 'react-router-dom'
+import Main from './layouts/Main.jsx'
 import SetupRoutePage from './pages/SetupRoutePage.jsx'
 import './App.css'
 
@@ -45,20 +46,22 @@ const routeDefinitions = [
 function App() {
   return (
     <Routes>
-      {routeDefinitions.map((route) => (
-        <Route
-          key={route.path}
-          path={route.path}
-          element={
-            <SetupRoutePage
-              description={route.description}
-              routePath={route.path}
-              title={route.title}
-            />
-          }
-        />
-      ))}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route element={<Main />}>
+        {routeDefinitions.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={
+              <SetupRoutePage
+                description={route.description}
+                routePath={route.path}
+                title={route.title}
+              />
+            }
+          />
+        ))}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
     </Routes>
   )
 }

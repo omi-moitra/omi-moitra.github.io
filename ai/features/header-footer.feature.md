@@ -148,9 +148,12 @@ Current source-asset status:
 - **Intrinsic dimensions:** 1254 × 1254 pixels
 - **Current file size:** 1,570,585 bytes (approximately 1.5 MB)
 - **Visual description:** A multicolored phoenix with painterly rainbow feathers and code-themed details in its dark right wing.
-- **Recommended link/alt text:** `Oishieka Moitra portfolio home`
-- **AI generation tool:** Pending confirmation from Oishieka
-- **Optimization:** Pending; the current source is too large for repeated delivery as a small Header logo
+- **AI derivative tool:** OpenAI built-in image generation tool
+- **Generation purpose:** Preserve the supplied phoenix/code identity while removing tiny pseudo-code text and simplifying the mark for legibility at Header size.
+- **Prompt summary:** Refine the source into a professional ascending phoenix with warm painterly feathers, a midnight technology wing, and abstract circuit accents; include no words, readable code, watermark, or extra objects.
+- **Header output:** `public/personal-logo-header.png`, an RGB PNG rendered at 320 × 320 pixels
+- **Optimization:** Downsampled from 1254 × 1254 to 320 × 320 with macOS `sips`; file size reduced from 1,570,585 to 153,613 bytes (90.2%).
+- **Alt-text decision:** The image uses empty alt text because adjacent visible brand text names Oishieka Moitra; the wrapping Home link provides the accessible name `Oishieka Moitra portfolio home`.
 
 ### Requirement 5 — Desktop Navigation Above 768px
 
@@ -437,73 +440,73 @@ The logo combines identity and a familiar Home affordance. Its alt text describe
 
 ### Shared Layout
 
-- [ ] `Main` renders a skip link, Header, main landmark/route content, and Footer in logical document order.
-- [ ] Home, Portfolio, Links, Contact, Login, and Back Office route content render within the shared layout.
-- [ ] Header and Footer are not duplicated inside individual page components.
-- [ ] Short pages place the Footer at the viewport bottom; long pages place it after content.
-- [ ] The main landmark has a stable skip-link target and pages retain responsibility for their own `<h1>`.
+- [x] `Main` renders a skip link, Header, main landmark/route content, and Footer in logical document order.
+- [x] Home, Portfolio, Links, Contact, Login, and Back Office route content render within the shared layout.
+- [x] Header and Footer are not duplicated inside individual page components.
+- [x] Short pages place the Footer at the viewport bottom; long pages place it after content.
+- [x] The main landmark has a stable skip-link target and pages retain responsibility for their own `<h1>`.
 
 ### Header and Logo
 
-- [ ] A semantic Header appears at the top of every route with consistent styling.
-- [ ] The Header remains visible during vertical scrolling.
-- [ ] One AI-generated personal logo is visible, responsive, and free of distortion/overflow.
-- [ ] The supplied source logo has been resized/compressed or replaced by an optimized derivative appropriate for repeated Header delivery.
-- [ ] The logo has intrinsic sizing or a stable aspect ratio that prevents layout shift.
-- [ ] Selecting the logo navigates to Home through React Router.
-- [ ] The logo link has useful alternative text or an equivalent accessible name.
-- [ ] The AI tool, purpose, filename, optimization, and alt-text decision are documented.
+- [x] A semantic Header appears at the top of every route with consistent styling.
+- [x] The Header remains visible during vertical scrolling.
+- [x] One AI-generated personal logo is visible, responsive, and free of distortion/overflow.
+- [x] The supplied source logo has been resized/compressed or replaced by an optimized derivative appropriate for repeated Header delivery.
+- [x] The logo has intrinsic sizing or a stable aspect ratio that prevents layout shift.
+- [x] Selecting the logo navigates to Home through React Router.
+- [x] The logo link has useful alternative text or an equivalent accessible name.
+- [x] The AI tool, purpose, filename, optimization, and alt-text decision are documented.
 
 ### Navigation
 
-- [ ] Public navigation contains exactly Home, Portfolio, Links, and Contact.
-- [ ] Desktop and mobile navigation use the same destination data.
-- [ ] Login and Back Office do not appear in Header, Footer, desktop navigation, or mobile navigation.
-- [ ] Internal links use React Router and do not request nested server paths.
-- [ ] The current route is visibly identified and exposed with `aria-current="page"` behavior.
-- [ ] Hover, focus-visible, and active styles remain distinguishable.
-- [ ] Every navigation link has an accessible name.
+- [x] Public navigation contains exactly Home, Portfolio, Links, and Contact.
+- [x] Desktop and mobile navigation use the same destination data.
+- [x] Login and Back Office do not appear in Header, Footer, desktop navigation, or mobile navigation.
+- [x] Internal links use React Router and do not request nested server paths.
+- [x] The current route is visibly identified and exposed with `aria-current="page"` behavior.
+- [x] Hover, focus-visible, and active styles remain distinguishable.
+- [x] Every navigation link has an accessible name.
 
 ### Responsive Behavior
 
-- [ ] At 769px and above, public links appear horizontally in the Header and bottom navigation is hidden.
-- [ ] At 768px and below, desktop links are hidden and icon-based bottom navigation is visible.
-- [ ] At exactly 768px, only the mobile navigation is present and focusable.
-- [ ] Mobile navigation includes icons and accessible destination names.
-- [ ] Mobile targets are comfortably operable by touch.
-- [ ] Safe-area padding is supported where available.
-- [ ] No content, Footer link, button, or form control is covered by fixed mobile navigation.
-- [ ] The logo, text, images, sections, and Footer scale or stack without horizontal overflow.
+- [x] At 769px and above, public links appear horizontally in the Header and bottom navigation is hidden.
+- [x] At 768px and below, desktop links are hidden and icon-based bottom navigation is visible.
+- [x] At exactly 768px, only the mobile navigation is present and focusable.
+- [x] Mobile navigation includes icons and accessible destination names.
+- [x] Mobile targets are comfortably operable by touch.
+- [x] Safe-area padding is supported where available.
+- [x] No content, Footer link, button, or form control is covered by fixed mobile navigation.
+- [x] The logo, text, images, sections, and Footer scale or stack without horizontal overflow.
 - [ ] Layout remains readable at 320px, 768px, 769px, desktop width, and 200% zoom.
-- [ ] Horizontal overflow is fixed at its source rather than hidden globally.
+- [x] Horizontal overflow is fixed at its source rather than hidden globally.
 
 ### Footer
 
-- [ ] A semantic Footer appears after route content on every route.
-- [ ] The Footer shows the approved public email as a working `mailto:` link.
+- [x] A semantic Footer appears after route content on every route.
+- [x] The Footer shows the approved public email as a working `mailto:` link.
 - [ ] Verified professional links render with descriptive labels and safe new-tab attributes.
-- [ ] Missing/unverified optional profiles produce no empty item or placeholder link.
-- [ ] The Footer includes an accurate copyright notice for Oishieka Moitra.
-- [ ] Footer content remains readable, wrapping, keyboard reachable, and unobscured on mobile.
-- [ ] Phone and residential details are not published by default.
+- [x] Missing/unverified optional profiles produce no empty item or placeholder link.
+- [x] The Footer includes an accurate copyright notice for Oishieka Moitra.
+- [x] Footer content remains readable, wrapping, keyboard reachable, and unobscured on mobile.
+- [x] Phone and residential details are not published by default.
 
 ### Accessibility and Quality
 
-- [ ] Shared design tokens use the canonical `phoenixPalette` names and values from `ai/ai-spec.md`.
-- [ ] CSS custom properties mirror palette names in kebab case without duplicating untracked raw hex values throughout component styles.
-- [ ] Phoenix, Code, and Creative gradient variables preserve their approved color-stop sequences.
-- [ ] Content placed over a gradient passes contrast across the full gradient or uses a solid backing surface.
-- [ ] Header, navigation, main, and Footer landmarks are semantically correct.
-- [ ] The first Tab reveals a working skip link that moves focus to main content.
-- [ ] Keyboard focus order is logical and no hidden navigation remains focusable.
-- [ ] Every interactive element has a visible focus indicator with adequate contrast.
-- [ ] Current-page state is not communicated by color alone.
-- [ ] Informative and decorative icons/images use appropriate accessible treatment.
-- [ ] Shared color pairs pass contrast checks in default, hover, focus, active, and disabled states.
-- [ ] Shared transitions respect `prefers-reduced-motion`.
-- [ ] Modified Markdown, JavaScript, JSX, and CSS files meet the TOC/comment rules in `ai/ai-spec.md`.
-- [ ] `npm run lint` and `npm run build` pass.
-- [ ] The implementation handoff reports checks and provides safe exact-file staging and commit commands.
+- [x] Shared design tokens use the canonical `phoenixPalette` names and values from `ai/ai-spec.md`.
+- [x] CSS custom properties mirror palette names in kebab case without duplicating untracked raw hex values throughout component styles.
+- [x] Phoenix, Code, and Creative gradient variables preserve their approved color-stop sequences.
+- [x] Content placed over a gradient passes contrast across the full gradient or uses a solid backing surface.
+- [x] Header, navigation, main, and Footer landmarks are semantically correct.
+- [x] The first Tab reveals a working skip link that moves focus to main content.
+- [x] Keyboard focus order is logical and no hidden navigation remains focusable.
+- [x] Every interactive element has a visible focus indicator with adequate contrast.
+- [x] Current-page state is not communicated by color alone.
+- [x] Informative and decorative icons/images use appropriate accessible treatment.
+- [x] Shared color pairs pass contrast checks in default, hover, focus, active, and disabled states.
+- [x] Shared transitions respect `prefers-reduced-motion`.
+- [x] Modified Markdown, JavaScript, JSX, and CSS files meet the TOC/comment rules in `ai/ai-spec.md`.
+- [x] `npm run lint` and `npm run build` pass.
+- [x] The implementation handoff reports checks and provides safe exact-file staging and commit commands.
 
 ## Verification Plan
 
