@@ -131,7 +131,7 @@ After this feature is complete:
 - Display one personal logo image in the Header.
 - Use the supplied source asset at `public/personalLogo.png`, available at `/personalLogo.png`.
 - Generate the logo with an AI image tool rather than using an unchanged stock mark.
-- Keep the logo consistent with the polished pastel-fantasy direction and professional tone.
+- Keep the logo consistent with the polished phoenix-inspired fantasy/code direction and professional tone.
 - Avoid embedding tiny text in the generated image because it can become illegible or malformed.
 - Optimize the final file for web delivery and store it in the appropriate project asset directory.
 - Provide explicit width/height information or `aspect-ratio` to prevent content shift.
@@ -190,7 +190,8 @@ Current source-asset status:
 
 - Define shared CSS custom properties for:
 
-  - pastel fantasy colors from `ai/ai-spec.md`;
+  - every canonical `phoenixPalette` color from `ai/ai-spec.md`, using matching kebab-case CSS names;
+  - the Phoenix, Code, and Creative gradient recipes from `ai/ai-spec.md`;
   - readable foreground colors with verified contrast;
   - fonts and system fallbacks;
   - spacing and responsive gutters;
@@ -201,8 +202,11 @@ Current source-asset status:
   - focus, success, warning, and error colors needed by later features.
 
 - Reuse tokens in Header, Footer, navigation, containers, buttons, cards, and later feature states.
+- Preserve the exact `phoenixPalette` token names and hex values supplied in `ai/ai-spec.md`.
+- Preserve the approved gradient stop order: Phoenix uses red → orange → gold, Code uses midnight blue → sapphire → teal, and Creative uses royal violet → magenta → red.
+- Use core brand colors for primary identity, creative accents selectively, and neutrals for readable foundations.
 - Do not copy raw palette values repeatedly across component styles when a shared token is appropriate.
-- Adjust planned palette values when necessary to meet contrast; the named palette is direction, not an exemption.
+- Solve contrast with appropriate token pairings or documented derived state tokens rather than silently changing canonical values.
 - Keep decorative script fonts out of navigation, instructions, and long passages.
 
 ### Requirement 9 — Global Responsive Behavior
@@ -304,6 +308,7 @@ Component boundaries may be combined when the result remains clear, reusable, an
 
 - `src/data/navigation.js` — optional single source for the four public destinations and icon identifiers.
 - `src/data/profile.js` — optional approved public email and professional profile links.
+- `src/data/phoenixPalette.js` — canonical `phoenixPalette` export when JavaScript needs programmatic color access; add the required file TOC banner above the export.
 
 If these objects remain small, they may live in the owning component. They must not be duplicated between desktop and mobile navigation.
 
@@ -394,7 +399,8 @@ Responsive behavior is controlled by CSS media queries rather than stored React 
 - Prefer `position: sticky` for the Header and `position: fixed` for mobile bottom navigation.
 - Do not add a UI framework, CSS-in-JS package, icon dependency, or animation library for this feature.
 - Use responsive imported assets, inline SVG, or the existing icon sprite.
-- Keep fantasy styling professional, readable, and subordinate to navigation clarity.
+- Keep phoenix-inspired fantasy/code styling professional, readable, and subordinate to navigation clarity.
+- Preserve the canonical `phoenixPalette` names and values; mirror them as kebab-case CSS custom properties.
 - Preserve the code-quality, accessibility, privacy, branching, and handoff rules from `ai/ai-spec.md`.
 
 ## Implementation Decisions
@@ -483,6 +489,10 @@ The logo combines identity and a familiar Home affordance. Its alt text describe
 
 ### Accessibility and Quality
 
+- [ ] Shared design tokens use the canonical `phoenixPalette` names and values from `ai/ai-spec.md`.
+- [ ] CSS custom properties mirror palette names in kebab case without duplicating untracked raw hex values throughout component styles.
+- [ ] Phoenix, Code, and Creative gradient variables preserve their approved color-stop sequences.
+- [ ] Content placed over a gradient passes contrast across the full gradient or uses a solid backing surface.
 - [ ] Header, navigation, main, and Footer landmarks are semantically correct.
 - [ ] The first Tab reveals a working skip link that moves focus to main content.
 - [ ] Keyboard focus order is logical and no hidden navigation remains focusable.

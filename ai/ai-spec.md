@@ -41,7 +41,7 @@ Do not use this file as a progress tracker. Current task status belongs in `.omi
 - **Project name:** Oishieka Moitra Fantasy Portfolio
 - **Owner:** Oishieka Moitra
 - **Professional title:** Full Stack Developer
-- **Short description:** A responsive portfolio and resume website that presents Oishieka Moitra’s verified skills, education, professional experience, projects, resources, and contact options through an accessible pastel-fantasy visual identity. Public visitors can submit contact messages, while an authenticated administrator can privately review and delete them.
+- **Short description:** A responsive portfolio and resume website that presents Oishieka Moitra’s verified skills, education, professional experience, projects, resources, and contact options through an accessible phoenix-inspired fantasy and code visual identity. Public visitors can submit contact messages, while an authenticated administrator can privately review and delete them.
 - **Project type:** Static client-side React single-page application with Supabase as its only external backend service
 - **Primary audience:** Recruiters, hiring managers, collaborators, coaches, and professional contacts
 - **Brand qualities:** Precise, thoughtful, dependable, imaginative, polished, and recruiter-friendly
@@ -269,19 +269,84 @@ Only these client variables are permitted:
 
 ## Visual and Interaction Direction
 
-### Light Theme
+### Phoenix Palette
 
-| Token | Value | Use |
+Use `phoenixPalette` as the canonical color vocabulary and preserve these token names and values:
+
+```javascript
+export const phoenixPalette = {
+  // Core Brand
+  phoenixRed:      '#D62828',
+  obsidian:        '#0F1115',
+  midnightBlue:    '#1E2A44',
+  teal:            '#14B8A6',
+  royalViolet:     '#7C3AED',
+
+  // Creative Accents
+  blazeOrange:     '#F97316',
+  solarGold:       '#FACC15',
+  emerald:         '#22C55E',
+  sapphire:        '#3B82F6',
+  magenta:         '#EC4899',
+
+  // Neutrals
+  graphite:        '#374151',
+  coolGray:        '#64748B',
+  silver:          '#E2E8F0',
+  snow:            '#F8FAFC',
+  white:           '#FFFFFF',
+};
+```
+
+Implementation rules:
+
+- Core brand colors establish primary surfaces, text, navigation, focus, and calls to action.
+- Creative accents echo the multicolored phoenix logo and should be used deliberately rather than placing every accent in every component.
+- Neutrals provide readable page, card, border, and text foundations.
+- CSS custom properties must mirror the JavaScript names in kebab case, such as `--phoenix-red`, `--midnight-blue`, and `--cool-gray`.
+- Use `obsidian`, `midnightBlue`, `graphite`, `snow`, and `white` as the first candidates for large surfaces and readable text relationships.
+- Do not use bright accents such as `teal`, `blazeOrange`, `solarGold`, `emerald`, or `magenta` for small text without verifying contrast against the actual background.
+- Active, hover, focus, success, warning, and error states must use more than color alone.
+- Do not silently change a canonical hex value to solve contrast. Choose a different foreground/background pairing or add a documented derived state token.
+
+The palette never overrides accessibility; every rendered color pair must still pass the project’s contrast requirements.
+
+### Suggested Gradients
+
+Use these approved color-stop sequences:
+
+| Gradient | Token sequence | Suggested use |
 | --- | --- | --- |
-| Lavender Mist | `#E8DCFF` | Primary background |
-| Peach Glow | `#FFD6C0` | Section accents |
-| Mint Whisper | `#C5F0E0` | Cards and tags |
-| Rose Quartz | `#FFB7C5` | Highlights and calls to action |
-| Sky Soft | `#BFE3FF` | Hover states and links |
-| Deep Amethyst | `#6B3FA0` | Headings and strong text where contrast passes |
-| Body Ink | `#2A133F` | Main text where contrast passes |
+| Phoenix | `phoenixRed` → `blazeOrange` → `solarGold` | Hero energy, phoenix flourishes, primary brand moments |
+| Code | `midnightBlue` → `sapphire` → `teal` | Technical sections, code motifs, interactive technology accents |
+| Creative | `royalViolet` → `magenta` → `phoenixRed` | Creative work, section dividers, selected emphasis |
 
-Adjust palette values when required to meet contrast. Visual direction never overrides accessibility.
+The default CSS custom properties are:
+
+```css
+:root {
+  --gradient-phoenix: linear-gradient(
+    135deg,
+    var(--phoenix-red),
+    var(--blaze-orange),
+    var(--solar-gold)
+  );
+  --gradient-code: linear-gradient(
+    135deg,
+    var(--midnight-blue),
+    var(--sapphire),
+    var(--teal)
+  );
+  --gradient-creative: linear-gradient(
+    135deg,
+    var(--royal-violet),
+    var(--magenta),
+    var(--phoenix-red)
+  );
+}
+```
+
+Preserve each gradient’s token order. The angle may change when a component’s composition requires it, but document a non-obvious change. Use gradients selectively and verify text/icon contrast across the entire gradient, not just its darkest stop. When consistent contrast cannot be guaranteed, use the gradient decoratively and place content on a solid surface.
 
 ### Typography and Motifs
 
