@@ -1,21 +1,17 @@
 // =============================================================================
 // src/App.jsx — application routes composed inside the shared Main layout
 // -----------------------------------------------------------------------------
-// 1. Imports & route metadata   layout, route views, and required paths
+// 1. Imports & route metadata   layout, Home, setup views, and required paths
 // 2. App                        nested route registration and fallback
 // =============================================================================
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Main from './layouts/Main.jsx'
+import HomePage from './pages/HomePage.jsx'
 import SetupRoutePage from './pages/SetupRoutePage.jsx'
 import './App.css'
 
-const routeDefinitions = [
-  {
-    path: '/',
-    title: 'Home',
-    description: 'The public home page foundation is ready for its page feature.',
-  },
+const setupRouteDefinitions = [
   {
     path: '/portfolio',
     title: 'Portfolio',
@@ -47,7 +43,8 @@ function App() {
   return (
     <Routes>
       <Route element={<Main />}>
-        {routeDefinitions.map((route) => (
+        <Route path="/" element={<HomePage />} />
+        {setupRouteDefinitions.map((route) => (
           <Route
             key={route.path}
             path={route.path}

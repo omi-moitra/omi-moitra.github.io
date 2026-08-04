@@ -1,0 +1,317 @@
+/* ==========================================================================
+   Home Page — identity, technical capability, and professional strengths
+   --------------------------------------------------------------------------
+   1. Page & Hero          three-section flow, identity copy, actions, and media
+   2. Section Treatment    Code/Creative visual separation and stable surfaces
+   3. Skill Cards          semantic responsive collections and decorative icons
+   4. Responsive ≤768px    stacked media, actions, and card spacing
+   5. Narrow ≤400px        compact one-column action and section treatment
+   ========================================================================== */
+
+.home-page {
+  display: grid;
+  gap: clamp(var(--space-7), 7vw, var(--space-8));
+  padding-block: clamp(var(--space-6), 6vw, var(--space-8));
+}
+
+.home-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+  align-items: center;
+  gap: clamp(var(--space-5), 4vw, var(--space-7));
+  padding: clamp(var(--space-5), 5vw, var(--space-7));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-large);
+}
+
+.home-hero::before {
+  position: absolute;
+  top: 0;
+  right: var(--space-5);
+  left: var(--space-5);
+  height: 0.35rem;
+  border-radius: 0 0 999px 999px;
+  background: var(--gradient-phoenix);
+  content: '';
+}
+
+.home-hero__copy {
+  min-width: 0;
+}
+
+.home-section__eyebrow {
+  margin: 0 0 var(--space-3);
+  color: var(--phoenix-red);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.home-hero h1 {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--midnight-blue);
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 5.6rem);
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.home-hero__title {
+  margin: var(--space-4) 0 0;
+  color: var(--phoenix-red);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 800;
+}
+
+.home-hero__tagline {
+  max-width: 48ch;
+  margin: var(--space-4) 0 0;
+  color: var(--midnight-blue);
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  font-weight: 700;
+}
+
+.home-hero__introduction {
+  max-width: 64ch;
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-muted);
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.home-action {
+  min-height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  border: 2px solid var(--midnight-blue);
+  border-radius: var(--radius-small);
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}
+
+.home-action--primary {
+  color: var(--white);
+  background: var(--midnight-blue);
+}
+
+.home-action--primary:hover {
+  color: var(--obsidian);
+  background: var(--solar-gold);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.home-action--secondary {
+  color: var(--midnight-blue);
+  background: var(--white);
+}
+
+.home-action--secondary:hover {
+  color: var(--white);
+  background: var(--royal-violet);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.home-media {
+  position: relative;
+  margin: 0;
+}
+
+.home-media img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--silver);
+  box-shadow: var(--shadow-small);
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.home-section {
+  position: relative;
+  padding: clamp(var(--space-5), 5vw, var(--space-7));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+}
+
+.home-section::before {
+  position: absolute;
+  top: 0;
+  right: var(--space-5);
+  left: var(--space-5);
+  height: 0.3rem;
+  border-radius: 0 0 999px 999px;
+  content: '';
+}
+
+.home-section--technical {
+  color: var(--white);
+  border-color: var(--graphite);
+  background: var(--midnight-blue);
+}
+
+.home-section--technical::before {
+  background: var(--gradient-code);
+}
+
+.home-section--strengths {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-small);
+}
+
+.home-section--strengths::before {
+  background: var(--gradient-creative);
+}
+
+.home-section__heading {
+  max-width: 62ch;
+  margin-bottom: var(--space-6);
+}
+
+.home-section__heading h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.home-section__heading > p:last-child {
+  margin: var(--space-3) 0 0;
+}
+
+.home-section--technical .home-section__eyebrow {
+  color: var(--solar-gold);
+}
+
+.home-section--technical .home-section__heading > p:last-child {
+  color: var(--silver);
+}
+
+.home-strengths__introduction {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 1.2fr);
+  align-items: center;
+  gap: clamp(var(--space-5), 5vw, var(--space-7));
+  margin-bottom: var(--space-6);
+}
+
+.home-strengths__introduction .home-section__heading {
+  margin-bottom: 0;
+}
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  color: var(--color-text);
+  background: var(--white);
+  box-shadow: var(--shadow-small);
+}
+
+.skill-card__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  grid-row: 1 / 3;
+  padding: var(--space-2);
+  border-radius: var(--radius-small);
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.skill-card--technical .skill-card__icon {
+  color: var(--white);
+  background: var(--midnight-blue);
+}
+
+.skill-card--strength .skill-card__icon {
+  color: var(--white);
+  background: var(--royal-violet);
+}
+
+.skill-card h3 {
+  align-self: center;
+  margin: 0;
+  color: var(--midnight-blue);
+  font-size: 1.1rem;
+  line-height: 1.25;
+}
+
+.skill-card p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    gap: var(--space-7);
+    padding-block: var(--space-5) var(--space-7);
+  }
+
+  .home-hero,
+  .home-strengths__introduction {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-hero__copy {
+    order: 1;
+  }
+
+  .home-media--hero {
+    order: 2;
+  }
+}
+
+@media (max-width: 25rem) {
+  .home-hero,
+  .home-section {
+    padding: var(--space-5) var(--space-4);
+    border-radius: var(--radius-medium);
+  }
+
+  .home-hero__actions {
+    display: grid;
+  }
+
+  .home-action {
+    width: 100%;
+  }
+
+  .skill-card {
+    padding: var(--space-4);
+  }
+}
