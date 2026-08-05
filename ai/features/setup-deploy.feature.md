@@ -44,6 +44,8 @@ After this feature is complete:
 - Maintain one React application scaffolded with Vite and JavaScript at the repository root.
 - Keep the Vite entry files, npm scripts, lockfile, and root build configuration working.
 - Add `react-router-dom` as a runtime dependency and update the lockfile.
+- Keep the approved `three` runtime dependency available for route-scoped progressive
+  scenes while ensuring non-scene routes do not eagerly execute renderer code.
 - Configure React Router with `HashRouter`.
 - Register route paths for Home, Portfolio, Links, Contact, Login, and Back Office.
 - Keep the browser pathname at `/` while route state is represented after the hash.
@@ -54,6 +56,8 @@ After this feature is complete:
 - Use GitHub Pages’ Actions deployment source.
 - Preserve least-privilege workflow permissions required to read repository contents and deploy Pages.
 - Verify local development, lint, production build, preview, defined hash routes, workflow structure, and the deployed public URL.
+- Inspect the production chunk graph and public assets so the readable shell is not
+  blocked by Home/Portfolio scene code or oversized visual assets.
 
 ### Out of Scope — Excluded
 
@@ -77,7 +81,8 @@ The following UI and content work is also excluded:
 - final Home, Portfolio, Links, Contact, Login, or Back Office content and behavior;
 - the Back Office authentication guard and redirect behavior;
 - final fantasy styling, AI-created images, responsive page layouts, and page-specific accessibility behavior;
-- the optional splash, dark mode, language switcher, and dual-PDF selector; and
+- the optional splash, dark mode, language switcher, and any résumé-selection widget
+  beyond the separately labeled standard/creative links owned by Portfolio; and
 - README, video, interview, and submission deliverables beyond any minimal setup instructions needed to verify this feature.
 
 ## Requirements Breakdown
@@ -169,6 +174,17 @@ The following UI and content work is also excluded:
 - Why-comments explain non-obvious routing and deployment constraints.
 - `:warning:` comments flag material invariants where removing or changing a line could break GitHub Pages routing or deployment.
 - The final implementation response reports verification results and provides precise staging commands and truthful commit messages for only the relevant files.
+
+### Requirement 9 — Progressive Scene Delivery
+
+- Keep `three` in the single root package manifest and synchronized lockfile.
+- Load Home and Portfolio scene modules through route/component-level dynamic imports.
+- Render the application shell and semantic page content without waiting for renderer,
+  model, texture, or particle code.
+- Keep static poster/fallback assets in build-managed paths with stable dimensions.
+- Inspect `npm run build` output for unexpected eager scene code and disclose any
+  unusually large chunk or asset before the release checkpoint.
+- A browser without WebGL must still load, navigate, and use every required workflow.
 
 ## User Flow and Expected Behavior
 
@@ -282,6 +298,8 @@ It uses configuration and build metadata only:
 - Do not commit `dist/`, `node_modules/`, local environment files, secrets, or generated caches.
 - Do not add a custom backend, server fallback, redirect service, or duplicate HTML file per route.
 - Do not introduce a framework, router, monorepo tool, or deployment dependency not required by this specification.
+- Keep `three` limited to the approved signature scenes and lazy route chunks; do not
+  add a second 3D, particle, or general animation framework.
 - Preserve the code-quality, accessibility, security, branching, and handoff rules from `ai/ai-spec.md`.
 
 ## Implementation Decisions
@@ -305,6 +323,13 @@ Only `dist/` is deployed because Vite compiles and fingerprints the production a
 ### Deployment From Main Only
 
 Feature work is reviewed through `feature/*` and `dev`; only stable work merged to `main` is graded and deployed. Limiting the workflow trigger prevents unfinished branches from replacing the public portfolio.
+
+### Static-First Scene Loading
+
+The Phoenix Codex experience is progressively enhanced on static hosting. Dynamic scene
+imports keep WebGL code out of the critical content path, while posters and semantic
+HTML guarantee that a renderer or asset failure does not turn into an application or
+deployment failure.
 
 ## Acceptance Criteria
 
@@ -333,6 +358,9 @@ Feature work is reviewed through `feature/*` and `dev`; only stable work merged 
 - [x] `npm run lint` passes.
 - [x] `npm run build` passes and creates `dist/`.
 - [x] `npm run preview` serves the production bundle for smoke testing.
+- [ ] Home and Portfolio scene code is lazy-loaded and does not block the shared shell or semantic content.
+- [ ] A WebGL-disabled smoke test preserves all routes and required workflows.
+- [ ] Production build output has been inspected for unexpectedly eager or oversized scene assets.
 - [x] The root and defined hash routes render from the preview build.
 
 ### GitHub Actions and Pages

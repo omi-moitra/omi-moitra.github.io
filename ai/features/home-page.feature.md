@@ -31,6 +31,10 @@
 
 Create the default landing page for Oishieka Moitra’s portfolio. The page should immediately communicate who Oishieka is, what kind of developer she is, and which technical and professional strengths she brings, using an accessible phoenix-inspired fantasy/code presentation that remains concise and credible.
 
+The page implements the plan's “Enter the Codex” concept: semantic introduction and
+calls to action render first, while a progressively loaded vortex, phoenix, restrained
+dragon silhouette, ink fragments, and code particles create the signature atmosphere.
+
 After this feature is complete:
 
 - `/#/` renders Home as the default React Router destination;
@@ -39,6 +43,9 @@ After this feature is complete:
 - at least three technical skills and three soft skills are presented with icons and meaningful supporting descriptions;
 - Introduction, Technical Skills, and Soft Skills are visually distinct sections;
 - at least two Home-specific AI-created images support the content and theme; and
+- a simplified vortex scene enhances the hero without owning text or navigation;
+- optional featured-project, journey-preview, and contact-callout sections point into
+  the combined Portfolio and Contact routes using only verified content; and
 - the page remains readable, operable, performant, and visually intentional from 320px through desktop widths.
 
 ## Feature Scope
@@ -57,7 +64,11 @@ After this feature is complete:
 - At least three visually distinct Home sections.
 - At least two relevant Home-specific AI-created images.
 - AI image provenance, purpose, optimization, and alt-text documentation.
-- Phoenix, Code, and Creative gradient use derived from the canonical `phoenixPalette`.
+- Phoenix Codex parchment, ink, pastel, magical-accent, and Home-gradient tokens.
+- A lazy-loaded, route-scoped Three.js vortex with static poster fallback, reduced-motion
+  frame, mobile particle reduction, visibility pausing, and full cleanup on unmount.
+- Up to three verified featured-project previews, a Phoenix Path preview, and a final
+  contact invitation after the required skill sections.
 - Semantic headings, keyboard access, visible focus, appropriate image alternatives, contrast, reduced-motion behavior, and responsive layout.
 - Data-driven repeated skill rendering where it improves clarity and consistency.
 - Home-specific empty/failure resilience for optional media, such as preserving readable content if an image fails to load.
@@ -76,7 +87,7 @@ After this feature is complete:
 - Reusing the Header logo as one of the two required Home AI-created images.
 - Stock images counted as AI-created assets.
 - Image text that duplicates essential HTML content.
-- Optional splash, dark mode, language switcher, and dual-PDF selector.
+- Full-screen splash, dark mode, language switcher, sound, device tilt, and theme selector.
 - A new UI framework, icon library, animation library, or image package solely for Home.
 
 ## Requirements Breakdown
@@ -172,17 +183,13 @@ After this feature is complete:
 
 ### Requirement 7 — Phoenix Visual Direction
 
-- Use the exact canonical `phoenixPalette` names and values from `ai/ai-spec.md`.
+- Use the exact canonical `phoenixCodexPalette` names and values from `ai/ai-spec.md`.
 - Reuse the shared kebab-case CSS custom properties established by the layout feature.
-- Use approved gradients selectively:
-
-  - Phoenix: `phoenixRed` → `blazeOrange` → `solarGold` for hero energy and phoenix flourishes;
-  - Code: `midnightBlue` → `sapphire` → `teal` for technical skills and code motifs; and
-  - Creative: `royalViolet` → `magenta` → `phoenixRed` for professional-strength accents or dividers.
-
-- Preserve each gradient’s token order.
+- Use the approved Home gradient current in this exact order: `softCream` →
+  `phoenixCoral` → `blushPink` → `radiantGold` → `arcaneViolet`.
+- Use parchment, cream, ivory, ink, and warm brown for most surfaces and text;
+  pastels support section identity and magical accents remain sparse.
 - Keep primary text on stable solid surfaces when contrast cannot be guaranteed across a gradient.
-- Use obsidian, midnight blue, graphite, snow, and white as primary candidates for readable foreground/background pairings.
 - Use creative accents deliberately; do not display every palette color in every component.
 - Keep fantasy language secondary to immediately understandable professional copy.
 
@@ -229,6 +236,25 @@ After this feature is complete:
 - Why-comments explain non-obvious content, image-loading, responsive, and accessibility decisions.
 - `:warning:` comments identify material invariants, such as preserving sourced claims or keeping essential content out of images.
 - The final implementation handoff reports verification and provides exact-file staging commands and truthful commit messages.
+
+### Requirement 12 — Enter the Codex Scene and Narrative Previews
+
+- Keep the hero's name, role, introduction, and calls to action in semantic HTML outside
+  the canvas and usable before the scene loads.
+- Render the desktop vortex as a soft rotating ink circle with emerging color, one
+  guiding phoenix, at most one distant dragon silhouette, and restrained code/particle
+  details. Decorative creatures must not compete with the heading.
+- On mobile, use a simplified vertical composition, at most half the desktop particles,
+  lower-resolution assets, and a static or lightly animated fallback.
+- Lazy-load the Three.js scene after the readable interface and poster are available.
+- Pause the render loop when the hero is outside the viewport and dispose all scene
+  resources and listeners when Home unmounts.
+- Under `prefers-reduced-motion`, show the poster or a stable rendered frame without
+  continuous rotation, flight, parallax, or particle travel.
+- If WebGL or an asset fails, keep the poster, HTML, skills, and calls to action intact.
+- After the required skill sections, show no more than three verified project previews,
+  a concise Journey preview, and a Contact callout. Each links to `/portfolio` or
+  `/contact`; do not invent project content to fill an empty slot.
 
 ## Approved Draft Content
 
@@ -353,7 +379,7 @@ Component boundaries are recommendations, not a requirement to create trivial wr
 ### Static Data
 
 - `src/data/homeContent.js` — recommended source for hero copy, calls to action, technical skills, soft skills, and Home image metadata.
-- `src/data/phoenixPalette.js` — canonical palette export if not already established by the shared-layout feature.
+- `src/data/phoenixCodexPalette.js` — canonical palette export if not already established by the shared-layout feature.
 
 If content is kept in `HomePage.jsx`, preserve the same validation rules and avoid duplicate versions elsewhere.
 
@@ -446,7 +472,9 @@ Validation rules:
 - Use `Link` from `react-router-dom` for internal calls to action.
 - Keep Home at route `/`; do not add a canonical `/home` route.
 - Render Home inside the shared `Main` layout.
-- Use the canonical `phoenixPalette` and approved gradient stop orders.
+- Use the canonical `phoenixCodexPalette` and approved Home gradient stop order.
+- Use `three` only for the route-scoped hero scene; lazy-load it and do not introduce a
+  second animation or particle framework.
 - Reuse shared CSS tokens; do not scatter duplicate raw hex values through Home styles.
 - Use semantic HTML before adding ARIA.
 - Use static local content; do not fetch Home from Supabase.
@@ -479,11 +507,20 @@ The rubric separately requires two Home images and one Header logo. Keeping a di
 
 ### Gradient Roles
 
-The Phoenix gradient supports the hero, Code supports technical capability, and Creative supports professional strengths. Stable solid text surfaces protect readability when a multicolor gradient cannot maintain uniform contrast.
+The route-specific Home current supplies motion and page identity, while parchment and
+ink surfaces carry readable content. Pastel framing differentiates sections and bright
+magic accents remain sparse. Stable solid text surfaces protect readability when a
+multicolor gradient cannot maintain uniform contrast.
 
 ### Static Content Resilience
 
 Home identity and skills are bundled as semantic text so they render immediately and remain useful even if decorative media fails. No service availability is required to understand the landing page.
+
+### Progressive Vortex Rather Than a Canvas Application
+
+The vortex is an atmospheric layer behind or beside the hero. React and semantic HTML
+own all text, links, skills, and previews. This keeps first paint, accessibility,
+responsive layout, and failure recovery independent from GPU capability.
 
 ## Acceptance Criteria
 
@@ -520,7 +557,7 @@ Home identity and skills are bundled as semantic text so they render immediately
 
 - [x] Introduction, Technical Skills, and Soft Skills are three clearly separated visual sections.
 - [x] Section order creates a clear identity → technical capability → professional-strength narrative.
-- [x] Home uses canonical `phoenixPalette` token names/values and approved gradient orders.
+- [ ] Home uses canonical `phoenixCodexPalette` token names/values and the approved Home gradient order.
 - [x] Gradient content passes contrast across the full surface or uses a solid backing surface.
 - [x] Fantasy/code decoration supports rather than obscures professional content.
 - [x] The Header logo is not counted as one of the Home images.
@@ -543,6 +580,11 @@ Home identity and skills are bundled as semantic text so they render immediately
 - [x] Content does not rely on color, gradient, icon, image, hover, or motion alone.
 - [x] Informative/decorative media uses appropriate accessible treatment.
 - [x] Any motion respects `prefers-reduced-motion`.
+- [ ] The Home scene loads after readable HTML and has a static poster/WebGL-failure fallback.
+- [ ] Mobile uses a simplified composition and no more than half the desktop particle budget.
+- [ ] The scene pauses out of view and releases render resources on unmount.
+- [ ] Featured-project previews never exceed three and render only verified projects.
+- [ ] Journey preview and Contact callout link to `/portfolio` and `/contact` without adding new top-level routes.
 - [ ] Home has no horizontal overflow at 320px, 768px, 769px, or desktop width.
 - [x] Hero, skill items, media, and calls to action stack/wrap correctly on narrow screens.
 - [ ] Home remains readable and operable at 200% zoom.

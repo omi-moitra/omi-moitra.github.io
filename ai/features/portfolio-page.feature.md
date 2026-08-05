@@ -29,7 +29,12 @@
 
 ## Feature Goal
 
-Create a public Portfolio page that presents Oishieka Moitra's verified education, professional experience, and project work as readable semantic HTML, while also giving visitors access to an approved downloadable résumé. Three.js renders the existing full-page phoenix-journey illustration as the visual environment, adding image depth, mist, golden particles, and a scroll-driven camera without replacing or imitating the source artwork. Education and work milestones materialize along the golden trail already painted into the image, connecting Oishieka's legal, research, documentation, and software-development experience without exaggerating claims or hiding essential information inside a PDF.
+Create a public Portfolio page that combines the plan's “The Phoenix Path” journey and
+“Crafted Worlds” projects in the rubric-required Portfolio route. Verified education,
+professional experience, and projects remain readable semantic HTML, supported by an
+approved downloadable résumé. Three.js progressively enhances the existing full-page
+phoenix-journey illustration with image depth, mist, golden particles, and restrained
+scroll movement without replacing the source artwork or blocking the static experience.
 
 After this feature is complete:
 
@@ -41,9 +46,11 @@ After this feature is complete:
 - scrolling moves the visitor forward through a rendered Three.js environment with subtle pointer parallax;
 - the page title appears directly over the upper-left of the phoenix image in pale gold without a surrounding hero card;
 - résumé years remain visible as trail points whose anchored detail tooltips open through hover, focus, click, or tap;
-- ambient spatial audio is available only through an explicit visitor-controlled toggle;
-- at least one complete, truthful project entry includes its name, technology, purpose, description, and image;
+- a settled editorial media wall presents at least three complete, truthful project
+  case studies once their content and URLs are verified;
 - visitors can open or download an approved PDF résumé;
+- visitors can download clearly labeled Standard and Creative résumé files once each
+  has passed its separate publication review;
 - at least two Portfolio-specific AI-created images complement the résumé content; and
 - the page remains readable, operable, and visually intentional from 320px through desktop widths.
 
@@ -56,18 +63,22 @@ After this feature is complete:
 - A pale-gold upper-left page title and lightweight introduction placed directly over the image without a hero card.
 - An Education section with at least one complete entry.
 - A Work Experience section with at least one complete entry and responsibility descriptions.
-- A Projects section with at least one complete project card.
+- A Projects section targeting at least three complete verified project cards and case-study detail panels.
 - Reverse-chronological ordering for Education and Work Experience.
 - A full-page `portfolio-phoenix-journey.jpg` background that establishes the Portfolio journey motif.
 - A single wireframe-derived curved path descending from the upper-right phoenix toward the lower-left page edge.
 - Education and Work Experience milestones positioned together along that glowing responsive phoenix trail.
 - A decorative Three.js WebGL canvas that renders the existing journey image itself.
 - Scroll-driven image depth, restrained pointer parallax, mist, golden particles, and a glow registered to the painted phoenix trail.
-- Optional user-activated phoenix ambience—air, ember crackle, warm resonance, and rising shimmer—created with the native Web Audio API and HRTF panning.
 - Progressive milestone reveals that never hide content when JavaScript, WebGL, or Intersection Observer support is unavailable.
 - Interactive year points with anchored résumé tooltips, click/tap pinning, keyboard operation, and Escape dismissal.
 - One shared coordinate set for the curve, moving particle stroke, and tooltip anchors so every milestone sits directly on the illuminated path.
 - The current Oishieka Moitra Fantasy Portfolio as a concrete project entry.
+- A controlled media-wall entrance in which varied frames settle into a stable
+  responsive grid; project cards never drift continuously.
+- Accessible in-page case-study panels containing overview, objective, role,
+  technologies, architecture, decisions, challenges, solutions, media, outcome,
+  repository/demo links, and honest next steps where verified.
 - A project preview image that represents the actual rendered website.
 - A working link for the approved public résumé at `public/assets/resume-standard.pdf`.
 - At least two relevant Portfolio-specific images created with an AI image tool.
@@ -75,7 +86,7 @@ After this feature is complete:
 - Semantic headings, lists or articles, meaningful link text, keyboard support, visible focus, image alternatives, adequate contrast, and reduced-motion behavior.
 - Responsive timelines, grids, cards, and calls to action.
 - Data-driven rendering for repeated education, work, and project entries.
-- Phoenix, Code, and Creative gradient use derived from the canonical `phoenixPalette`.
+- Phoenix Codex parchment, ink, pastel, magical-accent, and Portfolio-gradient tokens.
 - Graceful behavior when optional artwork or a project preview fails to load.
 
 ### Out of Scope — Excluded
@@ -87,7 +98,7 @@ After this feature is complete:
 - Login, Back Office, authentication, message data, deletion, or logout.
 - Any Supabase query or backend operation.
 - A standalone `/resume`, `/education`, `/experience`, or `/projects` route.
-- Project-detail routes, case-study modals, filters, search, carousels, or category tabs.
+- Public top-level Journey or Projects routes and unverified project filters/categories.
 - A PDF viewer dependency or embedded third-party document service.
 - Skill percentages, invented metrics, unverified achievements, or unsupported proficiency claims.
 - Publishing the source PDF directly from `.omi`.
@@ -97,6 +108,7 @@ After this feature is complete:
 - A new UI framework, icon library, animation library, timeline package, or PDF package solely for Portfolio.
 - Timed prompts, personality sorting, branching decisions, animal outcomes, quizzes, or result-calculation logic.
 - Automatically playing audio or audio required to understand the résumé.
+- Any sound design at initial launch; the plan explicitly defers sound until after launch.
 
 ## Requirements Breakdown
 
@@ -152,8 +164,10 @@ After this feature is complete:
 
 ### Requirement 4 — Project Section
 
-- Use a section-level `<h2>` such as “Selected Project.”
-- Render at least one project as an article or accessible card.
+- Use a section-level `<h2>` such as “Projects” with the optional thematic subtitle “Crafted Worlds.”
+- Render at least three projects as articles or accessible cards before claiming the
+  Phoenix Codex MVP complete. The grading minimum remains one complete project, but
+  empty or invented cards never count toward either threshold.
 - Every project entry includes:
 
   - a unique stable identifier;
@@ -170,8 +184,14 @@ After this feature is complete:
 - Label the links clearly, such as “Visit live site” and “View source on GitHub.”
 - Do not present a future feature as already complete; describe only behavior that exists when the project card is published.
 - Use a real screenshot or representative capture of the implemented site for the project image.
+- Let cards enter with slight rotation, varied scale, and paper/photo/poster framing,
+  then settle into a stable editorial grid. Do not continue floating or drifting.
+- Each verified project opens an in-page case-study panel or dialog with: overview,
+  problem/objective, role, technologies, architecture, design decisions, challenges,
+  solutions, screenshots/video, outcome, repository, live demo, and honest next steps.
+- Omit an unavailable case-study field instead of filling it with generic copy.
 
-### Requirement 5 — Downloadable PDF Résumé
+### Requirement 5 — Downloadable PDF Résumés
 
 - Publish only an approved public résumé at `public/assets/resume-standard.pdf`.
 - Provide a clearly labeled download link using the browser's native `download` behavior.
@@ -182,6 +202,13 @@ After this feature is complete:
 - Verify the filename is meaningful when downloaded.
 - Keep Education, Work Experience, and Projects in HTML; the PDF supplements rather than replaces page content.
 - Do not copy `.omi/Oishieka_Moitra_-_Full_Stack_Developer.pdf` into `public` until Oishieka approves its content for public distribution.
+- When a separately reviewed creative version exists, publish it at
+  `public/assets/resume-creative.pdf` and label the actions explicitly “Download
+  Standard Résumé” and “Download Creative Résumé.”
+- Keep the Standard résumé action available independently; a missing creative file
+  must not hide or break the required standard download.
+- Place résumé actions near the top of the Portfolio content and repeat them near the
+  end when both remain unambiguous and do not create a misleading selector.
 
 ### Requirement 6 — Three Distinct Visual Sections
 
@@ -217,23 +244,19 @@ After this feature is complete:
 
 ### Requirement 8 — Phoenix Visual Direction
 
-- Use the exact canonical `phoenixPalette` token names and values from `ai/ai-spec.md`.
+- Use the exact canonical `phoenixCodexPalette` token names and values from `ai/ai-spec.md`.
 - Reuse the shared kebab-case CSS custom properties instead of redefining competing colors.
-- Use approved gradients selectively:
-
-  - Phoenix: `phoenixRed` → `blazeOrange` → `solarGold` for the page introduction or journey motif;
-  - Code: `midnightBlue` → `sapphire` → `teal` for project technology and code accents; and
-  - Creative: `royalViolet` → `magenta` → `phoenixRed` for section dividers or selected highlights.
-
-- Preserve each gradient's token order.
+- Use the approved Portfolio gradient current in this exact order: `radiantGold` →
+  `phoenixCoral` → `plasmaPink` → `arcaneViolet`.
+- Keep parchment/cream content surfaces and ink text dominant; use street-art framing
+  around projects and cyberpunk glow chiefly for trail, focus, and selected states.
 - Use `portfolio-phoenix-journey.jpg` as the full Portfolio-page background; do not repeat it as a separate hero image.
-- Place a restrained Phoenix-gradient timeline over the background so résumé milestones visually follow the illustrated trail.
+- Place a restrained radiant-gold/phoenix-coral trail glow over the background so résumé milestones visually follow the illustrated trail.
 - Use Three.js to render the existing phoenix image as a responsive plane between the static fallback background and HTML content.
 - Register the generated glow curve to normalized coordinates along the golden trail already painted into the image so it stays aligned through viewport resizing and cover crops.
 - Add only image-depth movement, mist, and golden particles; do not generate a replacement forest or a second visual environment.
 - Move the Three.js camera forward according to document scroll progress and add restrained pointer parallax without making pointer input necessary.
 - Keep the WebGL environment decorative and non-interactive in the accessibility tree; all résumé information remains semantic HTML.
-- Offer ambient sound only after explicit activation, using the Web Audio API and an HRTF-positioned source that shifts subtly with scroll progress.
 - Place primary text on stable solid surfaces when contrast cannot be guaranteed across a gradient.
 - Treat the page title as the intentional exception: place it directly over the dark upper-left image area in pale gold with a strong token-based text shadow instead of a card.
 - Use a restrained timeline, path, scroll, or chapter motif only when it preserves scanning and reading order.
@@ -269,7 +292,6 @@ After this feature is complete:
 - Do not rely on color, timeline position, icon, image, motion, or gradient alone to communicate chronology or section meaning.
 - Respect `prefers-reduced-motion` for reveal, hover, timeline, or decorative effects.
 - Render a static Three.js frame and skip pointer/camera animation when reduced motion is requested.
-- Keep the ambience control off by default and expose its state with `aria-pressed`.
 - Maintain contrast for body text, dates, metadata, technology tags, borders, focus rings, and controls.
 - Preserve comprehension when CSS images fail or are disabled.
 
@@ -435,7 +457,7 @@ Both files are Portfolio-specific generated assets. The project preview remains 
 ### Reusable Components
 
 - `src/components/PortfolioExperience.jsx`
-  - Renders the existing phoenix image, registered golden trail, mist and particles; it also owns scroll/pointer movement, cleanup, reveals, and opt-in spatial ambience.
+  - Renders the existing phoenix image, registered golden trail, mist and particles; it also owns scroll/pointer movement, cleanup, and reveals.
 - `src/components/TimelineMilestone.jsx`
   - Renders a visible year point with hover/focus preview, click/tap pinning, Escape dismissal, accessible state, and an anchored résumé tooltip.
 - `src/components/ResumeEntry.jsx`
@@ -476,7 +498,8 @@ Component filenames may be consolidated when the rendered structures are too sma
 
 - No API endpoint, Supabase table, authentication state, or environment variable is used by this feature.
 - External project URLs and the résumé asset are ordinary links, not data-service integrations.
-- Three.js rendering and Web Audio run entirely in the browser; no quiz service, outcome engine, or audio stream is used.
+- Three.js rendering runs entirely in the browser; no quiz service, outcome engine,
+  audio system, or media stream is used.
 
 ## Data and Validation
 
@@ -613,12 +636,12 @@ Validation rules:
 - Use the existing `HashRouter`; do not replace it with `BrowserRouter`.
 - Keep Portfolio under the existing shared `Main` layout.
 - Do not add a dependency for timelines, cards, icons, image loading, or PDF viewing.
-- Use `three` for the decorative WebGL environment; do not introduce an additional animation, audio, or 3D framework.
+- Use `three` for the decorative WebGL environment; do not introduce an additional animation or 3D framework.
 - Do not query Supabase or another backend for static résumé data.
 - Import build-managed Portfolio images from `src/assets`.
 - Serve the approved résumé from `public/assets` so its stable public URL is not content-hashed.
 - Use `/assets/resume-standard.pdf` because the repository deploys at the GitHub Pages root with Vite `base: '/'`.
-- Preserve the canonical `phoenixPalette` values and approved gradient stop orders.
+- Preserve the canonical `phoenixCodexPalette` values and approved Portfolio gradient stop order.
 - Keep private `.omi` sources ignored and outside the production bundle.
 - Do not place private contact details, credentials, or unapproved content in source, rendered HTML, images, PDF metadata, or committed documentation.
 - Preserve lint and production build success.
@@ -669,9 +692,11 @@ The journey illustration is the full Portfolio narrative canvas. A full-bleed ba
 
 Three.js supplies atmosphere and movement rather than a replacement scene or application logic. The existing phoenix image is mapped onto a responsive plane; document scroll changes its camera depth and framing, pointer movement adds small optional parallax, and a normalized glow curve follows the image's painted golden trail. Deterministic mist and ember particles add depth without introducing another environment. The Portfolio does not collect choices, sort visitors, impose timers, or calculate an outcome.
 
-### Keep Spatial Audio Optional
+### Defer Sound Until After Launch
 
-The phoenix soundscape is synthesized locally with the Web Audio API and positioned with HRTF panning. Filtered air, irregular ember impulses, low warm resonance, and a slowly breathing high shimmer create atmosphere without becoming a melody. It begins only after the visitor activates a clearly labeled toggle, can be suspended immediately, and does not carry information required to understand the page.
+The creative plan explicitly places sound design after the first complete version.
+Keeping audio out of the launch scope reduces distraction, browser-policy edge cases,
+and accessibility/performance work while the journey and project content are finished.
 
 ## Acceptance Criteria
 
@@ -682,7 +707,7 @@ The phoenix soundscape is synthesized locally with the Web Audio API and positio
 - [x] The setup placeholder no longer renders at `/portfolio`.
 - [x] The page has exactly one descriptive `<h1>` and a concise professional introduction.
 - [x] The `<h1>` appears in pale gold over the upper-left image area without a surrounding hero card.
-- [x] No separate résumé or project-detail route is added.
+- [x] No separate top-level Journey or Projects route is added.
 
 ### Education
 
@@ -705,13 +730,15 @@ The phoenix soundscape is synthesized locally with the Web Audio API and positio
 ### Projects
 
 - [x] The page contains a clearly labeled Projects section.
-- [ ] At least one complete project renders.
+- [ ] At least three complete, verified projects render for the Phoenix Codex MVP; at least one complete project renders for the grading minimum.
 - [ ] The initial portfolio project includes name, technology, purpose, description, and representative image.
 - [ ] The project wording describes only behavior present in the published build.
 - [ ] The live URL resolves to `https://omi-moitra.github.io`.
 - [ ] The source URL resolves to the public GitHub repository.
 - [x] External links open in a new tab with `rel="noopener noreferrer"`.
 - [x] Project content and links remain available if the preview image fails.
+- [ ] Project cards settle into a stable editorial grid after any entrance motion.
+- [ ] Every project exposes an accessible case-study detail panel containing only verified fields.
 
 ### Résumé
 
@@ -721,6 +748,7 @@ The phoenix soundscape is synthesized locally with the Web Audio API and positio
 - [ ] The deployed asset request returns the PDF rather than the application shell.
 - [x] Essential Education, Work, and Project content remains available in HTML.
 - [ ] The published PDF and its metadata contain no unapproved private information.
+- [ ] If an approved creative résumé exists, it is explicitly labeled and the Standard résumé remains independently available.
 
 ### Visual Sections and AI Images
 
@@ -729,7 +757,7 @@ The phoenix soundscape is synthesized locally with the Web Audio API and positio
 - [x] Document scroll moves the rendered camera forward through the scene.
 - [x] Pointer movement adds restrained parallax without being required for navigation or comprehension.
 - [x] The WebGL scene falls back to the existing background and semantic content if renderer creation fails.
-- [x] Ambient sound is off by default, user-controlled, spatially positioned, and labeled with `aria-pressed`.
+- [x] No launch-scope sound system or ambience control is included.
 - [x] No timer, branching questionnaire, visitor sorting, or outcome algorithm is included.
 - [x] `portfolio-phoenix-journey.jpg` fills the Portfolio-page canvas behind the content.
 - [x] The desktop trail follows the wireframe's upper-right curve and lower-left diagonal path.
@@ -825,7 +853,7 @@ Also inspect the production output to confirm the résumé asset is copied into 
 - Confirm scroll advances the WebGL camera smoothly and pointer movement causes only subtle parallax.
 - Confirm reduced-motion mode renders a static scene with immediately visible résumé milestones.
 - Confirm the page remains complete after WebGL renderer creation is intentionally blocked.
-- Confirm the ambience toggle starts suspended, accurately reports state, and stays clear of mobile navigation.
+- Confirm no audio starts, no ambience control is exposed, and no audio resources load.
 - Confirm navigating away disposes the renderer and stops any active AudioContext.
 
 ### Accessibility Checks
@@ -877,7 +905,12 @@ For each of the two Portfolio images, record and inspect:
 
 > **:warning: External destinations:** GitHub and live-site links can change independently of the application. Verify both immediately before release.
 
-> **:warning: Progressive WebGL and audio:** GPU capability, WebGL support, reduced-motion settings, browser audio policies, and device power vary. The rendered environment and ambience must remain optional enhancements over the complete static image and HTML experience.
+> **:warning: Progressive WebGL:** GPU capability, WebGL support, reduced-motion settings, and device power vary. The rendered environment must remain an optional enhancement over the complete static image and HTML experience.
+
+> **:warning: Project inventory:** Only the portfolio itself is currently verified as a
+> software project. Two additional complete projects and their case-study facts must be
+> supplied and verified before claiming the plan's three-project MVP; never fabricate
+> entries to satisfy the target.
 
 > **:warning: PDF asset path:** A missing public résumé may appear to return the SPA shell depending on hosting behavior. Verify content, response, and file signature rather than accepting a successful navigation alone.
 

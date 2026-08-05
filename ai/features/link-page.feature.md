@@ -31,6 +31,11 @@
 
 Create a public Links page that shares a concise, intentional set of resources relevant to Oishieka Moitra's full stack development work. Each resource should be immediately understandable from its image, title, and short description, and should open its verified external destination safely in a new tab.
 
+The page implements the plan's quiet “Portals” concept. Professional destinations
+(LinkedIn, GitHub, résumé, email, and the portfolio repository when verified) may appear
+in a compact portal group, while the rubric's three complete developer-resource cards
+remain a separate, clearly labeled collection.
+
 After this feature is complete:
 
 - `/#/links` renders the Links page through React Router;
@@ -51,13 +56,16 @@ After this feature is complete:
 - MDN Web Docs, React documentation, and Supabase documentation as the initial concrete resource set, subject to final owner approval.
 - Local, optimized imagery rather than remote image hotlinking.
 - Three Links-specific AI-created card images, exceeding the one-image measurable rubric minimum.
+- An optional compact Professional Portals group for verified LinkedIn, GitHub,
+  résumé, email, and repository actions; these do not replace the three required
+  external resource cards.
 - Documentation of each AI image's generation tool, purpose, filename, optimization, placement, and alt-text decision.
 - Safe new-tab behavior using `target="_blank"` with `rel="noopener noreferrer"`.
 - Clear external-link cues in visible and accessible content.
 - Semantic card/list structure, meaningful link text, keyboard access, visible focus, useful image alternatives, adequate contrast, and reduced-motion behavior.
 - Responsive card-grid behavior from narrow phones through desktop widths.
 - Data-driven resource rendering with stable identifiers.
-- Phoenix, Code, and Creative gradient use derived from the canonical `phoenixPalette`.
+- Phoenix Codex parchment, ink, pastel, magical-accent, and Links-gradient tokens.
 - Graceful behavior when a card image fails or an external destination is temporarily unavailable.
 
 ### Out of Scope — Excluded
@@ -170,19 +178,26 @@ After this feature is complete:
 
 ### Requirement 8 — Phoenix Visual Direction
 
-- Use the exact canonical `phoenixPalette` token names and values from `ai/ai-spec.md`.
+- Use the exact canonical `phoenixCodexPalette` token names and values from `ai/ai-spec.md`.
 - Reuse shared kebab-case CSS custom properties rather than redefining competing colors.
-- Use approved gradients selectively:
-
-  - Phoenix: `phoenixRed` → `blazeOrange` → `solarGold` for the page introduction or primary flourish;
-  - Code: `midnightBlue` → `sapphire` → `teal` for developer-reference cards and technical accents; and
-  - Creative: `royalViolet` → `magenta` → `phoenixRed` for selected borders, dividers, or artwork framing.
-
-- Preserve each gradient's token order.
+- Use the approved Links gradient current in this exact order: `mintLight` →
+  `spiritCyan` → `portalBlue` → `arcaneViolet`.
+- Use warm parchment cards with restrained portal glows; one quiet feather or distant
+  portal accent is enough, and a large competing hero illustration is unnecessary.
 - Keep card text on stable solid surfaces when contrast cannot be guaranteed across a gradient.
 - Use a library, spellbook, portal, or constellation motif only when labels and actions remain immediately understandable.
 - Keep the three cards visually related without making their destinations indistinguishable.
 - Keep decoration subordinate to titles, descriptions, and link actions.
+
+### Requirement 8A — Professional Portals
+
+- Render LinkedIn and GitHub only after their owner-approved URLs are supplied.
+- The approved résumé action may link to `/assets/resume-standard.pdf`; email may use
+  the approved `mailto:` address; the portfolio repository may use its verified HTTPS URL.
+- Label every action plainly, with “Portals” used only as a thematic subtitle.
+- Do not count résumé, email, social-profile, or repository-shortcut actions toward the
+  three complete developer-resource cards required by this specification.
+- Omit unavailable destinations cleanly rather than showing placeholders.
 
 ### Requirement 9 — Responsive Layout
 
@@ -455,7 +470,7 @@ Do not use a React Router `Link`, button, click handler, or `window.open()` for 
 - Do not query Supabase or another backend for static resource data.
 - Import build-managed Links images from `src/assets`.
 - Do not hotlink third-party images or use remote favicons as card images.
-- Preserve the canonical `phoenixPalette` values and approved gradient stop orders.
+- Preserve the canonical `phoenixCodexPalette` values and approved Links gradient stop order.
 - Keep resource descriptions original and concise.
 - Do not place credentials, tracking tokens, referral codes, or private URLs in resource data.
 - Preserve lint and production build success.
@@ -486,6 +501,13 @@ The Links rubric contains a copied “Portfolio page” phrase but appears insid
 
 Native anchors communicate link semantics to browsers and assistive technology, support standard context-menu behavior, and meet new-tab requirements without imperative JavaScript.
 
+### Keep Professional Portals Separate From Curated Resources
+
+The creative plan calls for LinkedIn, GitHub, résumé, and email, while the grading
+requirement calls for three complete useful resources with descriptions and images.
+Separate groups satisfy both purposes without pretending a résumé download is an
+external learning resource or allowing unverified profile URLs into the page.
+
 ## Acceptance Criteria
 
 ### Route and Introduction
@@ -503,6 +525,7 @@ Native anchors communicate link semantics to browsers and assistive technology, 
 - [x] MDN Web Docs, React Documentation, and Supabase Documentation render unless Oishieka approves replacements.
 - [x] Every selected title, URL, description, and action label has owner approval.
 - [x] No incomplete, generic, duplicate, social-profile, or “coming soon” item is counted.
+- [ ] Verified professional portals render separately and never reduce the required resource count.
 - [x] Required information is visible without hover, focus, motion, or image text.
 
 ### External Links
@@ -533,6 +556,7 @@ Native anchors communicate link semantics to browsers and assistive technology, 
 - [x] Text, links, borders, and focus states meet project contrast requirements.
 - [x] Content does not depend on hover, image, color, gradient, motion, or position alone.
 - [x] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
+- [ ] Links uses the canonical Phoenix Codex tokens and approved Links gradient order.
 - [ ] No horizontal overflow, clipped text, overlapping cards, or hidden controls appear at 320px, 768px, 769px, desktop widths, or 200% zoom.
 - [x] Content clears the fixed mobile navigation at 768px and below.
 - [x] Images preserve aspect ratio, reserve stable space, and are optimized for rendered size.

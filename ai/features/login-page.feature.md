@@ -69,7 +69,7 @@ After this feature is complete:
 - Controlled missing-configuration and session-check failure states.
 - A pre-created administrator account managed only in the Supabase dashboard.
 - Semantic form structure, password-manager metadata, keyboard access, visible focus, live feedback, sufficient contrast, and responsive layout.
-- Canonical `phoenixPalette` and approved gradient use.
+- Canonical `phoenixCodexPalette` and restrained threshold/portal styling.
 
 ### Out of Scope — Excluded
 
@@ -267,11 +267,9 @@ After this feature is complete:
 
 ### Requirement 14 — Responsive Visual Design
 
-- Use the exact canonical `phoenixPalette` tokens and shared CSS custom properties from `ai/ai-spec.md`.
-- Use the Phoenix gradient (`phoenixRed` → `blazeOrange` → `solarGold`) for a restrained threshold or portal accent.
-- Use the Code gradient (`midnightBlue` → `sapphire` → `teal`) for authentication-form framing or technical accents.
-- Use the Creative gradient (`royalViolet` → `magenta` → `phoenixRed`) sparingly.
-- Preserve every approved gradient's token order.
+- Use the exact canonical `phoenixCodexPalette` tokens and shared CSS custom properties from `ai/ai-spec.md`.
+- Use parchment/ivory surfaces and ink text for the form; use `portalBlue`,
+  `arcaneViolet`, and `radiantGold` only as restrained threshold accents.
 - Keep labels, input text, status text, and errors on solid surfaces with verified contrast.
 - Use professional labels such as “Administrator Sign In”; fantasy styling must not obscure authentication meaning.
 - Use one column at narrow widths and keep controls within the viewport.
@@ -668,7 +666,7 @@ const initialErrors = {
 - Store rolling buffers in refs, not rendered state.
 - Do not add a dependency for keyboard sequences, authentication forms, validation, or notifications.
 - Do not add public navigation entries or visible phrase hints.
-- Preserve the canonical `phoenixPalette` values and approved gradient stop orders.
+- Preserve the canonical `phoenixCodexPalette` values and warm-surface hierarchy.
 - Preserve lint and production build success.
 
 ## Implementation Decisions

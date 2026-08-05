@@ -47,7 +47,9 @@ After this feature is complete:
 - A reusable `Main` layout component that renders Header, route content, and Footer in document order.
 - A semantic Header visible at the top of every route.
 - A sticky Header that remains available during vertical scrolling.
-- Route-aware full Header gradients for Home, Portfolio, Links, and Contact.
+- Route-aware gradient currents for Home, Portfolio, Links, and Contact beneath a stable Header surface.
+- A slim route-aware animated `GradientCurrent` beneath the Header that changes to
+  each destination palette and becomes static when reduced motion is requested.
 - A reusable desktop navigation containing Home, Portfolio, Links, and Contact.
 - An icon-based bottom navigation at 768px and below.
 - Consistent active, hover, focus-visible, and current-page states.
@@ -56,6 +58,8 @@ After this feature is complete:
 - One AI-generated personal logo in the Header.
 - Logo navigation to Home with useful alternative text and an accessible link name.
 - Shared layout/design tokens for color, typography, spacing, focus, feedback, container width, stacking, and responsive behavior.
+- Clear labels with optional Phoenix Codex subtitles: Home / Enter the Codex,
+  Portfolio / The Phoenix Path & Crafted Worlds, Links / Portals, and Contact / Send a Message.
 - Global media rules that keep logos, images, text, cards, sections, and route content within the viewport.
 - A keyboard-accessible skip link to the main route content.
 - Responsive verification at 320px, 768px, 769px, and a desktop width.
@@ -73,7 +77,7 @@ After this feature is complete:
 - Adding Login or Back Office to any navigation, menu, sitemap-style content, or visible discovery control.
 - A hamburger/drawer menu when the rubric requires icon-based bottom navigation at 768px and below.
 - Final page-specific section layouts beyond the shared responsive container and global media behavior.
-- Optional splash animation, dark mode, language switcher, and dual-PDF selector.
+- Optional splash animation, dark mode, language switcher, sound, and theme selector.
 - Unverified email addresses, social URLs, or placeholder profile links.
 - A new UI framework, CSS-in-JS library, icon package, or animation dependency solely for shared layout.
 
@@ -101,15 +105,17 @@ After this feature is complete:
 
 - Use a semantic `<header>` element.
 - Keep the Header visible while scrolling with `position: sticky` and `top: 0` unless testing proves a fixed Header is necessary.
-- Give the Header consistent spacing, border/shadow treatment, and stacking level while changing its full background gradient by active public route:
+- Give the Header a stable warm-ivory/parchment surface and change the slim
+  `GradientCurrent` beneath it by active public route:
 
-  - Home: `#1E2A44` → `#3B82F6` → `#14B8A6`;
-  - Portfolio: `#D62828` → `#F97316` → `#FACC15`;
-  - Links: `#7C3AED` → `#EC4899` → `#D62828`; and
-  - Contact: `#EC4899` → `#A855F7` → `#7C3AED` → `#3B82F6` → `#14B8A6`.
+  - Home: `softCream` → `phoenixCoral` → `blushPink` → `radiantGold` → `arcaneViolet`;
+  - Portfolio: `radiantGold` → `phoenixCoral` → `plasmaPink` → `arcaneViolet`;
+  - Links: `mintLight` → `spiritCyan` → `portalBlue` → `arcaneViolet`; and
+  - Contact: `peachGlow` → `blushPink` → `lavenderMist` → `butterGold`.
 
 - Derive the active Header theme from React Router location rather than direct location mutation.
-- Present the brand and desktop navigation directly on the Header gradient without card or button containers; preserve legibility with strong text color, weight, and restrained text shadow.
+- Present the brand and desktop navigation directly on the stable Header surface;
+  keep the gradient decorative so navigation contrast does not vary by color stop.
 - Place the personal logo and its Home link in the Header.
 - Above 768px, show the public navigation horizontally at the top.
 - At 768px and below, hide the desktop link row while retaining the branded Header/logo area.
@@ -202,8 +208,8 @@ Current source-asset status:
 
 - Define shared CSS custom properties for:
 
-  - every canonical `phoenixPalette` color from `ai/ai-spec.md`, using matching kebab-case CSS names;
-  - the Phoenix, Code, and Creative gradient recipes from `ai/ai-spec.md`;
+  - every canonical `phoenixCodexPalette` color from `ai/ai-spec.md`, using matching kebab-case CSS names;
+  - the Home, Portfolio, Links, and Contact gradient-current recipes from `ai/ai-spec.md`;
   - readable foreground colors with verified contrast;
   - fonts and system fallbacks;
   - spacing and responsive gutters;
@@ -214,9 +220,9 @@ Current source-asset status:
   - focus, success, warning, and error colors needed by later features.
 
 - Reuse tokens in Header, Footer, navigation, containers, buttons, cards, and later feature states.
-- Preserve the exact `phoenixPalette` token names and hex values supplied in `ai/ai-spec.md`.
-- Preserve the approved gradient stop order: Phoenix uses red → orange → gold, Code uses midnight blue → sapphire → teal, and Creative uses royal violet → magenta → red.
-- Use core brand colors for primary identity, creative accents selectively, and neutrals for readable foundations.
+- Preserve the exact `phoenixCodexPalette` token names and hex values supplied in `ai/ai-spec.md`.
+- Preserve each approved route gradient's stop order.
+- Follow the approximate 65% foundation, 20% dark ink, 10% pastel, and 5% bright-glow balance.
 - Do not copy raw palette values repeatedly across component styles when a shared token is appropriate.
 - Solve contrast with appropriate token pairings or documented derived state tokens rather than silently changing canonical values.
 - Keep decorative script fonts out of navigation, instructions, and long passages.
@@ -247,6 +253,7 @@ Current source-asset status:
 - Mark decorative icons hidden from assistive technology and give informative icons or links meaningful names.
 - Respect `prefers-reduced-motion` for any shared transition.
 - Do not add autoplaying or essential motion to the shared layout.
+- Stop the GradientCurrent sweep under reduced motion while preserving its route color.
 
 ### Requirement 11 — File Documentation and Handoff
 
@@ -320,7 +327,7 @@ Component boundaries may be combined when the result remains clear, reusable, an
 
 - `src/data/navigation.js` — optional single source for the four public destinations and icon identifiers.
 - `src/data/profile.js` — optional approved public email and professional profile links.
-- `src/data/phoenixPalette.js` — canonical `phoenixPalette` export when JavaScript needs programmatic color access; add the required file TOC banner above the export.
+- `src/data/phoenixCodexPalette.js` — canonical `phoenixCodexPalette` export when JavaScript needs programmatic color access; add the required file TOC banner above the export.
 
 If these objects remain small, they may live in the owning component. They must not be duplicated between desktop and mobile navigation.
 
@@ -412,7 +419,7 @@ Responsive behavior is controlled by CSS media queries rather than stored React 
 - Do not add a UI framework, CSS-in-JS package, icon dependency, or animation library for this feature.
 - Use responsive imported assets, inline SVG, or the existing icon sprite.
 - Keep phoenix-inspired fantasy/code styling professional, readable, and subordinate to navigation clarity.
-- Preserve the canonical `phoenixPalette` names and values; mirror them as kebab-case CSS custom properties.
+- Preserve the canonical `phoenixCodexPalette` names and values; mirror them as kebab-case CSS custom properties.
 - Preserve the code-quality, accessibility, privacy, branching, and handoff rules from `ai/ai-spec.md`.
 
 ## Implementation Decisions
@@ -445,6 +452,20 @@ An absent optional link is more trustworthy and accessible than a placeholder de
 
 The logo combines identity and a familiar Home affordance. Its alt text describes destination/function without narrating decorative visual details that do not help navigation.
 
+### Plan Route Mapping Without Extra Navigation Routes
+
+The plan's Journey and Projects concepts both live on Portfolio because the grading
+architecture requires four public destinations. Clear labels remain primary; thematic
+subtitles may appear as small supporting text but must not create duplicate links or
+hide destination meaning. The rubric-required mobile bottom navigation replaces the
+plan's proposed drawer at 768px and below.
+
+### Gradient Current Instead of a Full Gradient Header
+
+A stable warm Header keeps navigation readable while the thin route-aware current
+supplies the plan's animated page identity. On route change the current may sweep and
+transform, but it cannot delay navigation and becomes static under reduced motion.
+
 ## Acceptance Criteria
 
 ### Shared Layout
@@ -459,11 +480,10 @@ The logo combines identity and a familiar Home affordance. Its alt text describe
 
 - [x] A semantic Header appears at the top of every route with consistent styling.
 - [x] The Header remains visible during vertical scrolling.
-- [x] Home uses the Code gradient across the full sticky Header.
-- [x] Portfolio uses the Phoenix gradient across the full sticky Header.
-- [x] Links uses the Creative gradient across the full sticky Header.
-- [x] Contact uses the requested magenta → violet → royal violet → sapphire → teal gradient across the full sticky Header.
-- [x] Brand and desktop-navigation content appear directly on each Header gradient without card or button containers and remain readable through color, weight, and text shadow.
+- [ ] The sticky Header uses a stable warm surface with readable ink-colored navigation.
+- [ ] Home, Portfolio, Links, and Contact each use their approved GradientCurrent sequence.
+- [ ] Route changes never wait for the GradientCurrent animation.
+- [ ] The GradientCurrent becomes static under reduced motion.
 - [x] One AI-generated personal logo is visible, responsive, and free of distortion/overflow.
 - [x] The supplied source logo has been resized/compressed or replaced by an optimized derivative appropriate for repeated Header delivery.
 - [x] The logo has intrinsic sizing or a stable aspect ratio that prevents layout shift.
@@ -506,9 +526,9 @@ The logo combines identity and a familiar Home affordance. Its alt text describe
 
 ### Accessibility and Quality
 
-- [x] Shared design tokens use the canonical `phoenixPalette` names and values from `ai/ai-spec.md`.
+- [ ] Shared design tokens use the canonical `phoenixCodexPalette` names and values from `ai/ai-spec.md`.
 - [x] CSS custom properties mirror palette names in kebab case without duplicating untracked raw hex values throughout component styles.
-- [x] Phoenix, Code, and Creative gradient variables preserve their approved color-stop sequences.
+- [ ] Home, Portfolio, Links, and Contact gradient variables preserve their approved color-stop sequences.
 - [x] Content placed over a gradient passes contrast across the full gradient or uses a solid backing surface.
 - [x] Header, navigation, main, and Footer landmarks are semantically correct.
 - [x] The first Tab reveals a working skip link that moves focus to main content.

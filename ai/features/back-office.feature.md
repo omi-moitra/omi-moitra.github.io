@@ -69,7 +69,7 @@ After this feature is complete:
 - Immediate local row removal after confirmed server deletion.
 - Visible Logout action using `supabase.auth.signOut()`.
 - Responsive table containment, keyboard scrolling, long-content wrapping, readable dates, and 200% zoom support.
-- Canonical `phoenixPalette` and approved gradient use.
+- Canonical `phoenixCodexPalette` with restrained administrative styling.
 - Privacy safeguards for names, email addresses, message contents, sessions, and errors.
 
 ### Out of Scope — Excluded
@@ -334,11 +334,9 @@ After this feature is complete:
 
 ### Requirement 17 — Visual Design and Accessibility
 
-- Use the exact canonical `phoenixPalette` tokens and shared CSS custom properties from `ai/ai-spec.md`.
-- Use the Code gradient (`midnightBlue` → `sapphire` → `teal`) for restrained administrator-dashboard framing.
-- Use the Phoenix gradient (`phoenixRed` → `blazeOrange` → `solarGold`) for selected emphasis, not destructive-state meaning.
-- Use the Creative gradient (`royalViolet` → `magenta` → `phoenixRed`) sparingly.
-- Preserve every approved gradient's token order.
+- Use the exact canonical `phoenixCodexPalette` tokens and shared CSS custom properties from `ai/ai-spec.md`.
+- Use warm-ivory/parchment surfaces, ink text, and quiet portal-blue framing. Magical
+  accents remain decorative and never carry destructive, success, or error meaning.
 - Use explicit text and icons for success, error, empty, delete, and logout states; do not rely on color alone.
 - Keep table text, modal text, buttons, status copy, and focus indicators on surfaces with verified contrast.
 - Use one page-level `<h1>` and logical modal headings.
@@ -754,7 +752,7 @@ Never remove the row before these success conditions pass.
 - Do not introduce Realtime, polling, caching, local persistence, or another backend.
 - Keep Login and Back Office absent from public navigation.
 - Preserve the Contact-owned schema and RLS contract.
-- Preserve the canonical `phoenixPalette` values and approved gradient stop orders.
+- Preserve the canonical `phoenixCodexPalette` values and warm-surface hierarchy.
 - Preserve lint and production build success.
 
 ## Implementation Decisions

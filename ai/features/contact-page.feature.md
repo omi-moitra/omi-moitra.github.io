@@ -32,6 +32,10 @@
 
 Create a public Contact page where a visitor can submit a name, email address, and message to the Supabase `messages` table. The form must reject invalid input before any network request, prevent duplicate submissions while a request is pending, provide accessible pending/success/failure feedback, preserve entered values after failure, clear them only after success, and fail safely when Supabase is not configured.
 
+This is the plan's calmest page: the form resembles a practical parchment dispatch,
+with restrained portal light and a sub-one-second feather/fade confirmation that never
+delays or replaces the accessible success message.
+
 After this feature is complete:
 
 - `/#/contact` renders the Contact page through React Router;
@@ -64,7 +68,9 @@ After this feature is complete:
 - A reproducible `messages` schema and Row Level Security policy contract.
 - Anonymous insert access without anonymous select, update, or delete access.
 - Semantic form structure, autocomplete metadata, keyboard access, focus management, live feedback, visible focus, sufficient contrast, and reduced-motion behavior.
-- Responsive form layout using the canonical `phoenixPalette` and approved gradients.
+- Responsive form layout using the canonical `phoenixCodexPalette` and approved Contact gradient.
+- A concise privacy notice explaining what is stored and why, without promising a
+  retention or response period that has not been approved.
 
 ### Out of Scope — Excluded
 
@@ -82,6 +88,10 @@ After this feature is complete:
 - Exposing raw Supabase errors, table details, credentials, or environment values to visitors.
 - A service-role or secret key in browser code.
 - Contact-specific AI-generated imagery; the Contact rubric does not require it.
+- Subject and contact-reason fields until the authoritative schema, RLS policies,
+  Back Office display, privacy copy, and retention decision are approved together.
+- Client-only claims of rate limiting or spam prevention. Meaningful enforcement needs
+  an approved Supabase-side control or intermediary and cannot be guaranteed by UI state.
 - A new form, validation, state-management, notification, or animation dependency solely for Contact.
 
 ## Requirements Breakdown
@@ -227,11 +237,11 @@ After this feature is complete:
 
 ### Requirement 11 — Responsive Visual Design
 
-- Use the exact canonical `phoenixPalette` tokens and shared CSS custom properties from `ai/ai-spec.md`.
-- Use the Phoenix gradient (`phoenixRed` → `blazeOrange` → `solarGold`) selectively for the page's welcoming brand moment.
-- Use the Code gradient (`midnightBlue` → `sapphire` → `teal`) for restrained form or technical accents.
-- Use the Creative gradient (`royalViolet` → `magenta` → `phoenixRed`) only where it does not compete with validation and feedback states.
-- Preserve every approved gradient's token order.
+- Use the exact canonical `phoenixCodexPalette` tokens and shared CSS custom properties from `ai/ai-spec.md`.
+- Use the approved Contact gradient current in this exact order: `peachGlow` →
+  `blushPink` → `lavenderMist` → `butterGold`.
+- Style the form as a calm parchment dispatch with ink text and restrained portal
+  illumination; validation and status semantics take priority over decoration.
 - Keep field text, labels, instructions, errors, and feedback on solid surfaces with verified contrast.
 - At narrow widths, use one column and full-width form controls.
 - Keep the page inside the viewport at 320px, 768px, 769px, and desktop widths.
@@ -252,7 +262,11 @@ After this feature is complete:
 - Use live regions intentionally so pending, validation, success, failure, and configuration messages are announced without excessive repetition.
 - Do not rely on color, icon, motion, placeholder, or position alone to communicate form state.
 - Respect `prefers-reduced-motion` for feedback entrances, button effects, and decorative motion.
+- Keep any confirmed-success fold/fade or feather pass under one second and remove it
+  entirely under reduced motion; announce success immediately in either mode.
 - Preserve logical tab order and source order at every viewport.
+- Place a concise privacy notice before submission explaining that name, email, message,
+  and submission time are stored so Oishieka can respond.
 
 ### Requirement 13 — File Documentation and Handoff
 
@@ -603,7 +617,7 @@ The expected policy operations are anonymous/authenticated `INSERT`, authenticat
 - Do not add a server, serverless function, Edge Function, or second backend for this feature.
 - Do not add a dependency for form state, validation, feedback, timers, or icons.
 - Do not call `.select()` after anonymous insertion.
-- Preserve the canonical `phoenixPalette` values and approved gradient stop orders.
+- Preserve the canonical `phoenixCodexPalette` values and approved Contact gradient stop order.
 - Do not store form values in local storage, session storage, query parameters, logs, analytics, or URLs.
 - Preserve lint and production build success.
 
@@ -640,6 +654,19 @@ Anyone can call a public Data API without using this React form. Database constr
 ### Keep the Existing Environment Variable Name
 
 The Global AI Spec authorizes `VITE_SUPABASE_ANON_KEY`. Supabase may supply a newer low-privilege publishable key, but changing the variable name would create a cross-feature deployment mismatch. The invariant is the key's low privilege, not whether the approved variable name contains the legacy term “ANON.”
+
+### Keep the Launch Payload Narrow
+
+The creative plan suggests Subject and contact-reason fields, but the rubric and shared
+security contract currently authorize only `name`, `email`, and `message`. Adding fields
+piecemeal would desynchronize validation, database constraints, RLS testing, Back Office,
+and privacy copy. Treat them as a coordinated follow-up enhancement.
+
+### Do Not Promise Client-Side Rate Limiting
+
+The pending guard prevents accidental duplicate requests in one mounted form; it does
+not stop a caller from using the public data API directly. Documentation and UI must not
+describe that guard as spam protection or rate limiting.
 
 ## Acceptance Criteria
 
@@ -682,6 +709,7 @@ The Global AI Spec authorizes `VITE_SUPABASE_ANON_KEY`. Supabase may supply a ne
 - [x] Fields and validation errors clear only after confirmed success.
 - [x] Success feedback dismisses after five seconds or the next form interaction.
 - [x] Success timers are cancelled on replacement, interaction, and unmount.
+- [ ] Any visual success flourish lasts under one second, never delays feedback, and is removed under reduced motion.
 - [x] Returned errors and thrown exceptions produce safe, accessible failure feedback.
 - [x] Failure is visually and semantically distinct without relying only on red or an icon.
 - [x] All entered values remain after request failure.
@@ -708,6 +736,8 @@ The Global AI Spec authorizes `VITE_SUPABASE_ANON_KEY`. Supabase may supply a ne
 - [x] Text, labels, inputs, borders, errors, success, disabled state, and focus indicators meet project contrast requirements.
 - [x] State meaning does not depend on color, icon, placeholder, position, or motion alone.
 - [x] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
+- [ ] Contact uses the canonical Phoenix Codex tokens and approved Contact gradient order.
+- [ ] A concise, accurate data-use notice appears before submission.
 - [ ] No horizontal overflow, clipped labels, overlapping feedback, or hidden controls appear at 320px, 768px, 769px, desktop widths, or 200% zoom.
 - [x] Content clears the fixed mobile navigation at 768px and below.
 - [x] Every changed file has its required format-appropriate TOC and current decision comments.

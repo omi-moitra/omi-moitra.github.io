@@ -6,6 +6,7 @@
 - [Project Identity](#project-identity)
 - [Goal and Scope](#goal-and-scope)
 - [Users and Use Cases](#users-and-use-cases)
+- [Phoenix Codex Plan Integration](#phoenix-codex-plan-integration)
 - [Feature Index](#feature-index--links-only)
 - [Pages, Screens, and Routes](#pages-screens-and-routes)
 - [Content Requirements](#content-requirements)
@@ -32,7 +33,12 @@ Use sources in this order when instructions differ:
 1. The Module 16 grading checklist in `.omi/src`.
 2. `.omi/PROJECT_TASKS.md`.
 3. This main specification and the relevant file in `ai/features/`.
-4. The content and design extensions in `.omi/plan/`.
+4. The content and design extensions in `.omi/plan/`, especially `.omi/plan/PLAN.md`.
+
+The current user request to implement the Phoenix Codex plan is represented by the
+integration contract below. Where the plan proposes an alternate route or component
+that conflicts with the grading checklist, preserve the rubric-required information
+architecture and adapt the planned experience to it.
 
 Do not use this file as a progress tracker. Current task status belongs in `.omi/PROJECT_TASKS.md`.
 
@@ -58,6 +64,11 @@ Build and deploy a professional portfolio that satisfies every Module 16 rubric 
 - React Router with `HashRouter` for GitHub Pages-compatible client-side routing.
 - Public Home, Portfolio, Links, and Contact pages.
 - A shared public layout with a logo, desktop header navigation, mobile bottom navigation, and footer.
+- The Phoenix Codex visual system: cozy fantasy as the primary world, street-art marks as secondary energy, cyberpunk glow as a restrained accent, and code as the underlying magic-system metaphor.
+- A progressively enhanced Home vortex with a phoenix focal animation, a lightweight mobile composition, a static non-WebGL fallback, and a complete semantic HTML layer that loads first.
+- A combined Portfolio experience containing the plan's Phoenix Path journey and Crafted Worlds project presentation without adding competing top-level Journey or Projects routes.
+- A glowing, selectable résumé timeline and a settled editorial project-media grid whose motion never blocks reading or interaction.
+- Page-specific gradient currents, warm parchment surfaces, responsive performance budgets, and reduced-motion variants derived from the Phoenix Codex plan.
 - A hidden Login page that is reachable directly but absent from public navigation.
 - A protected Back Office page for authenticated message administration.
 - A Supabase client with safe behavior when environment variables are missing.
@@ -86,7 +97,8 @@ Build and deploy a professional portfolio that satisfies every Module 16 rubric 
 - A standalone Resume route; the required resume experience belongs on Portfolio.
 - Skill percentages or proficiency claims not supported by verified content.
 - Publication of a phone number, postal code, home address, private credential, or unapproved personal information.
-- Dark mode, multiple languages, the dual-PDF selector, or the bird-and-paint splash until all required checkpoints pass and the enhancement has its own approved specification.
+- Dark mode, multiple languages, or multiple selectable themes until all required checkpoints pass and the enhancement has its own approved specification.
+- Sound design, device-tilt controls, several simultaneous dragons, a content-management dashboard, and highly elaborate page-to-page 3D transitions for the initial launch.
 - Animation or visual effects that make content harder to read, operate, or load.
 
 ## Users and Use Cases
@@ -97,6 +109,61 @@ Build and deploy a professional portfolio that satisfies every Module 16 rubric 
 - **Authenticated administrator:** Sign in through the hidden Login route, retain a valid session across refreshes, view messages newest first, open a full message, delete a message deliberately, and log out.
 - **Unauthenticated administrator visitor:** Be redirected from Back Office to Login without seeing private message data.
 - **Developer or maintainer:** Run, lint, build, test, document, and deploy the project without needing a separate backend repository.
+
+## Phoenix Codex Plan Integration
+
+`.omi/plan/PLAN.md` is the creative source for the site's experience. Its guiding
+statement is implemented as a hierarchy, not as a collection of equally loud styles:
+
+1. **Cozy fantasy is the world.** Parchment, cream, ink, illustrated journals, maps,
+   soft light, cards, and decorative borders define the persistent interface.
+2. **Street art is secondary energy.** Brush strokes, ink splashes, arrows, energetic
+   linework, and occasional oversized annotations add personality around content.
+3. **Cyberpunk is an accent.** Glow appears on active states, timeline paths, code
+   motifs, route gradients, particles, and small indicators; it does not become the
+   page's dominant surface treatment.
+4. **The phoenix is the guide and code is the magic system.** The phoenix represents
+   growth and reinvention, the glowing path represents learning and career progress,
+   crafted worlds represent projects, and code/rune motifs connect fantasy with the
+   developer story.
+
+### Required Route Adaptation
+
+The plan's thematic names are subtitles, never replacements for clear navigation
+labels. The five conceptual destinations map to the rubric's four public routes:
+
+| Clear public label | Thematic subtitle | Implementation destination |
+| --- | --- | --- |
+| Home | Enter the Codex | `/` |
+| Journey | The Phoenix Path | Portfolio journey section at `/portfolio` |
+| Projects | Crafted Worlds | Portfolio projects section at `/portfolio` |
+| Links | Portals | `/links` |
+| Contact | Send a Message | `/contact` |
+
+Do not add Journey or Projects to the primary navigation. Deep-linked project case
+studies may be added later under `/portfolio/projects/:slug` only after the core
+Portfolio route, verified project data, and GitHub Pages refresh behavior pass. Until
+then, case-study details belong in accessible in-page panels or dialogs.
+
+### Progressive Delivery Contract
+
+Implement the plan in layers so the professional content is never coupled to an
+expensive visual effect:
+
+1. **Foundation:** routing, shared shell, design tokens, typography, cards, buttons,
+   gradient current, responsive behavior, focus states, and reduced-motion utilities.
+2. **Content:** verified Home, Portfolio, Links, Contact, authentication, and Back
+   Office behavior rendered as complete semantic HTML with optimized static images.
+3. **Signature scenes:** Home vortex and phoenix, Portfolio journey depth and trail,
+   and the project media-wall entrance, each loaded progressively with static fallbacks.
+4. **Polish:** performance, keyboard and screen-reader checks, metadata, social image,
+   favicon, cross-browser checks, and deployed-route verification.
+5. **Post-launch only:** theme chooser, sound, device tilt, advanced 3D transitions,
+   multiple dragons, and CMS-style project editing.
+
+The readable interface must render before background texture, poster image, WebGL,
+models, or particles. A failure at any enhancement layer must leave navigation,
+content, forms, résumé actions, links, and authentication workflows usable.
 
 ## Feature Index — Links Only
 
@@ -151,6 +218,10 @@ Use real, verified content rather than Vite starter text, lorem ipsum, generic c
 - Present at least three soft skills or talents with icons and meaningful descriptions.
 - Use at least three clearly separated visual sections.
 - Include at least two relevant AI-created images.
+- Progressively enhance the hero with the Enter the Codex vortex and a simplified
+  mobile/static fallback while keeping all identity and actions in HTML.
+- After required skills, include up to three verified featured projects, a Phoenix
+  Path preview, and a final Contact invitation.
 
 ### Portfolio
 
@@ -160,6 +231,12 @@ Use real, verified content rather than Vite starter text, lorem ipsum, generic c
 - Keep essential resume information in semantic HTML rather than only inside a PDF.
 - Provide a working open/download link for the approved `public/assets/resume-standard.pdf`.
 - Include at least two portfolio-specific AI-created images.
+- Combine Journey and Projects on this route: use an accessible glowing timeline for
+  education/work and a settled editorial media wall for verified project case studies.
+- Treat three complete projects as the Phoenix Codex MVP target. Until three are
+  supplied, render only verified entries and report the content gap openly.
+- Offer a separately approved creative résumé in addition to the required standard
+  résumé; never let the optional file break the standard download.
 
 ### Links
 
@@ -187,6 +264,8 @@ Portfolio content may be represented as JavaScript objects or arrays and should 
 - `education`: institution, program or degree, start/end display dates, and optional approved location.
 - `workExperience`: role, organization, dates, responsibilities, and verified achievements.
 - `projects`: name, technology, purpose, description, image, live URL, and optional source URL.
+- Optional verified project case-study fields: objective, role, architecture, design
+  decisions, challenges, solutions, media, outcome, and next steps.
 - `resources`: title, URL, image, and 1–3 sentence description.
 
 Keep repeated content in data arrays and render it with reusable components. Do not fabricate missing project details, links, achievements, dates, or proficiency levels.
@@ -264,85 +343,89 @@ Only these client variables are permitted:
 - Add a dependency only when a required or separately approved feature needs it.
 - Commit `package.json` and `package-lock.json` together after dependency changes.
 - Prefer browser APIs and CSS for small interactions before adding another library.
+- `three` is permitted only for the approved Home vortex and Portfolio journey/media
+  enhancements. Keep scene code route-scoped and lazy-loaded; do not make Three.js a
+  prerequisite for first paint or semantic content.
 - Framer Motion, particle libraries, Lottie, GSAP, Tailwind, and similar tools are not part of required scope.
 - If an optional feature later justifies one of these tools, document the decision in that feature’s approved specification and retest performance, accessibility, lint, and build.
 
 ## Visual and Interaction Direction
 
-### Phoenix Palette
+### Phoenix Codex Palette
 
-Use `phoenixPalette` as the canonical color vocabulary and preserve these token names and values:
+Use the plan's warm palette as the canonical color vocabulary. Keep the three groups
+separate so foundation surfaces, quiet pastels, and bright magical accents cannot be
+confused in implementation:
 
 ```javascript
-export const phoenixPalette = {
-  // Core Brand
-  phoenixRed:      '#D62828',
-  obsidian:        '#0F1115',
-  midnightBlue:    '#1E2A44',
-  teal:            '#14B8A6',
-  royalViolet:     '#7C3AED',
-
-  // Creative Accents
-  blazeOrange:     '#F97316',
-  solarGold:       '#FACC15',
-  emerald:         '#22C55E',
-  sapphire:        '#3B82F6',
-  magenta:         '#EC4899',
-
-  // Neutrals
-  graphite:        '#374151',
-  coolGray:        '#64748B',
-  silver:          '#E2E8F0',
-  snow:            '#F8FAFC',
-  white:           '#FFFFFF',
+export const phoenixCodexPalette = {
+  foundation: {
+    parchment: '#F5EBD8',
+    softCream: '#FFF9ED',
+    warmIvory: '#FFFDF6',
+    agedPaper: '#E7D5B7',
+    inkBlack: '#232126',
+    charcoal: '#37323B',
+    warmBrown: '#725E50',
+  },
+  pastels: {
+    blushPink: '#F5B9C8',
+    peachGlow: '#F6BE96',
+    lavenderMist: '#C9B9F4',
+    skyBlue: '#AFCFF2',
+    mintLight: '#AEE3CE',
+    butterGold: '#F4D889',
+  },
+  magic: {
+    phoenixCoral: '#FF6559',
+    solarOrange: '#FF963D',
+    radiantGold: '#FFD34E',
+    plasmaPink: '#F34DA0',
+    arcaneViolet: '#8757E8',
+    portalBlue: '#428BFF',
+    spiritCyan: '#35D5DC',
+    renewalGreen: '#43C98A',
+  },
 };
 ```
 
 Implementation rules:
 
-- Core brand colors establish primary surfaces, text, navigation, focus, and calls to action.
-- Creative accents echo the multicolored phoenix logo and should be used deliberately rather than placing every accent in every component.
-- Neutrals provide readable page, card, border, and text foundations.
-- CSS custom properties must mirror the JavaScript names in kebab case, such as `--phoenix-red`, `--midnight-blue`, and `--cool-gray`.
-- Use `obsidian`, `midnightBlue`, `graphite`, `snow`, and `white` as the first candidates for large surfaces and readable text relationships.
-- Do not use bright accents such as `teal`, `blazeOrange`, `solarGold`, `emerald`, or `magenta` for small text without verifying contrast against the actual background.
+- Aim for approximately 65% cream/parchment/ivory, 20% ink/charcoal/brown,
+  10% pastel color, and 5% bright magical glow.
+- CSS custom properties mirror the JavaScript names in kebab case, such as
+  `--parchment`, `--ink-black`, and `--phoenix-coral`.
+- Use foundation colors first for large surfaces and readable text relationships.
+- Use pastels for quiet section identity, framing, and illustration support.
+- Do not use bright magical accents for small text without verifying contrast against
+  the actual background.
 - Active, hover, focus, success, warning, and error states must use more than color alone.
 - Do not silently change a canonical hex value to solve contrast. Choose a different foreground/background pairing or add a documented derived state token.
+- Existing source may still import the retired `phoenixPalette` vocabulary. Migrate the
+  token module, CSS variables, imports, and tests together during the Foundation phase;
+  do not maintain two competing canonical palettes or silently alias mismatched colors.
 
 The palette never overrides accessibility; every rendered color pair must still pass the project’s contrast requirements.
 
 ### Suggested Gradients
 
-Use these approved color-stop sequences:
+Use these approved route color-stop sequences for the shared gradient current:
 
-| Gradient | Token sequence | Suggested use |
+| Route | Token sequence | Suggested use |
 | --- | --- | --- |
-| Phoenix | `phoenixRed` → `blazeOrange` → `solarGold` | Hero energy, phoenix flourishes, primary brand moments |
-| Code | `midnightBlue` → `sapphire` → `teal` | Technical sections, code motifs, interactive technology accents |
-| Creative | `royalViolet` → `magenta` → `phoenixRed` | Creative work, section dividers, selected emphasis |
+| Home | `softCream` → `phoenixCoral` → `blushPink` → `radiantGold` → `arcaneViolet` | Welcoming Codex energy |
+| Portfolio | `radiantGold` → `phoenixCoral` → `plasmaPink` → `arcaneViolet` | Journey and crafted-world energy |
+| Links | `mintLight` → `spiritCyan` → `portalBlue` → `arcaneViolet` | Portal/resource energy |
+| Contact | `peachGlow` → `blushPink` → `lavenderMist` → `butterGold` | Calm dispatch energy |
 
-The default CSS custom properties are:
+The default CSS custom properties are route-specific:
 
 ```css
 :root {
-  --gradient-phoenix: linear-gradient(
-    135deg,
-    var(--phoenix-red),
-    var(--blaze-orange),
-    var(--solar-gold)
-  );
-  --gradient-code: linear-gradient(
-    135deg,
-    var(--midnight-blue),
-    var(--sapphire),
-    var(--teal)
-  );
-  --gradient-creative: linear-gradient(
-    135deg,
-    var(--royal-violet),
-    var(--magenta),
-    var(--phoenix-red)
-  );
+  --gradient-home: linear-gradient(90deg, var(--soft-cream), var(--phoenix-coral), var(--blush-pink), var(--radiant-gold), var(--arcane-violet));
+  --gradient-portfolio: linear-gradient(90deg, var(--radiant-gold), var(--phoenix-coral), var(--plasma-pink), var(--arcane-violet));
+  --gradient-links: linear-gradient(90deg, var(--mint-light), var(--spirit-cyan), var(--portal-blue), var(--arcane-violet));
+  --gradient-contact: linear-gradient(90deg, var(--peach-glow), var(--blush-pink), var(--lavender-mist), var(--butter-gold));
 }
 ```
 
@@ -353,7 +436,10 @@ Preserve each gradient’s token order. The angle may change when a component’
 - Preferred heading direction: Cinzel or Playfair Display.
 - Preferred body direction: Nunito or Lato with system fallbacks.
 - Great Vibes may be used sparingly for decorative accents, never for instructions or long text.
-- Use coherent fantasy motifs such as dragons, unicorns, phoenixes, constellations, scrolls, spell cards, and quest tomes.
+- Use one readable literary display serif, one modern interface sans serif, and one
+  sparingly applied monospace face for dates, technologies, and code annotations.
+- Use coherent motifs such as phoenixes, restrained dragons, vortexes, maps, paths,
+  codices, runes mixed with code, scrolls, and illustrated studio materials.
 - Keep labels and feedback immediately understandable; fantasy phrases may supplement but not replace plain language.
 - Do not let decorations compete with resume content or calls to action.
 
@@ -368,12 +454,25 @@ The minimum inventory is:
 
 For each AI-created asset, document the generation tool, purpose, filename, optimization, and alt-text decision in the relevant feature specification or research file. Use empty alt text for purely decorative images. A stock asset does not count as AI-created merely because it was downloaded from an image library.
 
+Assets generated before the Phoenix Codex palette migration remain valid provenance,
+but must be visually reviewed against the warm hierarchy. Regenerate or recolor only
+when an asset materially fights the cozy-fantasy direction; never rewrite historical
+generation notes to imply a tool or prompt that was not actually used.
+
 ### Motion
 
 - Motion must not communicate information that is unavailable without animation.
 - Respect `prefers-reduced-motion`.
 - Avoid excessive blur, particles, autoplay effects, and animation work on mobile.
-- The optional splash must not be implemented until required work passes and its specification is approved.
+- Desktop pointer movement may gently influence decorative scenes, but no content or
+  control may require pointer tracking.
+- Mobile scenes use at most half the desktop particle count, lower-resolution assets,
+  no unrequested device-tilt access, and a static or lightly animated composition.
+- Pause continuous scene work while it is outside the viewport and dispose renderer,
+  texture, geometry, animation-frame, and listener resources on route unmount.
+- Project cards may enter with slight rotation and varied frames, but must settle into
+  a stable readable layout rather than drift continuously.
+- Sound and the full-screen splash remain post-launch enhancements.
 
 ## Repository Structure
 
@@ -406,7 +505,20 @@ Keep one root-level Vite application. Create intended directories only when thei
 ├── src/
 │   ├── assets/
 │   ├── components/
+│   │   ├── layout/
+│   │   ├── motion/
+│   │   ├── three/
+│   │   └── ui/
 │   ├── data/
+│   │   ├── navigation.js
+│   │   ├── phoenixCodexPalette.js
+│   │   ├── projects.js
+│   │   ├── skills.js
+│   │   └── timeline.js
+│   ├── features/
+│   │   ├── journey/
+│   │   ├── projects/
+│   │   └── contact/
 │   ├── layouts/
 │   │   └── Main.jsx
 │   ├── lib/
@@ -428,6 +540,8 @@ Keep one root-level Vite application. Create intended directories only when thei
 ### File Placement Rules
 
 - Put reusable UI in `src/components/`.
+- Keep route-scoped WebGL components in `src/components/three/` and small reusable
+  motion/fallback utilities in `src/components/motion/`; lazy-load scene entry points.
 - Put the shared public layout in `src/layouts/`.
 - Put route-level components in `src/pages/`.
 - Put repeated static content arrays in `src/data/` when doing so improves clarity.
@@ -715,7 +829,12 @@ The project is complete only when every item below is true or has documented coa
 - [ ] Home, Portfolio, Links, Contact, hidden Login, and protected Back Office routes work through `HashRouter` locally and on GitHub Pages.
 - [ ] Header, footer, desktop navigation, mobile bottom navigation, logo link, focus states, and active states work consistently across public pages.
 - [ ] Home includes the required introduction, three technical skills, three soft skills, three visual sections, and two relevant AI-created images.
+- [ ] Home's Enter the Codex scene loads progressively, simplifies on mobile, pauses
+  out of view, respects reduced motion, cleans up fully, and falls back to a poster.
 - [ ] Portfolio includes complete reverse-chronological Education, Work, and Projects sections, two portfolio-specific AI-created images, and a valid approved resume download.
+- [ ] Portfolio combines the Phoenix Path timeline and a stable Crafted Worlds media
+  grid, exposes accessible case-study detail, and never invents projects to reach the
+  three-project creative target.
 - [ ] Links contains at least three complete, responsive, accessible resource items and one relevant AI-created image.
 - [ ] Contact rejects invalid input, prevents duplicates, inserts exactly one valid message, reports failures safely, preserves failed input, and resets after success.
 - [ ] Missing Supabase configuration never crashes the application or exposes secrets.
@@ -724,6 +843,10 @@ The project is complete only when every item below is true or has documented coa
 - [ ] RLS allows anonymous insert only and restricts message selection/deletion to the authenticated administrator workflow.
 - [ ] Required AI-created assets are documented, optimized, responsive, relevant, and accessible.
 - [ ] The site passes keyboard, focus, labels, alt text, contrast, reduced-motion, overflow, modal, mobile, tablet, desktop, and cross-browser checks.
+- [ ] The readable interface loads before scene enhancements; WebGL-disabled and
+  reduced-motion checks preserve every required route, action, and workflow.
+- [ ] No sound, device-tilt request, theme chooser, or continuously drifting project
+  card ships in the initial release.
 - [ ] `npm ci`, `npm run lint`, and `npm run build` pass from a clean installation.
 - [ ] The README, pitch scripts, pitch feedback, CONCEPTS, approved resume, five challenge screenshots, reasoning notes, and required videos are complete and proofread.
 - [ ] No secret, `.env`, administrator password, service-role key, or submission summary is tracked or present in Git history.
