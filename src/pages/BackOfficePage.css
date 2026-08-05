@@ -1,0 +1,490 @@
+/* ==========================================================================
+   Back Office — protected dashboard, message table, and modal interactions
+   --------------------------------------------------------------------------
+   1. Page & Gate             authenticated framing and non-private gate states
+   2. Actions & Feedback     accessible buttons, counts, and status treatments
+   3. Message Table          semantic responsive scroll region and row actions
+   4. Dialogs                overlay, metadata, message, confirmation, and focus
+   5. Responsive             narrow layout, table containment, mobile-nav offset
+   6. Reduced Motion         remove nonessential transitions and entrances
+   ========================================================================== */
+
+.back-office-page,
+.protected-gate {
+  /* Derived danger tokens keep accessible text contrast without changing the
+     canonical phoenix palette values shared by public pages. */
+  --back-office-danger-dark: #8f1919;
+  --back-office-error-text: #751313;
+  --back-office-error-surface: #fff4f4;
+
+  min-height: calc(100svh - var(--header-height));
+  padding-block: clamp(var(--space-6), 6vw, var(--space-8));
+}
+
+.back-office-page {
+  position: relative;
+}
+
+.back-office-page::before,
+.protected-gate::before {
+  position: fixed;
+  inset: var(--header-height) 0 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 85% 5%, rgb(20 184 166 / 18%), transparent 30rem),
+    linear-gradient(155deg, var(--snow), color-mix(in srgb, var(--sapphire) 9%, var(--snow)));
+  content: '';
+}
+
+.protected-gate {
+  display: grid;
+  place-items: center;
+}
+
+.protected-gate__panel {
+  width: min(100%, 44rem);
+  padding: clamp(var(--space-5), 6vw, var(--space-7));
+  border: 1px solid color-mix(in srgb, var(--sapphire) 35%, var(--silver));
+  border-top: 0.35rem solid var(--sapphire);
+  border-radius: var(--radius-large);
+  background: var(--white);
+  box-shadow: var(--shadow-large);
+}
+
+.protected-gate__panel h1,
+.back-office-page h1,
+.back-office-page h2,
+.back-office-page h3 {
+  color: var(--midnight-blue);
+  font-family: var(--font-heading);
+  line-height: 1.15;
+}
+
+.protected-gate__panel h1 {
+  margin: 0 0 var(--space-4);
+  font-size: clamp(1.7rem, 5vw, 2.7rem);
+}
+
+.protected-gate__eyebrow,
+.back-office-page__eyebrow,
+.back-office-dialog__eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--graphite);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.protected-gate__actions,
+.back-office-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.back-office-page__private-content {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.back-office-page__header,
+.back-office-page__messages {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--sapphire) 28%, var(--silver));
+  border-radius: var(--radius-large);
+  background: var(--white);
+  box-shadow: var(--shadow-large);
+}
+
+.back-office-page__header::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 0.4rem;
+  background: var(--gradient-code);
+  content: '';
+}
+
+.back-office-page__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: clamp(var(--space-5), 5vw, var(--space-7));
+}
+
+.back-office-page__header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3.7rem);
+}
+
+.back-office-page__header p:last-child {
+  max-width: 43rem;
+  margin: var(--space-3) 0 0;
+  color: var(--graphite);
+}
+
+.back-office-button {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--midnight-blue);
+  border-radius: var(--radius-small);
+  color: var(--midnight-blue);
+  background: var(--white);
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 150ms ease-out, background-color 150ms ease-out;
+}
+
+.back-office-button:hover:not(:disabled) {
+  color: var(--white);
+  background: var(--midnight-blue);
+  transform: translateY(-1px);
+}
+
+.back-office-button:disabled {
+  border-color: var(--cool-gray);
+  color: var(--graphite);
+  background: var(--silver);
+  cursor: wait;
+  opacity: 0.82;
+}
+
+.back-office-button--primary {
+  color: var(--white);
+  background: var(--midnight-blue);
+}
+
+.back-office-button--danger {
+  border-color: var(--phoenix-red);
+  color: var(--back-office-danger-dark);
+}
+
+.back-office-button--danger:hover:not(:disabled) {
+  border-color: var(--back-office-danger-dark);
+  color: var(--white);
+  background: var(--back-office-danger-dark);
+}
+
+.back-office-button--compact {
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-3);
+}
+
+.back-office-button--logout {
+  flex: 0 0 auto;
+}
+
+.back-office-feedback {
+  margin: 0;
+  padding: var(--space-4);
+  border: 2px solid var(--sapphire);
+  border-radius: var(--radius-small);
+  color: var(--midnight-blue);
+  background: color-mix(in srgb, var(--sapphire) 10%, var(--white));
+}
+
+.back-office-feedback--error {
+  border-color: var(--phoenix-red);
+  color: var(--back-office-error-text);
+  background: var(--back-office-error-surface);
+}
+
+.back-office-page__messages {
+  padding: clamp(var(--space-4), 4vw, var(--space-6));
+}
+
+.back-office-page__section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.back-office-page__section-heading h2,
+.back-office-dialog h2,
+.back-office-dialog h3 {
+  margin: 0;
+}
+
+.back-office-page__count {
+  min-width: 2.6rem;
+  min-height: 2.6rem;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  border-radius: 999px;
+  color: var(--midnight-blue);
+  background: var(--solar-gold);
+  font-weight: 900;
+}
+
+.back-office-state {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: clamp(var(--space-4), 4vw, var(--space-6));
+  border: 2px solid var(--sapphire);
+  border-radius: var(--radius-medium);
+  color: var(--midnight-blue);
+  background: color-mix(in srgb, var(--sapphire) 8%, var(--white));
+}
+
+.back-office-state > span {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--white);
+  background: var(--midnight-blue);
+  font-weight: 900;
+}
+
+.back-office-state strong {
+  display: block;
+  font-size: 1.12rem;
+}
+
+.back-office-state p {
+  margin: var(--space-1) 0 var(--space-4);
+}
+
+.back-office-state--error {
+  border-color: var(--phoenix-red);
+  color: var(--back-office-error-text);
+  background: var(--back-office-error-surface);
+}
+
+.back-office-state--error > span {
+  background: var(--back-office-danger-dark);
+}
+
+.back-office-table-instruction {
+  margin: 0 0 var(--space-3);
+  color: var(--graphite);
+  font-size: 0.9rem;
+}
+
+.back-office-table-region {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--cool-gray);
+  border-radius: var(--radius-small);
+  overscroll-behavior-inline: contain;
+}
+
+.back-office-table-region:focus-visible {
+  outline-offset: 4px;
+}
+
+.back-office-table-region table {
+  width: 100%;
+  min-width: 48rem;
+  border-collapse: collapse;
+  background: var(--white);
+}
+
+.back-office-table-region caption {
+  padding: var(--space-3) var(--space-4);
+  color: var(--white);
+  background: var(--midnight-blue);
+  font-weight: 800;
+  text-align: left;
+}
+
+.back-office-table-region th,
+.back-office-table-region td {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--silver);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.back-office-table-region th {
+  color: var(--midnight-blue);
+  background: color-mix(in srgb, var(--sapphire) 9%, var(--white));
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.back-office-table-region tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.back-office-table-region tbody tr:hover {
+  background: color-mix(in srgb, var(--solar-gold) 10%, var(--white));
+}
+
+.back-office-table-region td:nth-child(1) {
+  width: 22%;
+  font-weight: 750;
+}
+
+.back-office-table-region td:nth-child(2) {
+  width: 28%;
+}
+
+.back-office-table-region td:nth-child(3) {
+  width: 27%;
+}
+
+.back-office-table__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.back-office-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-dialog);
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgb(15 17 21 / 78%);
+  animation: back-office-backdrop-in 150ms ease-out;
+}
+
+.back-office-dialog {
+  width: min(100%, 42rem);
+  max-height: calc(100svh - (2 * var(--space-4)));
+  overflow: auto;
+  padding: clamp(var(--space-4), 5vw, var(--space-6));
+  border: 2px solid var(--sapphire);
+  border-top: 0.4rem solid var(--teal);
+  border-radius: var(--radius-large);
+  color: var(--obsidian);
+  background: var(--white);
+  box-shadow: 0 1.5rem 5rem rgb(15 17 21 / 45%);
+  animation: back-office-dialog-in 170ms ease-out;
+}
+
+.back-office-dialog:focus {
+  outline: 3px solid var(--solar-gold);
+  outline-offset: 3px;
+}
+
+.back-office-dialog--confirmation {
+  width: min(100%, 34rem);
+  border-color: var(--phoenix-red);
+  border-top-color: var(--phoenix-red);
+}
+
+.back-office-dialog__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.back-office-dialog__heading h2 {
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+}
+
+.back-office-dialog__metadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+}
+
+.back-office-dialog__metadata > div {
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--silver);
+  border-radius: var(--radius-small);
+  background: var(--snow);
+}
+
+.back-office-dialog__metadata dt {
+  color: var(--graphite);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.back-office-dialog__metadata dd {
+  margin: var(--space-1) 0 0;
+  overflow-wrap: anywhere;
+}
+
+.back-office-dialog__message {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--silver);
+}
+
+.back-office-dialog__message p {
+  margin-bottom: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@keyframes back-office-backdrop-in {
+  from { opacity: 0; }
+}
+
+@keyframes back-office-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.985);
+  }
+}
+
+@media (max-width: 768px) {
+  .back-office-page,
+  .protected-gate {
+    min-height: auto;
+    padding-bottom: calc(var(--mobile-navigation-height) + var(--space-7));
+  }
+
+  .back-office-page__header,
+  .back-office-dialog__heading {
+    flex-direction: column;
+  }
+
+  .back-office-button--logout,
+  .back-office-dialog__heading .back-office-button {
+    width: 100%;
+  }
+
+  .back-office-dialog__metadata {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .back-office-dialog-backdrop {
+    padding: var(--space-2);
+  }
+
+  .back-office-dialog {
+    max-height: calc(100svh - (2 * var(--space-2)));
+    border-radius: var(--radius-medium);
+  }
+
+  .back-office-dialog__actions .back-office-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-office-button,
+  .back-office-dialog-backdrop,
+  .back-office-dialog {
+    animation: none;
+    transition: none;
+  }
+}

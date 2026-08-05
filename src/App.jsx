@@ -1,32 +1,25 @@
 // =============================================================================
 // src/App.jsx — application routes composed inside the shared Main layout
 // -----------------------------------------------------------------------------
-// 1. Imports & route metadata   public pages, lazy Portfolio, and setup views
-// 2. Portfolio fallback         lightweight status while WebGL code loads
-// 3. App                        nested route registration and fallback
+// 1. Imports                    public pages, protected gate, and lazy Portfolio
+// 2. Portfolio fallback        lightweight status while WebGL code loads
+// 3. App                       public, protected, alias, and fallback routes
 // =============================================================================
 
 import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import RequireSession from './components/RequireSession.jsx'
 import Main from './layouts/Main.jsx'
+import BackOfficePage from './pages/BackOfficePage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 import LinksPage from './pages/LinksPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
-import SetupRoutePage from './pages/SetupRoutePage.jsx'
 import './App.css'
 
 // Three.js is isolated to the Portfolio route so the 3D enhancement does not
 // increase the initial JavaScript cost for every other public page.
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage.jsx'))
-
-const setupRouteDefinitions = [
-  {
-    path: '/back-office',
-    title: 'Back Office',
-    description: 'This route is registered, but no private data is loaded during setup.',
-  },
-]
 
 function PortfolioFallback() {
   return (
@@ -52,19 +45,10 @@ function App() {
             </Suspense>
           }
         />
-        {setupRouteDefinitions.map((route) => (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={
-              <SetupRoutePage
-                description={route.description}
-                routePath={route.path}
-                title={route.title}
-              />
-            }
-          />
-        ))}
+        <Route element={<RequireSession />}>
+          <Route path="/back-office" element={<BackOfficePage />} />
+        </Route>
+        <Route path="/backoffice" element={<Navigate to="/back-office" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
