@@ -234,7 +234,7 @@ After this feature is complete:
 
 ## Approved Draft Content
 
-The source résumé does not identify external resources for this page. The initial set below was selected because each destination is official, directly relevant to the website's technology and implementation practices, and useful to visitors interested in full stack development. Oishieka must approve the selection before implementation is considered content-complete.
+The source résumé does not identify external resources for this page. The initial set below was selected because each destination is official, directly relevant to the website's technology and implementation practices, and useful to visitors interested in full stack development. Oishieka approved this specified set by requesting its implementation on August 5, 2026.
 
 ### Page Introduction
 
@@ -272,13 +272,13 @@ The source résumé does not identify external resources for this page. The init
 
 ### Links AI Image Inventory
 
-| Intended filename | Resource role | Initial alt-text decision | Completion evidence |
+| Final filename | Resource role | Final alt-text decision | Completion evidence |
 | --- | --- | --- | --- |
-| `src/assets/links-mdn-web-platform.jpg` | Card image for MDN Web Docs | Informative alt text describing the web-platform library concept | Record actual AI tool, generation date, optimization, dimensions, and final alt text after creation |
-| `src/assets/links-react-components.jpg` | Card image for React Documentation | Informative alt text describing connected interface components | Record actual AI tool, generation date, optimization, dimensions, and final alt text after creation |
-| `src/assets/links-supabase-data.jpg` | Card image for Supabase Documentation | Informative alt text describing protected application data | Record actual AI tool, generation date, optimization, dimensions, and final alt text after creation |
+| `src/assets/links-mdn-web-platform.jpg` | MDN Web Docs card; luminous standards archive | “Luminous digital library representing web-platform documentation and browser standards.” | OpenAI built-in image generation, August 5, 2026; original 1536 × 1024 PNG converted with `sips` to a 1200 × 800 JPEG at quality 82; 237,300 bytes |
+| `src/assets/links-react-components.jpg` | React Documentation card; connected component constellation | “Interface components connected into a larger application constellation.” | OpenAI built-in image generation, August 5, 2026; original 1536 × 1024 PNG converted with `sips` to a 1200 × 800 JPEG at quality 82; 221,598 bytes |
+| `src/assets/links-supabase-data.jpg` | Supabase Documentation card; protected application-data vault | “Secure data vault connected to web application services.” | OpenAI built-in image generation, August 5, 2026; original 1536 × 1024 PNG converted with `sips` to a 1200 × 800 JPEG at quality 82; 271,049 bytes |
 
-The filenames describe required asset roles, but these assets do not exist yet. Do not mark the card-image or AI-image criteria complete until the files render and their provenance is recorded.
+All three images are original conceptual illustrations generated specifically for this route. They contain no copied logo, readable third-party interface, trademark, or essential text; Vite imports them locally and emitted all three optimized assets during the production build.
 
 ## User Flow and Expected Behavior
 
@@ -464,7 +464,7 @@ Do not use a React Router `Link`, button, click handler, or `window.open()` for 
 
 ### Use Three Official Technical Resources
 
-The résumé does not provide Links-page content. MDN, React, and Supabase are concrete official references directly related to the browser platform, component architecture, and backend service used by this portfolio. They create an honest initial collection without inventing personal affiliations, but Oishieka retains final content approval.
+The résumé does not provide Links-page content. MDN, React, and Supabase are concrete official references directly related to the browser platform, component architecture, and backend service used by this portfolio. They create an honest collection without inventing personal affiliations, and Oishieka approved the specified set by requesting its implementation.
 
 ### Use One Clear Destination Per Card
 
@@ -490,55 +490,55 @@ Native anchors communicate link semantics to browsers and assistive technology, 
 
 ### Route and Introduction
 
-- [ ] `/#/links` renders `LinksPage` inside the shared layout.
+- [x] `/#/links` renders `LinksPage` inside the shared layout.
 - [ ] Direct loading and refresh work in local preview and deployed GitHub Pages.
-- [ ] The setup placeholder no longer renders at `/links`.
-- [ ] The page has exactly one descriptive `<h1>` and a concise introduction.
-- [ ] No nested resource routes, filters, search, or data service are added.
+- [x] The setup placeholder no longer renders at `/links`.
+- [x] The page has exactly one descriptive `<h1>` and a concise introduction.
+- [x] No nested resource routes, filters, search, or data service are added.
 
 ### Resource Inventory
 
-- [ ] At least three complete resource cards render.
-- [ ] Every card has a local image, visible title, one-to-three-sentence description, and clickable URL.
-- [ ] MDN Web Docs, React Documentation, and Supabase Documentation render unless Oishieka approves replacements.
-- [ ] Every selected title, URL, description, and action label has owner approval.
-- [ ] No incomplete, generic, duplicate, social-profile, or “coming soon” item is counted.
-- [ ] Required information is visible without hover, focus, motion, or image text.
+- [x] At least three complete resource cards render.
+- [x] Every card has a local image, visible title, one-to-three-sentence description, and clickable URL.
+- [x] MDN Web Docs, React Documentation, and Supabase Documentation render unless Oishieka approves replacements.
+- [x] Every selected title, URL, description, and action label has owner approval.
+- [x] No incomplete, generic, duplicate, social-profile, or “coming soon” item is counted.
+- [x] Required information is visible without hover, focus, motion, or image text.
 
 ### External Links
 
-- [ ] Every destination uses a verified HTTPS URL.
-- [ ] Every resource opens in a new tab.
-- [ ] Every resource anchor includes `rel="noopener noreferrer"`.
-- [ ] Every action has unique, descriptive visible text.
-- [ ] No external destination uses React Router, a button, `window.open()`, or tracking parameters.
-- [ ] A failed external destination does not break the Links page.
+- [x] Every destination uses a verified HTTPS URL.
+- [x] Every resource opens in a new tab.
+- [x] Every resource anchor includes `rel="noopener noreferrer"`.
+- [x] Every action has unique, descriptive visible text.
+- [x] No external destination uses React Router, a button, `window.open()`, or tracking parameters.
+- [x] A failed external destination does not break the Links page.
 
 ### Images and AI Evidence
 
-- [ ] Every resource card renders one locally stored, optimized image.
-- [ ] At least one Links-specific AI-created image renders; the planned implementation renders three.
-- [ ] Required images are not borrowed from Header, Home, Portfolio, favicon, remote sites, or stock-only inventory.
-- [ ] Artwork does not reproduce third-party logos, screenshots, or exact brand styling.
-- [ ] Every image has an appropriate informative or decorative alt-text decision.
-- [ ] The actual AI tool, purpose, filename, dimensions, optimization, placement, and alt-text decision are documented for every AI-created image.
-- [ ] Card text and links remain available if an image fails.
+- [x] Every resource card renders one locally stored, optimized image.
+- [x] At least one Links-specific AI-created image renders; the implemented page renders three.
+- [x] Required images are not borrowed from Header, Home, Portfolio, favicon, remote sites, or stock-only inventory.
+- [x] Artwork does not reproduce third-party logos, screenshots, or exact brand styling.
+- [x] Every image has an appropriate informative or decorative alt-text decision.
+- [x] The actual AI tool, purpose, filename, dimensions, optimization, placement, and alt-text decision are documented for every AI-created image.
+- [x] Card text and links remain available if an image fails.
 
 ### Responsive, Accessible, and Quality
 
-- [ ] Cards form a semantic list or equally clear structured collection.
-- [ ] DOM order and visual order match.
-- [ ] All links work by keyboard and have visible focus.
-- [ ] External-tab behavior is communicated without relying only on an icon or color.
-- [ ] Text, links, borders, and focus states meet project contrast requirements.
-- [ ] Content does not depend on hover, image, color, gradient, motion, or position alone.
-- [ ] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
+- [x] Cards form a semantic list or equally clear structured collection.
+- [x] DOM order and visual order match.
+- [x] All links work by keyboard and have visible focus.
+- [x] External-tab behavior is communicated without relying only on an icon or color.
+- [x] Text, links, borders, and focus states meet project contrast requirements.
+- [x] Content does not depend on hover, image, color, gradient, motion, or position alone.
+- [x] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
 - [ ] No horizontal overflow, clipped text, overlapping cards, or hidden controls appear at 320px, 768px, 769px, desktop widths, or 200% zoom.
-- [ ] Content clears the fixed mobile navigation at 768px and below.
-- [ ] Images preserve aspect ratio, reserve stable space, and are optimized for rendered size.
-- [ ] Every changed file has its required format-appropriate TOC and current decision comments.
-- [ ] `npm run lint` succeeds.
-- [ ] `npm run build` succeeds.
+- [x] Content clears the fixed mobile navigation at 768px and below.
+- [x] Images preserve aspect ratio, reserve stable space, and are optimized for rendered size.
+- [x] Every changed file has its required format-appropriate TOC and current decision comments.
+- [x] `npm run lint` succeeds.
+- [x] `npm run build` succeeds.
 
 ## Verification Plan
 
@@ -621,7 +621,7 @@ For each Links image, record and inspect:
 
 ## Warnings and Known Limitations
 
-> **:warning: Owner approval required:** The source résumé does not supply Links-page resources. MDN, React, and Supabase are verified draft selections, but Oishieka must approve them before content is considered final.
+> **Owner approval record:** The source résumé does not supply Links-page resources. Oishieka approved the specified MDN, React, and Supabase set by requesting implementation of this feature specification on August 5, 2026.
 
 > **:warning: Rubric wording conflict:** The AI-image row appears in the Links subsection but says “Portfolio page.” The measurable bullet requires at least one image on this page, and the Global AI Spec requires one Links image. This specification uses the stricter page-relevant interpretation and plans three.
 

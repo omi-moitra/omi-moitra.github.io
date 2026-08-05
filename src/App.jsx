@@ -1,7 +1,7 @@
 // =============================================================================
 // src/App.jsx — application routes composed inside the shared Main layout
 // -----------------------------------------------------------------------------
-// 1. Imports & route metadata   layout, lazy Portfolio, setup views, and paths
+// 1. Imports & route metadata   public pages, lazy Portfolio, and setup views
 // 2. Portfolio fallback         lightweight status while WebGL code loads
 // 3. App                        nested route registration and fallback
 // =============================================================================
@@ -10,6 +10,7 @@ import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Main from './layouts/Main.jsx'
 import HomePage from './pages/HomePage.jsx'
+import LinksPage from './pages/LinksPage.jsx'
 import SetupRoutePage from './pages/SetupRoutePage.jsx'
 import './App.css'
 
@@ -18,11 +19,6 @@ import './App.css'
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage.jsx'))
 
 const setupRouteDefinitions = [
-  {
-    path: '/links',
-    title: 'Links',
-    description: 'The links route is ready for curated professional resources.',
-  },
   {
     path: '/contact',
     title: 'Contact',
@@ -53,6 +49,7 @@ function App() {
     <Routes>
       <Route element={<Main />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/links" element={<LinksPage />} />
         <Route
           path="/portfolio"
           element={
