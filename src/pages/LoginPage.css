@@ -1,0 +1,333 @@
+/* ==========================================================================
+   Login Page — hidden-route administrator authentication threshold
+   --------------------------------------------------------------------------
+   1. Page & Portal         responsive layout and decorative route threshold
+   2. Login Panel           solid credential surface and heading hierarchy
+   3. Form & Controls       labels, validation, focus, pending, and submit states
+   4. Service Feedback     checking, error, retry, and configuration treatments
+   5. Responsive ≤768px    stacked composition and mobile navigation clearance
+   6. Motion Preference    static portal and controls when reduced motion is set
+   ========================================================================== */
+
+.login-page {
+  --login-error-text: #9f1d1d;
+
+  width: min(100%, 58rem);
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+  align-items: stretch;
+  gap: clamp(var(--space-5), 5vw, var(--space-7));
+  margin-inline: auto;
+  padding-block: clamp(var(--space-6), 7vw, var(--space-8));
+}
+
+.login-portal {
+  position: relative;
+  min-height: 32rem;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-large);
+  background:
+    radial-gradient(circle at center, rgb(59 130 246 / 42%), transparent 35%),
+    var(--midnight-blue);
+  box-shadow: var(--shadow-large);
+  isolation: isolate;
+}
+
+.login-portal::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 14% 18%, rgb(236 72 153 / 40%), transparent 28%),
+    radial-gradient(circle at 88% 82%, rgb(20 184 166 / 36%), transparent 30%);
+  content: '';
+}
+
+.login-portal::after {
+  position: absolute;
+  right: var(--space-5);
+  bottom: 0;
+  left: var(--space-5);
+  height: 0.35rem;
+  border-radius: 999px 999px 0 0;
+  background: var(--gradient-phoenix);
+  content: '';
+}
+
+.login-portal__ring {
+  position: absolute;
+  border: 2px solid rgb(255 255 255 / 68%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 1.5rem rgb(59 130 246 / 55%),
+    inset 0 0 1.5rem rgb(124 58 237 / 35%);
+}
+
+.login-portal__ring--outer {
+  width: min(76%, 14rem);
+  aspect-ratio: 1;
+  animation: login-portal-turn 18s linear infinite;
+}
+
+.login-portal__ring--outer::before,
+.login-portal__ring--outer::after {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--solar-gold);
+  box-shadow: 0 0 1rem var(--solar-gold);
+  content: '';
+}
+
+.login-portal__ring--outer::before {
+  top: 12%;
+  right: 10%;
+}
+
+.login-portal__ring--outer::after {
+  bottom: 12%;
+  left: 10%;
+}
+
+.login-portal__ring--inner {
+  width: min(52%, 9rem);
+  border-color: var(--teal);
+  aspect-ratio: 1;
+}
+
+.login-portal__flame {
+  color: var(--white);
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1;
+  text-shadow:
+    0 0 0.65rem var(--sapphire),
+    0 0 1.5rem var(--teal);
+}
+
+.login-panel {
+  min-width: 0;
+  align-self: center;
+  padding: clamp(var(--space-5), 5vw, var(--space-7));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  background: var(--white);
+  box-shadow: var(--shadow-large);
+}
+
+.login-panel__heading {
+  margin-bottom: var(--space-6);
+}
+
+.login-panel__heading > p:first-child {
+  margin: 0 0 var(--space-3);
+  color: var(--royal-violet);
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.login-panel__heading h1 {
+  margin: 0;
+  color: var(--midnight-blue);
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.login-panel__heading > p:last-child {
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-muted);
+}
+
+.login-form {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.login-form__field {
+  min-width: 0;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--midnight-blue);
+  font-weight: 850;
+}
+
+.login-form input {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--cool-gray);
+  border-radius: var(--radius-small);
+  color: var(--obsidian);
+  background: var(--snow);
+  transition: border-color 160ms ease-out, box-shadow 160ms ease-out;
+}
+
+.login-form input:hover {
+  border-color: var(--midnight-blue);
+}
+
+.login-form input:focus-visible {
+  border-color: var(--sapphire);
+  outline: 3px solid var(--sapphire);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgb(59 130 246 / 18%);
+}
+
+.login-form input[aria-invalid='true'] {
+  border-color: var(--phoenix-red);
+  background: color-mix(in srgb, var(--phoenix-red) 5%, var(--white));
+}
+
+.login-form__error {
+  margin: var(--space-2) 0 0;
+  color: var(--login-error-text);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.login-form__error::before {
+  margin-right: var(--space-2);
+  content: 'Error:';
+}
+
+.login-form__submit {
+  position: relative;
+  min-height: 3.5rem;
+  overflow: hidden;
+  padding: var(--space-3) var(--space-5);
+  border: 2px solid var(--midnight-blue);
+  border-radius: var(--radius-small);
+  color: var(--white);
+  background: var(--midnight-blue);
+  font-weight: 850;
+  cursor: pointer;
+  transition: color 160ms ease-out, background-color 160ms ease-out;
+}
+
+.login-form__submit::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 0.25rem;
+  background: var(--gradient-code);
+  content: '';
+}
+
+.login-form__submit:hover:not(:disabled) {
+  color: var(--obsidian);
+  background: var(--solar-gold);
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.login-form__submit:disabled {
+  border-color: var(--cool-gray);
+  color: var(--graphite);
+  background: var(--silver);
+  cursor: wait;
+}
+
+.login-status {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  border: 2px solid var(--status-color, var(--sapphire));
+  border-radius: var(--radius-small);
+  color: var(--obsidian);
+  background: var(--status-background, var(--snow));
+}
+
+.login-status__mark {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--status-color, var(--sapphire));
+  font-weight: 900;
+}
+
+.login-status strong,
+.login-status strong + span {
+  display: block;
+}
+
+.login-status strong + span {
+  margin-top: var(--space-1);
+}
+
+.login-status--error {
+  --status-color: var(--phoenix-red);
+  --status-background: color-mix(in srgb, var(--phoenix-red) 8%, var(--white));
+}
+
+.login-status--configuration {
+  --status-color: var(--royal-violet);
+  --status-background: color-mix(in srgb, var(--royal-violet) 8%, var(--white));
+}
+
+.login-status button {
+  min-height: 2.75rem;
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--midnight-blue);
+  border-radius: var(--radius-small);
+  color: var(--white);
+  background: var(--midnight-blue);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@keyframes login-portal-turn {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (max-width: 768px) {
+  .login-page {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .login-portal {
+    min-height: 16rem;
+  }
+
+  .login-panel {
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 25rem) {
+  .login-panel {
+    padding: var(--space-5);
+    border-radius: var(--radius-medium);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-portal__ring--outer {
+    animation: none;
+  }
+
+  .login-form input,
+  .login-form__submit {
+    transition: none;
+  }
+}

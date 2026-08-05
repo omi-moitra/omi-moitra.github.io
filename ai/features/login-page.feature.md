@@ -709,81 +709,81 @@ Retaining the email supports efficient retry, while clearing the password limits
 
 ### Hidden Discovery and Routing
 
-- [ ] `/#/login` renders `LoginPage` inside the shared layout.
+- [x] `/#/login` renders `LoginPage` inside the shared layout.
 - [ ] Direct loading and refresh work on GitHub Pages.
-- [ ] Login and Back Office are absent from Header, Footer, desktop navigation, mobile navigation, Home actions, and other public links.
-- [ ] Home contains no trigger input, button, link, clue, tooltip, progress, or visible instruction.
-- [ ] Typing exact `heaven's library` on Home navigates to Login.
-- [ ] Matching is case-insensitive and accepts a straight or curly apostrophe.
-- [ ] Incomplete, misspelled, or out-of-order phrases do not navigate.
-- [ ] Unrelated preceding characters fall out of the rolling buffer without preventing a later complete match.
-- [ ] The phrase is not rendered, persisted, transmitted, or logged.
+- [x] Login and Back Office are absent from Header, Footer, desktop navigation, mobile navigation, Home actions, and other public links.
+- [x] Home contains no trigger input, button, link, clue, tooltip, progress, or visible instruction.
+- [x] Typing exact `heaven's library` on Home navigates to Login.
+- [x] Matching is case-insensitive and accepts a straight or curly apostrophe.
+- [x] Incomplete, misspelled, or out-of-order phrases do not navigate.
+- [x] Unrelated preceding characters fall out of the rolling buffer without preventing a later complete match.
+- [x] The phrase is not rendered, persisted, transmitted, or logged.
 
 ### Close Phrase
 
-- [ ] Typing `flaws` on Login with focus outside controls navigates to Home.
-- [ ] Matching is case-insensitive.
-- [ ] The close action replaces Login in browser history.
-- [ ] Closing does not call Supabase sign-out or modify a session.
-- [ ] Login has no phrase input, close button, visible clue, progress, or confirmation dialog.
-- [ ] Typing `flaws` inside email, password, button, or editable content does not navigate.
+- [x] Typing `flaws` on Login with focus outside controls navigates to Home.
+- [x] Matching is case-insensitive.
+- [x] The close action replaces Login in browser history.
+- [x] Closing does not call Supabase sign-out or modify a session.
+- [x] Login has no phrase input, close button, visible clue, progress, or confirmation dialog.
+- [x] Typing `flaws` inside email, password, button, or editable content does not navigate.
 
 ### Keyboard Listener Safety
 
-- [ ] Listeners exist only while their owning Home or Login component is mounted.
-- [ ] Cleanup removes listeners and clears buffers.
-- [ ] IME composition, modified shortcuts, held-key repeats, and non-character keys do not contribute.
-- [ ] Inputs, textareas, selects, buttons, and editable elements are excluded.
-- [ ] Standard browser key behavior is not prevented.
-- [ ] Repeated route visits do not accumulate duplicate listeners or duplicate navigation.
+- [x] Listeners exist only while their owning Home or Login component is mounted.
+- [x] Cleanup removes listeners and clears buffers.
+- [x] IME composition, modified shortcuts, held-key repeats, and non-character keys do not contribute.
+- [x] Inputs, textareas, selects, buttons, and editable elements are excluded.
+- [x] Standard browser key behavior is not prevented.
+- [x] Repeated route visits do not accumulate duplicate listeners or duplicate navigation.
 
 ### Login Form and Validation
 
-- [ ] Login contains a semantic form with email, password, and one submit button.
-- [ ] Email uses `type="email"` and `autoComplete="username"`.
-- [ ] Password uses `type="password"` and `autoComplete="current-password"`.
-- [ ] Both fields have persistent, associated visible labels.
-- [ ] Empty or malformed values produce associated field errors and no auth request.
-- [ ] The first invalid field receives focus.
-- [ ] Email is trimmed; password is never trimmed or transformed.
-- [ ] No credentials are hard-coded, displayed, logged, or committed.
+- [x] Login contains a semantic form with email, password, and one submit button.
+- [x] Email uses `type="email"` and `autoComplete="username"`.
+- [x] Password uses `type="password"` and `autoComplete="current-password"`.
+- [x] Both fields have persistent, associated visible labels.
+- [x] Empty or malformed values produce associated field errors and no auth request.
+- [x] The first invalid field receives focus.
+- [x] Email is trimmed; password is never trimmed or transformed.
+- [x] No credentials are hard-coded, displayed, logged, or committed.
 
 ### Authentication and Session Persistence
 
-- [ ] A valid configured submission calls `supabase.auth.signInWithPassword()` exactly once.
-- [ ] The payload contains only the entered normalized email and unchanged password.
-- [ ] Pending state prevents duplicate clicks, Enter presses, touch events, and same-render submits.
-- [ ] A returned error or missing session is treated as failure.
-- [ ] A valid returned session navigates to `/#/back-office` with history replacement.
+- [x] A valid configured submission calls `supabase.auth.signInWithPassword()` exactly once.
+- [x] The payload contains only the entered normalized email and unchanged password.
+- [x] Pending state prevents duplicate clicks, Enter presses, touch events, and same-render submits.
+- [x] A returned error or missing session is treated as failure.
+- [x] A valid returned session navigates to `/#/back-office` with history replacement.
 - [ ] Refreshing Back Office retains the valid session.
-- [ ] Visiting Login with a valid stored session redirects to Back Office without flashing the form.
+- [x] Visiting Login with a valid stored session redirects to Back Office without flashing the form.
 - [ ] The administrator account is pre-created in Supabase and public signup is disabled.
-- [ ] The shared client remains responsible for session persistence and refresh.
+- [x] The shared client remains responsible for session persistence and refresh.
 
 ### Failure and Configuration States
 
-- [ ] Invalid credentials show a generic, visually distinct, accessible error.
-- [ ] Failure copy does not reveal account existence, raw service text, URLs, keys, or tokens.
-- [ ] Email remains and password clears after authentication failure.
-- [ ] Password focus is restored for retry.
-- [ ] Missing Supabase configuration renders a controlled unavailable state without crashing.
-- [ ] Missing configuration issues no session or sign-in request and never fakes success.
-- [ ] `flaws` remains available during configuration and service errors.
-- [ ] No secret or service-role key appears in source, bundle, logs, screenshots, or Git history.
+- [x] Invalid credentials show a generic, visually distinct, accessible error.
+- [x] Failure copy does not reveal account existence, raw service text, URLs, keys, or tokens.
+- [x] Email remains and password clears after authentication failure.
+- [x] Password focus is restored for retry.
+- [x] Missing Supabase configuration renders a controlled unavailable state without crashing.
+- [x] Missing configuration issues no session or sign-in request and never fakes success.
+- [x] `flaws` remains available during configuration and service errors.
+- [x] No secret or service-role key appears in source, bundle, logs, screenshots, or Git history.
 
 ### Responsive, Accessible, and Quality
 
-- [ ] Keyboard tab order is email → password → submit.
-- [ ] Every control has visible focus against its actual surface.
-- [ ] Checking, pending, validation, error, and unavailable states are announced appropriately.
-- [ ] Text, labels, fields, borders, errors, disabled states, and focus indicators meet project contrast requirements.
-- [ ] State meaning does not depend on color, icon, fantasy terminology, or motion alone.
-- [ ] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
+- [x] Keyboard tab order is email → password → submit.
+- [x] Every control has visible focus against its actual surface.
+- [x] Checking, pending, validation, error, and unavailable states are announced appropriately.
+- [x] Text, labels, fields, borders, errors, disabled states, and focus indicators meet project contrast requirements.
+- [x] State meaning does not depend on color, icon, fantasy terminology, or motion alone.
+- [x] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
 - [ ] No horizontal overflow, clipped labels, overlapping feedback, or hidden controls appear at 320px, 768px, 769px, desktop widths, or 200% zoom.
-- [ ] Content clears the fixed mobile navigation at 768px and below.
-- [ ] Every changed file has its required format-appropriate TOC and current decision comments.
-- [ ] `npm run lint` succeeds.
-- [ ] `npm run build` succeeds with and without Supabase variables.
+- [x] Content clears the fixed mobile navigation at 768px and below.
+- [x] Every changed file has its required format-appropriate TOC and current decision comments.
+- [x] `npm run lint` succeeds.
+- [x] `npm run build` succeeds with and without Supabase variables.
 
 ## Verification Plan
 

@@ -1,13 +1,15 @@
 // =============================================================================
 // src/pages/HomePage.jsx — public identity, capabilities, and strengths landing
 // -----------------------------------------------------------------------------
-// 1. Imports        router links, reusable cards, static content, and styles
-// 2. Hero           identity, introduction, calls to action, and eager artwork
-// 3. Technical      sourced technical skill card collection
-// 4. Strengths      lazy supporting artwork and professional skill collection
+// 1. Imports & hidden route   router, route-scoped sequence, content, and styles
+// 2. HomePage setup           invisible Login sequence and navigation callback
+// 3. Hero                     identity, calls to action, and eager artwork
+// 4. Technical                sourced technical skill card collection
+// 5. Strengths                supporting artwork and professional skill cards
 // =============================================================================
 
-import { Link } from 'react-router-dom'
+import { useCallback } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import SkillCard from '../components/SkillCard.jsx'
 import {
   homeHero,
@@ -15,9 +17,19 @@ import {
   professionalStrengths,
   technicalSkills,
 } from '../data/homeContent.js'
+import useKeySequence from '../hooks/useKeySequence.js'
 import './HomePage.css'
 
+const LOGIN_OPEN_SEQUENCE = "heaven's library"
+
 function HomePage() {
+  const navigate = useNavigate()
+  const openLogin = useCallback(() => navigate('/login'), [navigate])
+
+  // :warning: This gesture changes discoverability only. Authentication and
+  // RLS—not knowledge of the phrase—protect administrator data.
+  useKeySequence({ sequence: LOGIN_OPEN_SEQUENCE, onMatch: openLogin })
+
   return (
     <article className="home-page">
       <section className="home-hero" aria-labelledby="home-title">

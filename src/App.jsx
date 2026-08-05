@@ -12,6 +12,7 @@ import Main from './layouts/Main.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 import LinksPage from './pages/LinksPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
 import SetupRoutePage from './pages/SetupRoutePage.jsx'
 import './App.css'
 
@@ -20,11 +21,6 @@ import './App.css'
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage.jsx'))
 
 const setupRouteDefinitions = [
-  {
-    path: '/login',
-    title: 'Administrator Login',
-    description: 'This hidden route is reserved for the administrator sign-in feature.',
-  },
   {
     path: '/back-office',
     title: 'Back Office',
@@ -47,6 +43,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/links" element={<LinksPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/portfolio"
           element={
