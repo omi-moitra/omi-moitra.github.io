@@ -108,24 +108,23 @@
   pointer-events: none;
 }
 
-.portfolio-resume-journey__path-glow,
-.portfolio-resume-journey__path-core {
+.portfolio-resume-journey__path-particles {
   vector-effect: non-scaling-stroke;
 }
 
-.portfolio-resume-journey__path-glow {
-  stroke: var(--solar-gold);
+.portfolio-resume-journey__path-particles {
+  stroke: color-mix(in srgb, var(--solar-gold) 68%, var(--white));
+  stroke-dasharray: 1 24;
   stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-opacity: 0.24;
-  stroke-width: 18;
+  stroke-width: 5;
+  filter: drop-shadow(0 0 0.45rem var(--solar-gold));
+  animation: journey-particles-flow 2.4s linear infinite;
 }
 
-.portfolio-resume-journey__path-core {
-  stroke: var(--blaze-orange);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2.5;
+@keyframes journey-particles-flow {
+  to {
+    stroke-dashoffset: -100;
+  }
 }
 
 .portfolio-hero {
@@ -861,6 +860,10 @@
   }
 
   .timeline-milestone__tooltip {
+    animation: none;
+  }
+
+  .portfolio-resume-journey__path-particles {
     animation: none;
   }
 }

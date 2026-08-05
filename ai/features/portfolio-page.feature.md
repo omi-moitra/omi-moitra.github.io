@@ -66,6 +66,7 @@ After this feature is complete:
 - Optional user-activated phoenix ambience—air, ember crackle, warm resonance, and rising shimmer—created with the native Web Audio API and HRTF panning.
 - Progressive milestone reveals that never hide content when JavaScript, WebGL, or Intersection Observer support is unavailable.
 - Interactive year points with anchored résumé tooltips, click/tap pinning, keyboard operation, and Escape dismissal.
+- One shared coordinate set for the curve, moving particle stroke, and tooltip anchors so every milestone sits directly on the illuminated path.
 - The current Oishieka Moitra Fantasy Portfolio as a concrete project entry.
 - A project preview image that represents the actual rendered website.
 - A working link for the approved public résumé at `public/assets/resume-standard.pdf`.
@@ -652,6 +653,10 @@ The phoenix trail is built with semantic ordered lists, native buttons, and a de
 
 The Portfolio title occupies the upper-left of one continuous scene, while the phoenix remains visually dominant toward the upper-right. A curved path descends from the phoenix, bends through the middle, and travels diagonally to the lower-left. All six sourced résumé entries use explicit percentage coordinates along this curve; the wireframe's placeholder labels do not replace or reduce the approved content inventory.
 
+### Keep Milestones Registered to the Particle Trail
+
+The source image supplies the only solid golden trail. Animated SVG dashes, Three.js particles, and HTML year controls share its curve geometry and milestone coordinates; no generated solid line or glow tube is drawn over the artwork. A tooltip point must never be positioned beside a visually separate timeline. Viewport adaptations may replace the desktop curve with the mobile left rail, but the control centers remain on the visible illuminated path in either layout.
+
 ### Use Trail Points as Résumé Tooltips
 
 Dates remain scannable as visible year controls even while details are closed. Hover and focus provide a temporary preview, while click, tap, Enter, or Space pins the anchored panel. Escape dismisses it. Each panel contains the same semantic `ResumeEntry` HTML, so the visual tooltip treatment does not reduce content quality or keyboard access.
@@ -730,6 +735,8 @@ The phoenix soundscape is synthesized locally with the Web Audio API and positio
 - [x] The desktop trail follows the wireframe's upper-right curve and lower-left diagonal path.
 - [x] Education and Professional Experience points share the same continuous visual trail.
 - [x] Tooltip panels branch left or right from their assigned wireframe-aligned points.
+- [x] Every desktop year control is centered directly on the same curve used by the animated glowing particles.
+- [x] No redundant SVG core line or Three.js tube is drawn over the source image's solid golden trail.
 - [x] The résumé trail collapses to a left-aligned, single-column layout at narrow widths.
 - [x] Every résumé entry is represented by a visible year point on the trail.
 - [x] Each point opens its complete entry in an anchored tooltip panel.

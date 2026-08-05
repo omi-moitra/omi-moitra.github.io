@@ -24,7 +24,7 @@ const educationEntries = [
     location: 'Boulder, Colorado',
     dates: '2024–Present',
     startYear: 2024,
-    trail: { x: '61%', y: '39%', side: 'left' },
+    trail: { x: '61%', y: '41%', side: 'left' },
   },
   {
     id: 'south-florida-biomedical-sciences',
@@ -33,7 +33,7 @@ const educationEntries = [
     location: 'Tampa, Florida',
     dates: '2019–Present',
     startYear: 2019,
-    trail: { x: '49%', y: '61%', side: 'left' },
+    trail: { x: '42%', y: '58%', side: 'left' },
   },
 ]
 
@@ -45,7 +45,7 @@ const experienceEntries = [
     location: 'Tampa, Florida',
     dates: '2025–2026',
     startYear: 2025,
-    trail: { x: '68%', y: '27%', side: 'right' },
+    trail: { x: '69%', y: '31%', side: 'right' },
     responsibilities: [
       'Drafted, reviewed, and edited complex legal documents with close attention to accuracy, clause interpretation, and compliance.',
       'Identified risks, inconsistencies, and missing terms, then escalated issues and recommended corrective action.',
@@ -61,7 +61,7 @@ const experienceEntries = [
     location: 'Denver, Colorado',
     dates: '2021',
     startYear: 2021,
-    trail: { x: '66%', y: '51%', side: 'right' },
+    trail: { x: '63%', y: '54%', side: 'right' },
     responsibilities: [
       'Reviewed multiple sources for accuracy and consistency.',
       'Drafted precise written analyses.',
@@ -74,7 +74,7 @@ const experienceEntries = [
     location: 'Tampa, Florida',
     dates: '2019–2020',
     startYear: 2019,
-    trail: { x: '36%', y: '71%', side: 'right' },
+    trail: { x: '35%', y: '75%', side: 'right' },
     responsibilities: [
       'Explained policy terms and contractual obligations to clients.',
       'Ensured regulatory compliance and maintained accurate transaction documentation.',
@@ -87,7 +87,7 @@ const experienceEntries = [
     location: 'Tampa, Florida',
     dates: '2018–2020',
     startYear: 2018,
-    trail: { x: '23%', y: '79%', side: 'left' },
+    trail: { x: '22%', y: '85%', side: 'left' },
     responsibilities: [
       'Developed structured plans and maintained detailed records, demonstrating strong organization and documentation.',
       'Communicated complex concepts clearly and adapted explanations to diverse audiences.',

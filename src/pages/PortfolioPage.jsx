@@ -20,6 +20,9 @@ import {
 } from '../data/portfolioContent.js'
 import './PortfolioPage.css'
 
+const journeyPath =
+  'M67 850C120 825 175 790 220 765 280 735 330 705 350 675 375 610 400 555 420 522 485 495 560 490 630 486 650 450 640 405 610 369 620 330 650 298 690 279 700 235 706 200 710 171'
+
 function PortfolioPage() {
   return (
     <article
@@ -54,12 +57,8 @@ function PortfolioPage() {
           preserveAspectRatio="none"
         >
           <path
-            className="portfolio-resume-journey__path-glow"
-            d="M70 850 150 760C260 720 330 670 440 620L610 530C690 485 710 430 650 375 590 320 610 255 690 205 735 175 750 150 760 120"
-          />
-          <path
-            className="portfolio-resume-journey__path-core"
-            d="M70 850 150 760C260 720 330 670 440 620L610 530C690 485 710 430 650 375 590 320 610 255 690 205 735 175 750 150 760 120"
+            className="portfolio-resume-journey__path-particles"
+            d={journeyPath}
           />
         </svg>
 

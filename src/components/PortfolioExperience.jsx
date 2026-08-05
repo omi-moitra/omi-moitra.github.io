@@ -85,55 +85,6 @@ function buildPhoenixScene(scene, imageSource, onImageReady) {
     new THREE.Vector3(0.28, 0.19, 0.053),
     new THREE.Vector3(0.31, 0.31, 0.056),
   ])
-  const trailSegments = 180
-  const trailRadialSegments = 8
-  const trailGeometry = new THREE.TubeGeometry(
-    trailCurve,
-    trailSegments,
-    0.0035,
-    trailRadialSegments,
-    false,
-  )
-  const trailColors = new Float32Array(trailGeometry.attributes.position.count * 3)
-  const phoenixRed = new THREE.Color(0xd62828)
-  const blazeOrange = new THREE.Color(0xf97316)
-  const solarGold = new THREE.Color(0xfacc15)
-
-  for (let index = 0; index < trailGeometry.attributes.position.count; index += 1) {
-    const segment = Math.floor(index / (trailRadialSegments + 1))
-    const progress = segment / trailSegments
-    const color =
-      progress < 0.5
-        ? phoenixRed.clone().lerp(blazeOrange, progress * 2)
-        : blazeOrange.clone().lerp(solarGold, (progress - 0.5) * 2)
-    trailColors[index * 3] = color.r
-    trailColors[index * 3 + 1] = color.g
-    trailColors[index * 3 + 2] = color.b
-  }
-  trailGeometry.setAttribute('color', new THREE.BufferAttribute(trailColors, 3))
-
-  // Three.js materials require numeric colors; these exactly mirror the
-  // canonical phoenix-red, blaze-orange, and solar-gold theme tokens.
-  const trailMaterial = new THREE.MeshBasicMaterial({
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-    opacity: 0.7,
-    transparent: true,
-    vertexColors: true,
-  })
-  const trailGlowMaterial = new THREE.MeshBasicMaterial({
-    color: 0xfacc15,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-    opacity: 0.11,
-    transparent: true,
-  })
-  const trail = new THREE.Mesh(trailGeometry, trailMaterial)
-  const trailGlow = new THREE.Mesh(
-    new THREE.TubeGeometry(trailCurve, trailSegments, 0.022, trailRadialSegments, false),
-    trailGlowMaterial,
-  )
-
   const particlePositions = new Float32Array(780 * 3)
   for (let index = 0; index < 780; index += 1) {
     const point = trailCurve.getPointAt(random())
@@ -172,9 +123,9 @@ function buildPhoenixScene(scene, imageSource, onImageReady) {
     disposableMaterials.push(mistMaterial)
   }
 
-  disposableGeometries.push(trailGeometry, trailGlow.geometry, particleGeometry)
-  disposableMaterials.push(trailMaterial, trailGlowMaterial, particleMaterial)
-  imageGroup.add(trailGlow, trail, particles)
+  disposableGeometries.push(particleGeometry)
+  disposableMaterials.push(particleMaterial)
+  imageGroup.add(particles)
   scene.add(imageGroup, mist)
 
   return {
