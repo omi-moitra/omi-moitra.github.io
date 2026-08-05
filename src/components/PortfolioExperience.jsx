@@ -197,34 +197,108 @@ function createSpatialAmbience() {
 
   const context = new AudioContext()
   const master = context.createGain()
-  const filter = context.createBiquadFilter()
-  const panner = context.createPanner()
-  const noise = context.createBufferSource()
-  const buffer = context.createBuffer(1, context.sampleRate * 4, context.sampleRate)
-  const samples = buffer.getChannelData(0)
+  master.gain.value = 0.12
+  master.connect(context.destination)
 
-  for (let index = 0; index < samples.length; index += 1) {
-    samples[index] = (Math.random() * 2 - 1) * 0.34
+  const createPanner = (xPosition, zPosition) => {
+    const panner = context.createPanner()
+    panner.panningModel = 'HRTF'
+    panner.distanceModel = 'inverse'
+    panner.refDistance = 1
+    panner.maxDistance = 14
+    panner.rolloffFactor = 0.45
+    panner.positionX.value = xPosition
+    panner.positionY.value = 0.3
+    panner.positionZ.value = zPosition
+    return panner
   }
 
-  master.gain.value = 0.05
-  filter.type = 'lowpass'
-  filter.frequency.value = 720
-  filter.Q.value = 0.7
-  panner.panningModel = 'HRTF'
-  panner.distanceModel = 'inverse'
-  panner.refDistance = 1
-  panner.maxDistance = 12
-  panner.rolloffFactor = 0.5
-  panner.positionX.value = -1.5
-  panner.positionY.value = 0.2
-  panner.positionZ.value = -1
-  noise.buffer = buffer
-  noise.loop = true
-  noise.connect(filter).connect(panner).connect(master).connect(context.destination)
-  noise.start()
+  // Air layer: filtered noise suggests heat and upward movement without using
+  // a prerecorded or remotely loaded sound asset.
+  const airBuffer = context.createBuffer(1, context.sampleRate * 4, context.sampleRate)
+  const airSamples = airBuffer.getChannelData(0)
+  for (let index = 0; index < airSamples.length; index += 1) {
+    airSamples[index] = (Math.random() * 2 - 1) * 0.24
+  }
+  const air = context.createBufferSource()
+  const airFilter = context.createBiquadFilter()
+  const airGain = context.createGain()
+  const airPanner = createPanner(-1.6, -1)
+  air.buffer = airBuffer
+  air.loop = true
+  airFilter.type = 'bandpass'
+  airFilter.frequency.value = 560
+  airFilter.Q.value = 0.55
+  airGain.gain.value = 0.2
+  air.connect(airFilter).connect(airGain).connect(airPanner).connect(master)
+  air.start()
 
-  return { context, noise, panner }
+  // Ember layer: short decaying noise impulses create a quiet, irregular
+  // crackle instead of a continuous static texture.
+  const emberBuffer = context.createBuffer(1, context.sampleRate * 4, context.sampleRate)
+  const emberSamples = emberBuffer.getChannelData(0)
+  for (let spark = 0; spark < 52; spark += 1) {
+    const start = Math.floor(Math.random() * (emberSamples.length - 900))
+    const decayLength = 180 + Math.floor(Math.random() * 620)
+    for (let offset = 0; offset < decayLength; offset += 1) {
+      emberSamples[start + offset] +=
+        (Math.random() * 2 - 1) * Math.exp(-offset / (decayLength * 0.18))
+    }
+  }
+  const embers = context.createBufferSource()
+  const emberFilter = context.createBiquadFilter()
+  const emberGain = context.createGain()
+  const emberPanner = createPanner(1.8, -1.8)
+  embers.buffer = emberBuffer
+  embers.loop = true
+  emberFilter.type = 'highpass'
+  emberFilter.frequency.value = 1700
+  emberGain.gain.value = 0.1
+  embers.connect(emberFilter).connect(emberGain).connect(emberPanner).connect(master)
+  embers.start()
+
+  // Resonance and shimmer use low-amplitude oscillators. An LFO makes the high
+  // layer breathe gently so it reads as a phoenix rise, not a musical melody.
+  const resonancePanner = createPanner(0, -2.4)
+  const resonanceGain = context.createGain()
+  const resonance = context.createOscillator()
+  const overtone = context.createOscillator()
+  resonance.type = 'sine'
+  resonance.frequency.value = 82.41
+  overtone.type = 'sine'
+  overtone.frequency.value = 123.47
+  resonanceGain.gain.value = 0.034
+  resonance.connect(resonanceGain)
+  overtone.connect(resonanceGain)
+  resonanceGain.connect(resonancePanner).connect(master)
+  resonance.start()
+  overtone.start()
+
+  const shimmerPanner = createPanner(0.8, -1.2)
+  const shimmerGain = context.createGain()
+  const shimmer = context.createOscillator()
+  const shimmerOvertone = context.createOscillator()
+  const shimmerLfo = context.createOscillator()
+  const shimmerDepth = context.createGain()
+  shimmer.type = 'sine'
+  shimmer.frequency.value = 523.25
+  shimmerOvertone.type = 'sine'
+  shimmerOvertone.frequency.value = 659.25
+  shimmerGain.gain.value = 0.012
+  shimmerLfo.frequency.value = 0.11
+  shimmerDepth.gain.value = 0.008
+  shimmerLfo.connect(shimmerDepth).connect(shimmerGain.gain)
+  shimmer.connect(shimmerGain)
+  shimmerOvertone.connect(shimmerGain)
+  shimmerGain.connect(shimmerPanner).connect(master)
+  shimmer.start()
+  shimmerOvertone.start()
+  shimmerLfo.start()
+
+  return {
+    context,
+    panners: { air: airPanner, embers: emberPanner, resonance: resonancePanner, shimmer: shimmerPanner },
+  }
 }
 
 function PortfolioExperience({ imageSource }) {
@@ -366,8 +440,18 @@ function PortfolioExperience({ imageSource }) {
       const maximumScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
       const progress = Math.min(Math.max(window.scrollY / maximumScroll, 0), 1)
       const time = audio.context.currentTime
-      audio.panner.positionX.setTargetAtTime(Math.sin(progress * Math.PI * 4) * 2.4, time, 0.08)
-      audio.panner.positionZ.setTargetAtTime(-1 - progress * 4, time, 0.08)
+      audio.panners.air.positionX.setTargetAtTime(
+        Math.sin(progress * Math.PI * 2.5) * 2.2,
+        time,
+        0.08,
+      )
+      audio.panners.embers.positionX.setTargetAtTime(
+        Math.cos(progress * Math.PI * 4) * 1.8,
+        time,
+        0.08,
+      )
+      audio.panners.shimmer.positionY.setTargetAtTime(0.5 + progress * 2.4, time, 0.08)
+      audio.panners.resonance.positionZ.setTargetAtTime(-2.4 - progress * 2, time, 0.08)
     }
 
     moveSound()
@@ -406,7 +490,7 @@ function PortfolioExperience({ imageSource }) {
         onClick={toggleSound}
       >
         <span aria-hidden="true">{soundEnabled ? '◉' : '○'}</span>
-        {soundEnabled ? 'Ambient sound on' : 'Enable ambience'}
+        {soundEnabled ? 'Phoenix ambience on' : 'Enable phoenix ambience'}
       </button>
     </>
   )

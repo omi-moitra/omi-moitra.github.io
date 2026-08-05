@@ -63,7 +63,7 @@ After this feature is complete:
 - Education and Work Experience milestones positioned together along that glowing responsive phoenix trail.
 - A decorative Three.js WebGL canvas that renders the existing journey image itself.
 - Scroll-driven image depth, restrained pointer parallax, mist, golden particles, and a glow registered to the painted phoenix trail.
-- Optional user-activated ambience created with the native Web Audio API and HRTF panning.
+- Optional user-activated phoenix ambience—air, ember crackle, warm resonance, and rising shimmer—created with the native Web Audio API and HRTF panning.
 - Progressive milestone reveals that never hide content when JavaScript, WebGL, or Intersection Observer support is unavailable.
 - Interactive year points with anchored résumé tooltips, click/tap pinning, keyboard operation, and Escape dismissal.
 - The current Oishieka Moitra Fantasy Portfolio as a concrete project entry.
@@ -666,7 +666,7 @@ Three.js supplies atmosphere and movement rather than a replacement scene or app
 
 ### Keep Spatial Audio Optional
 
-The soundscape is synthesized locally with the Web Audio API and positioned with HRTF panning. It begins only after the visitor activates a clearly labeled toggle, can be suspended immediately, and does not carry information required to understand the page.
+The phoenix soundscape is synthesized locally with the Web Audio API and positioned with HRTF panning. Filtered air, irregular ember impulses, low warm resonance, and a slowly breathing high shimmer create atmosphere without becoming a melody. It begins only after the visitor activates a clearly labeled toggle, can be suspended immediately, and does not carry information required to understand the page.
 
 ## Acceptance Criteria
 
