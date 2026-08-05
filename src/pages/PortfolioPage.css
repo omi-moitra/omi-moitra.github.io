@@ -1,0 +1,866 @@
+/* ========================================================================== 
+   Portfolio Page — professional journey, chronology, and selected work
+   --------------------------------------------------------------------------
+   1. Page Canvas            full-page phoenix background and readable overlays
+   2. WebGL Experience       rendered phoenix image, camera, and sound control
+   3. Journey Wireframe      upper-left title, curved path, positioned points
+   4. Resume Tooltips        anchored milestones and semantic detail panels
+   5. Section System         atmospheric Projects and mobile résumé groups
+   6. Supporting Artwork     stable responsive Portfolio-specific media
+   7. Project Card           actual-site preview, tags, and external actions
+   8. Responsive ≤768px      left-aligned trail and single-column flow
+   9. Reduced Motion         static, fully readable experience fallback
+   ========================================================================== */
+
+.portfolio-page {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: clamp(var(--space-7), 7vw, var(--space-8));
+  padding-block: clamp(var(--space-6), 6vw, var(--space-8));
+}
+
+/* The full-bleed fixed canvas keeps one continuous phoenix trail behind the
+   long résumé rather than stretching or repeating the source illustration. */
+.portfolio-page::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  z-index: -2;
+  width: 100vw;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--obsidian) 58%, transparent),
+      color-mix(in srgb, var(--midnight-blue) 72%, transparent)
+    ),
+    var(--portfolio-journey-background);
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  content: '';
+  transition: opacity 500ms ease-out;
+  transform: translateX(-50%);
+}
+
+.portfolio-experience__canvas {
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: calc(100svh - var(--header-height));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 500ms ease-out;
+}
+
+.portfolio-page--webgl-ready::before {
+  opacity: 0;
+}
+
+.portfolio-page--webgl-ready .portfolio-experience__canvas {
+  opacity: 1;
+}
+
+.portfolio-sound-toggle {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 10;
+  min-height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--sapphire);
+  border-radius: 999px;
+  color: var(--white);
+  background: color-mix(in srgb, var(--obsidian) 88%, transparent);
+  box-shadow: 0 0 1.5rem color-mix(in srgb, var(--sapphire) 38%, transparent);
+  backdrop-filter: blur(0.6rem);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.portfolio-sound-toggle:hover,
+.portfolio-sound-toggle[aria-pressed='true'] {
+  border-color: var(--teal);
+  color: var(--white);
+  background: color-mix(in srgb, var(--midnight-blue) 92%, transparent);
+}
+
+.portfolio-resume-journey {
+  position: relative;
+  min-height: clamp(62rem, 92vw, 76rem);
+}
+
+.portfolio-resume-journey__path {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  pointer-events: none;
+}
+
+.portfolio-resume-journey__path-glow,
+.portfolio-resume-journey__path-core {
+  vector-effect: non-scaling-stroke;
+}
+
+.portfolio-resume-journey__path-glow {
+  stroke: var(--solar-gold);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-opacity: 0.24;
+  stroke-width: 18;
+}
+
+.portfolio-resume-journey__path-core {
+  stroke: var(--blaze-orange);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+.portfolio-hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: min(48%, 36rem);
+  min-height: 0;
+  display: flex;
+  align-items: flex-start;
+  padding: clamp(var(--space-6), 5vw, var(--space-8)) 0;
+  text-align: left;
+}
+
+.portfolio-section::before {
+  position: absolute;
+  top: 0;
+  right: var(--space-5);
+  left: var(--space-5);
+  height: 0.35rem;
+  border-radius: 0 0 999px 999px;
+  content: '';
+}
+
+.portfolio-hero__copy {
+  width: min(100%, 48rem);
+  min-width: 0;
+}
+
+.portfolio-eyebrow {
+  margin: 0 0 var(--space-3);
+  color: var(--phoenix-red);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.portfolio-hero .portfolio-eyebrow {
+  color: color-mix(in srgb, var(--solar-gold) 78%, var(--white));
+  text-shadow: 0 0.2rem 1rem var(--obsidian);
+}
+
+.portfolio-hero h1 {
+  max-width: 14ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--solar-gold) 70%, var(--white));
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 5.4rem);
+  line-height: 0.95;
+  text-shadow: 0 0.3rem 1.5rem var(--obsidian), 0 0 2.5rem var(--blaze-orange);
+  text-wrap: balance;
+}
+
+.portfolio-hero__introduction {
+  max-width: 54ch;
+  margin: var(--space-5) 0 0;
+  color: var(--white);
+  font-size: clamp(1rem, 2vw, 1.12rem);
+  font-weight: 650;
+  text-shadow: 0 0.15rem 0.8rem var(--obsidian), 0 0.2rem 1.4rem var(--obsidian);
+}
+
+.portfolio-resume-link {
+  min-height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-5);
+  border: 2px solid var(--midnight-blue);
+  border-radius: var(--radius-small);
+  color: var(--white);
+  background: var(--midnight-blue);
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.portfolio-resume-link:hover {
+  color: var(--obsidian);
+  background: var(--solar-gold);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.portfolio-section {
+  position: relative;
+  padding: clamp(var(--space-5), 5vw, var(--space-7));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-large);
+  backdrop-filter: blur(0.6rem);
+}
+
+.portfolio-section--education {
+  color: var(--white);
+  border-color: var(--cool-gray);
+  background: color-mix(in srgb, var(--obsidian) 84%, transparent);
+}
+
+.portfolio-section--education::before {
+  background: var(--gradient-creative);
+}
+
+.portfolio-section--experience {
+  color: var(--white);
+  border-color: var(--graphite);
+  background: color-mix(in srgb, var(--midnight-blue) 82%, transparent);
+}
+
+.portfolio-section--experience::before {
+  background: var(--gradient-phoenix);
+}
+
+.portfolio-section--projects {
+  color: var(--white);
+  border-color: var(--cool-gray);
+  background: color-mix(in srgb, var(--obsidian) 84%, transparent);
+}
+
+.portfolio-section--projects::before {
+  background: var(--gradient-code);
+}
+
+.portfolio-section__heading {
+  max-width: 67ch;
+  margin-bottom: var(--space-6);
+}
+
+.portfolio-section__heading h2 {
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.portfolio-section__heading > p:last-child {
+  margin: var(--space-3) 0 0;
+  color: var(--silver);
+}
+
+.portfolio-section--experience .portfolio-eyebrow {
+  color: var(--solar-gold);
+}
+
+.portfolio-section--experience .portfolio-section__heading h2 {
+  color: var(--white);
+}
+
+.portfolio-section--experience .portfolio-section__heading > p:last-child {
+  color: var(--silver);
+}
+
+.portfolio-journey-group {
+  display: contents;
+}
+
+.portfolio-journey-group__heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.resume-timeline {
+  display: contents;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resume-timeline::before {
+  display: none;
+}
+
+.resume-timeline > li {
+  position: absolute;
+  top: var(--journey-y);
+  left: var(--journey-x);
+  z-index: 4;
+  min-height: 4.5rem;
+  transform: translate(-50%, -50%);
+}
+
+.resume-timeline > li:hover,
+.resume-timeline > li:focus-within,
+.resume-timeline > li:has(.timeline-milestone--open) {
+  z-index: 12;
+}
+
+.timeline-milestone {
+  position: relative;
+}
+
+.timeline-milestone__trigger {
+  position: relative;
+  z-index: 3;
+  width: 4.25rem;
+  min-height: 4.25rem;
+  display: inline-grid;
+  place-items: center;
+  padding: var(--space-2);
+  border: 2px solid var(--blaze-orange);
+  border-radius: 50%;
+  color: var(--obsidian);
+  background: var(--solar-gold);
+  box-shadow:
+    0 0 0 0.3rem color-mix(in srgb, var(--obsidian) 75%, transparent),
+    0 0 1.5rem var(--solar-gold);
+  cursor: pointer;
+  font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+}
+
+.timeline-milestone__trigger:hover,
+.timeline-milestone__trigger[aria-expanded='true'] {
+  box-shadow:
+    0 0 0 0.35rem color-mix(in srgb, var(--obsidian) 78%, transparent),
+    0 0 2.5rem var(--solar-gold);
+  transform: scale(1.08);
+}
+
+.timeline-milestone__trigger::before,
+.timeline-milestone__trigger::after {
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 1.4rem);
+  height: 0.15rem;
+  background: var(--blaze-orange);
+  content: '';
+}
+
+.timeline-milestone__trigger::before {
+  right: calc(100% + 0.15rem);
+}
+
+.timeline-milestone__trigger::after {
+  left: calc(100% + 0.15rem);
+}
+
+.timeline-milestone__tooltip {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: min(24rem, 20vw);
+  animation: milestone-tooltip-open 240ms ease-out both;
+  transform: translateY(-50%);
+}
+
+.timeline-milestone--left .timeline-milestone__tooltip {
+  right: calc(100% + var(--space-5));
+}
+
+.timeline-milestone--right .timeline-milestone__tooltip {
+  left: calc(100% + var(--space-5));
+}
+
+.timeline-milestone__tooltip[hidden] {
+  display: none;
+}
+
+.timeline-milestone__tooltip::after {
+  position: absolute;
+  top: 1.45rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-top: 1px solid var(--cool-gray);
+  border-right: 1px solid var(--cool-gray);
+  background: color-mix(in srgb, var(--obsidian) 94%, transparent);
+  content: '';
+}
+
+.timeline-milestone--left .timeline-milestone__tooltip::after {
+  right: -0.45rem;
+  transform: rotate(45deg);
+}
+
+.timeline-milestone--right .timeline-milestone__tooltip::after {
+  left: -0.45rem;
+  transform: rotate(225deg);
+}
+
+@keyframes milestone-tooltip-open {
+  from {
+    opacity: 0;
+    filter: blur(0.2rem);
+  }
+
+  to {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+.resume-entry {
+  min-width: 0;
+  padding: clamp(var(--space-4), 4vw, var(--space-5));
+  border: 1px solid var(--cool-gray);
+  border-radius: var(--radius-medium);
+  color: var(--white);
+  background: color-mix(in srgb, var(--obsidian) 88%, transparent);
+  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--obsidian) 65%, transparent);
+  backdrop-filter: blur(0.7rem);
+  transition: border-color 180ms ease-out, box-shadow 180ms ease-out;
+}
+
+.resume-entry:hover {
+  border-color: var(--teal);
+  box-shadow: 0 0 2rem color-mix(in srgb, var(--sapphire) 24%, transparent);
+}
+
+.resume-entry__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-1) var(--space-5);
+}
+
+.resume-entry h3 {
+  grid-column: 1;
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 3vw, 1.7rem);
+  line-height: 1.15;
+}
+
+.resume-entry__dates {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  margin: 0;
+  color: var(--teal);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.resume-entry__organization {
+  grid-column: 1;
+  margin: 0;
+  color: var(--silver);
+  font-weight: 800;
+}
+
+.resume-entry__location {
+  grid-column: 1;
+  margin: 0;
+  color: var(--cool-gray);
+  font-size: 0.92rem;
+}
+
+.resume-entry__responsibilities {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  padding-left: 1.25rem;
+  color: var(--silver);
+}
+
+.resume-entry__responsibilities li::marker {
+  color: var(--sapphire);
+}
+
+.portfolio-media {
+  margin: 0;
+}
+
+.portfolio-media img,
+.project-card__media img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--silver);
+  box-shadow: var(--shadow-small);
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.portfolio-media--scroll {
+  width: min(100%, 55rem);
+  margin: var(--space-7) auto 0;
+}
+
+.project-list {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.project-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  align-items: center;
+  gap: clamp(var(--space-5), 4vw, var(--space-7));
+  padding: clamp(var(--space-4), 4vw, var(--space-6));
+  border: 1px solid var(--cool-gray);
+  border-radius: var(--radius-large);
+  background: color-mix(in srgb, var(--obsidian) 88%, transparent);
+  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--obsidian) 65%, transparent);
+  backdrop-filter: blur(0.7rem);
+}
+
+.project-card__media {
+  min-width: 0;
+  margin: 0;
+}
+
+.project-card__content {
+  min-width: 0;
+}
+
+.project-card__eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--sapphire);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.project-card h3 {
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
+  line-height: 1.1;
+}
+
+.project-card__purpose {
+  margin: var(--space-4) 0 0;
+  color: var(--silver);
+  font-weight: 800;
+}
+
+.project-card__content > p:not([class]) {
+  margin: var(--space-3) 0 0;
+  color: var(--silver);
+}
+
+.project-card__technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-card__technologies li {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--sapphire);
+  border-radius: 999px;
+  color: var(--white);
+  background: var(--midnight-blue);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.project-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.project-card__links a {
+  min-height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--midnight-blue);
+  border-radius: var(--radius-small);
+  color: var(--white);
+  background: var(--midnight-blue);
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.project-card__links a:last-child {
+  color: var(--white);
+  background: transparent;
+}
+
+.project-card__links a:hover {
+  color: var(--white);
+  background: var(--sapphire);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.portfolio-page--enhanced .portfolio-reveal {
+  opacity: 0;
+  filter: blur(0.3rem);
+  transform: translateY(2.25rem) scale(0.985);
+  transition:
+    opacity 700ms ease-out,
+    filter 700ms ease-out,
+    transform 850ms cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.portfolio-page--enhanced .resume-timeline > li:nth-child(odd).portfolio-reveal {
+  transform: translate(-2rem, 2.25rem) scale(0.985);
+}
+
+.portfolio-page--enhanced .resume-timeline > li:nth-child(even).portfolio-reveal {
+  transform: translate(2rem, 2.25rem) scale(0.985);
+}
+
+.portfolio-page--enhanced .portfolio-reveal.portfolio-reveal--visible {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .portfolio-page {
+    gap: var(--space-7);
+    padding-block: var(--space-5) var(--space-7);
+  }
+
+  .portfolio-resume-journey {
+    min-height: 0;
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .portfolio-resume-journey__path {
+    display: none;
+  }
+
+  .portfolio-hero {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    min-height: 65svh;
+    padding: var(--space-7) 0;
+  }
+
+  .portfolio-journey-group {
+    position: relative;
+    display: block;
+    padding: var(--space-5);
+    border: 1px solid var(--cool-gray);
+    border-radius: var(--radius-large);
+    backdrop-filter: blur(0.6rem);
+  }
+
+  .portfolio-journey-group--education {
+    background: color-mix(in srgb, var(--obsidian) 84%, transparent);
+  }
+
+  .portfolio-journey-group--experience {
+    background: color-mix(in srgb, var(--midnight-blue) 82%, transparent);
+  }
+
+  .portfolio-journey-group__heading {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0 0 var(--space-5);
+    overflow: visible;
+    clip: auto;
+    color: var(--white);
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.05;
+    white-space: normal;
+  }
+
+  .project-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .portfolio-page::before {
+    background-attachment: scroll;
+    background-position: 58% top;
+  }
+
+  .portfolio-sound-toggle {
+    right: var(--space-3);
+    bottom: calc(
+      var(--mobile-navigation-height) + var(--space-3) + env(safe-area-inset-bottom, 0px)
+    );
+  }
+
+  .resume-timeline {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+    padding: var(--space-3) 0;
+  }
+
+  .resume-timeline::before {
+    position: absolute;
+    top: var(--space-3);
+    bottom: var(--space-3);
+    left: 2.375rem;
+    width: 0.4rem;
+    display: block;
+    border-radius: 999px;
+    background: var(--gradient-phoenix);
+    box-shadow: 0 0 1.5rem var(--solar-gold);
+    content: '';
+    transform: none;
+  }
+
+  .resume-timeline > li,
+  .resume-timeline > li:nth-child(odd),
+  .resume-timeline > li:nth-child(even) {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    justify-self: stretch;
+    transform: none;
+  }
+
+  .timeline-milestone {
+    grid-template-columns: 4.75rem minmax(0, 1fr);
+  }
+
+  .timeline-milestone__trigger {
+    grid-column: 1;
+  }
+
+  .timeline-milestone__trigger::before {
+    display: none;
+  }
+
+  .timeline-milestone__trigger::after {
+    right: auto;
+    left: calc(100% + 0.15rem);
+    width: 0.65rem;
+  }
+
+  .resume-timeline > li:nth-child(odd) .timeline-milestone__tooltip,
+  .resume-timeline > li:nth-child(even) .timeline-milestone__tooltip {
+    position: relative;
+    top: auto;
+    width: auto;
+    grid-column: 2;
+    margin-right: 0;
+    margin-left: var(--space-3);
+    transform: none;
+  }
+
+  .resume-timeline > li:nth-child(odd) .timeline-milestone__tooltip::after,
+  .resume-timeline > li:nth-child(even) .timeline-milestone__tooltip::after {
+    right: auto;
+    left: -0.45rem;
+    transform: rotate(225deg);
+  }
+
+  .portfolio-page--enhanced .resume-timeline > li:nth-child(odd).portfolio-reveal,
+  .portfolio-page--enhanced .resume-timeline > li:nth-child(even).portfolio-reveal {
+    transform: translateY(1.75rem) scale(0.99);
+  }
+
+  .portfolio-page--enhanced .portfolio-reveal.portfolio-reveal--visible {
+    transform: none;
+  }
+
+  .resume-entry__header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .resume-entry__dates {
+    grid-column: 1;
+    grid-row: 1;
+    white-space: normal;
+  }
+
+  .resume-entry h3 {
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 25rem) {
+  .portfolio-section,
+  .project-card {
+    padding: var(--space-5) var(--space-4);
+    border-radius: var(--radius-medium);
+  }
+
+  .portfolio-hero {
+    min-height: 65svh;
+    padding-inline: var(--space-2);
+  }
+
+  .timeline-milestone {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+  }
+
+  .timeline-milestone__trigger {
+    width: 4rem;
+    min-height: 4rem;
+  }
+
+  .resume-timeline::before {
+    left: 2.25rem;
+  }
+
+  .project-card__links {
+    display: grid;
+  }
+
+  .project-card__links a,
+  .portfolio-resume-link {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-page--enhanced .portfolio-reveal,
+  .portfolio-page--enhanced .resume-timeline > li:nth-child(odd).portfolio-reveal,
+  .portfolio-page--enhanced .resume-timeline > li:nth-child(even).portfolio-reveal {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .timeline-milestone__tooltip {
+    animation: none;
+  }
+}

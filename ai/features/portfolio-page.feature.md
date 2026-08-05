@@ -29,13 +29,19 @@
 
 ## Feature Goal
 
-Create a public Portfolio page that presents Oishieka Moitra's verified education, professional experience, and project work as readable semantic HTML, while also giving visitors access to an approved downloadable résumé. The page should connect Oishieka's legal, research, documentation, and software-development experience without exaggerating claims or hiding essential information inside a PDF.
+Create a public Portfolio page that presents Oishieka Moitra's verified education, professional experience, and project work as readable semantic HTML, while also giving visitors access to an approved downloadable résumé. Three.js renders the existing full-page phoenix-journey illustration as the visual environment, adding image depth, mist, golden particles, and a scroll-driven camera without replacing or imitating the source artwork. Education and work milestones materialize along the golden trail already painted into the image, connecting Oishieka's legal, research, documentation, and software-development experience without exaggerating claims or hiding essential information inside a PDF.
 
 After this feature is complete:
 
 - `/#/portfolio` renders the Portfolio page through React Router;
 - Education, Work Experience, and Projects appear as three clearly separated sections;
 - Education and work entries are displayed newest first;
+- the phoenix-journey artwork fills the Portfolio canvas behind readable content surfaces;
+- education and work entries share one curved résumé trail derived from `.omi/Untitled.png`, with milestone tooltips branching left or right on wide screens and a left-aligned trail on narrow screens;
+- scrolling moves the visitor forward through a rendered Three.js environment with subtle pointer parallax;
+- the page title appears directly over the upper-left of the phoenix image in pale gold without a surrounding hero card;
+- résumé years remain visible as trail points whose anchored detail tooltips open through hover, focus, click, or tap;
+- ambient spatial audio is available only through an explicit visitor-controlled toggle;
 - at least one complete, truthful project entry includes its name, technology, purpose, description, and image;
 - visitors can open or download an approved PDF résumé;
 - at least two Portfolio-specific AI-created images complement the résumé content; and
@@ -47,10 +53,19 @@ After this feature is complete:
 
 - Portfolio at React Router path `/portfolio` and deployed hash URL `/#/portfolio`.
 - A concise page introduction that explains the relationship between software development and Oishieka's professional background.
+- A pale-gold upper-left page title and lightweight introduction placed directly over the image without a hero card.
 - An Education section with at least one complete entry.
 - A Work Experience section with at least one complete entry and responsibility descriptions.
 - A Projects section with at least one complete project card.
 - Reverse-chronological ordering for Education and Work Experience.
+- A full-page `portfolio-phoenix-journey.jpg` background that establishes the Portfolio journey motif.
+- A single wireframe-derived curved path descending from the upper-right phoenix toward the lower-left page edge.
+- Education and Work Experience milestones positioned together along that glowing responsive phoenix trail.
+- A decorative Three.js WebGL canvas that renders the existing journey image itself.
+- Scroll-driven image depth, restrained pointer parallax, mist, golden particles, and a glow registered to the painted phoenix trail.
+- Optional user-activated ambience created with the native Web Audio API and HRTF panning.
+- Progressive milestone reveals that never hide content when JavaScript, WebGL, or Intersection Observer support is unavailable.
+- Interactive year points with anchored résumé tooltips, click/tap pinning, keyboard operation, and Escape dismissal.
 - The current Oishieka Moitra Fantasy Portfolio as a concrete project entry.
 - A project preview image that represents the actual rendered website.
 - A working link for the approved public résumé at `public/assets/resume-standard.pdf`.
@@ -79,6 +94,8 @@ After this feature is complete:
 - Treating the Header logo or Home images as either of the two required Portfolio AI images.
 - Treating a website screenshot as AI-created unless it was actually generated with an AI image tool.
 - A new UI framework, icon library, animation library, timeline package, or PDF package solely for Portfolio.
+- Timed prompts, personality sorting, branching decisions, animal outcomes, quizzes, or result-calculation logic.
+- Automatically playing audio or audio required to understand the résumé.
 
 ## Requirements Breakdown
 
@@ -88,6 +105,7 @@ After this feature is complete:
 - Render the page at deployed hash URL `/#/portfolio` inside the shared `Main` layout.
 - Direct loading and refreshing of `/#/portfolio` must work on GitHub Pages.
 - Use one page-level `<h1>` such as “Portfolio & Experience.”
+- Place the `<h1>` in the upper-left of the image canvas using a pale-gold token-derived color, readable text shadow, and no card surface, border, or backdrop panel.
 - Add a short introduction that frames the page accurately and avoids unsupported claims.
 - Keep the introduction in HTML so it remains readable without downloading the résumé.
 - Do not create nested Portfolio routes or use imperative location changes for normal navigation.
@@ -105,6 +123,8 @@ After this feature is complete:
   - optional location only when approved.
 
 - Order entries by starting date descending, with the most recently started program first.
+- Present each entry as a visible year point on the phoenix trail.
+- Open the complete semantic education entry in an anchored tooltip panel when its point is hovered, focused, clicked, tapped, or keyboard-activated.
 - Display dates as human-readable content rather than relying on JavaScript locale output.
 - Preserve “Present” only after Oishieka verifies that current enrollment is accurate.
 - Do not add grades, honors, concentrations, activities, or graduation dates that do not appear in an approved source.
@@ -123,6 +143,7 @@ After this feature is complete:
   - one or more responsibility or achievement statements.
 
 - Order entries by starting date descending, with the most recently started role first.
+- Continue the same interactive year-point and anchored-tooltip treatment used by Education so the résumé reads as one professional journey.
 - Use semantic lists for multiple responsibility statements.
 - Present responsibilities accurately and concisely without turning them into invented outcomes.
 - Add quantified achievements only when Oishieka supplies a verifiable source.
@@ -180,9 +201,9 @@ After this feature is complete:
 - Include at least two images generated using an AI image tool specifically for Portfolio.
 - The Header logo, Home images, favicon, project screenshot, and unmodified stock images do not count toward this two-image minimum.
 - Both images must complement résumé content or the phoenix/code professional journey.
-- Recommended image roles:
+- Required image roles:
 
-  1. `portfolio-phoenix-journey.jpg` — a wide journey illustration connecting education, professional analysis, and software development; and
+  1. `portfolio-phoenix-journey.jpg` — the full-page visual canvas connecting education, professional analysis, and software development; and
   2. `portfolio-code-scroll.jpg` — a supporting illustration combining precise documentation with modern code motifs.
 
 - Do not place required dates, organizations, degrees, job titles, project details, or calls to action only inside image pixels.
@@ -204,14 +225,24 @@ After this feature is complete:
   - Creative: `royalViolet` → `magenta` → `phoenixRed` for section dividers or selected highlights.
 
 - Preserve each gradient's token order.
+- Use `portfolio-phoenix-journey.jpg` as the full Portfolio-page background; do not repeat it as a separate hero image.
+- Place a restrained Phoenix-gradient timeline over the background so résumé milestones visually follow the illustrated trail.
+- Use Three.js to render the existing phoenix image as a responsive plane between the static fallback background and HTML content.
+- Register the generated glow curve to normalized coordinates along the golden trail already painted into the image so it stays aligned through viewport resizing and cover crops.
+- Add only image-depth movement, mist, and golden particles; do not generate a replacement forest or a second visual environment.
+- Move the Three.js camera forward according to document scroll progress and add restrained pointer parallax without making pointer input necessary.
+- Keep the WebGL environment decorative and non-interactive in the accessibility tree; all résumé information remains semantic HTML.
+- Offer ambient sound only after explicit activation, using the Web Audio API and an HRTF-positioned source that shifts subtly with scroll progress.
 - Place primary text on stable solid surfaces when contrast cannot be guaranteed across a gradient.
+- Treat the page title as the intentional exception: place it directly over the dark upper-left image area in pale gold with a strong token-based text shadow instead of a card.
 - Use a restrained timeline, path, scroll, or chapter motif only when it preserves scanning and reading order.
 - Keep professional content dominant; fantasy terminology may support visual character but must not replace clear section labels.
 
 ### Requirement 9 — Responsive Layout
 
-- At desktop widths, allow an alternating timeline, two-column entries, or project media/content grid when reading order remains clear.
-- At narrow widths, collapse content into a single logical column.
+- At desktop widths, position year controls at explicit points along the curved wireframe trail and anchor each tooltip on its approved left or right branch while preserving newest-first DOM order within each semantic group.
+- At narrow widths, keep year controls on a left-aligned trail and open every tooltip panel in the single content column to their right.
+- Let the journey background cover the Portfolio canvas on wide screens; use a stable scroll-positioned treatment on mobile where fixed backgrounds are unreliable.
 - Keep the page within the viewport at 320px, 768px, 769px, and desktop widths.
 - Ensure dates, organization names, degree names, technology labels, and URLs wrap without clipping.
 - Scale images while preserving aspect ratio.
@@ -220,6 +251,7 @@ After this feature is complete:
 - Do not use fixed heights that clip responsibility lists or enlarged text.
 - Preserve readable line lengths and spacing at 200% zoom.
 - Do not rely on visual left/right alternation to establish chronological order.
+- Cap renderer pixel density to protect performance on high-density displays.
 
 ### Requirement 10 — Accessibility and Semantics
 
@@ -227,11 +259,16 @@ After this feature is complete:
 - Use `<section>` for major content areas and `<article>` or list structures for repeated entries.
 - Use `<time>` with valid `datetime` values only when the source dates are sufficiently precise; otherwise render verified display text without false machine precision.
 - Ensure all links are keyboard operable and have visible focus treatment.
+- Implement each trail point as a native `<button>` with an accessible milestone label, `aria-controls`, and accurate `aria-expanded` state.
+- Let Enter, Space, click, and tap pin or unpin a tooltip; let focus and hover preview it; let Escape close it.
+- Keep full résumé content in the tooltip region and never require hover as the only way to access it.
 - Make external-link behavior clear in accessible names or nearby text when needed.
 - Give project screenshots useful alt text that describes the represented interface rather than repeating the project title alone.
 - Mark decorative AI art with empty alt text when it adds no unique content.
 - Do not rely on color, timeline position, icon, image, motion, or gradient alone to communicate chronology or section meaning.
 - Respect `prefers-reduced-motion` for reveal, hover, timeline, or decorative effects.
+- Render a static Three.js frame and skip pointer/camera animation when reduced motion is requested.
+- Keep the ambience control off by default and expose its state with `aria-pressed`.
 - Maintain contrast for body text, dates, metadata, technology tags, borders, focus rings, and controls.
 - Preserve comprehension when CSS images fail or are disabled.
 
@@ -245,6 +282,9 @@ After this feature is complete:
 - Do not make page rendering depend on Supabase, a remote CMS, or an external résumé service.
 - Use stable dimensions to prevent media from moving surrounding content during load.
 - Avoid unnecessary JavaScript for visual-only timeline behavior that CSS can provide.
+- Treat WebGL as progressive enhancement: the existing image, content, links, and CSS trail remain usable if renderer creation fails.
+- Dispose Three.js geometries, materials, textures, animation frames, and listeners when the Portfolio route unmounts.
+- Use deterministic particle and mist placement so Strict Mode remounts do not produce a visibly different effect.
 
 ### Requirement 12 — File Documentation and Handoff
 
@@ -331,10 +371,10 @@ Before publishing this card, update its wording to describe only features actual
 
 | Intended filename | Role | Initial alt-text decision | Completion evidence |
 | --- | --- | --- | --- |
-| `src/assets/portfolio-phoenix-journey.jpg` | Wide visual connecting education, professional analysis, and code | Use concise informative alt text if the image adds a unique narrative; otherwise use `alt=""` | Record the actual AI tool, generation date, optimization, dimensions, and final alt text after creation |
-| `src/assets/portfolio-code-scroll.jpg` | Supporting documentation-and-code illustration near Experience or Projects | Use `alt=""` when adjacent headings and text fully communicate its purpose | Record the actual AI tool, generation date, optimization, dimensions, and final alt text after creation |
+| `src/assets/portfolio-phoenix-journey.jpg` | Full-page visual canvas connecting education, professional analysis, and code | Decorative CSS background with no accessibility announcement because the complete journey is present in semantic HTML | OpenAI built-in image generation tool; generated 2026-08-05 at 1536×1024 PNG (2,453,139 bytes); optimized to 1200×800 JPEG (297,543 bytes, 87.9% reduction); placed behind the complete Portfolio page and résumé trail |
+| `src/assets/portfolio-code-scroll.jpg` | Supporting documentation-and-code illustration near Experience | Decorative `alt=""` because the adjacent HTML communicates the documentation-and-systems relationship | OpenAI built-in image generation tool; generated 2026-08-05 at 1536×1024 PNG (2,596,946 bytes); optimized to 1200×800 JPEG (268,908 bytes, 89.6% reduction); placed after Professional Experience |
 
-The filenames describe required asset roles, but the assets do not exist yet. Do not mark the AI-image criterion complete until two actual Portfolio-specific files render and their provenance is recorded.
+Both files are Portfolio-specific generated assets. The project preview remains a separate requirement and is not counted toward this pair.
 
 ## User Flow and Expected Behavior
 
@@ -342,16 +382,18 @@ The filenames describe required asset roles, but the assets do not exist yet. Do
 
 1. A visitor selects Portfolio from the shared navigation or opens `/#/portfolio` directly.
 2. The Portfolio page renders inside the shared Header, Main, and Footer layout.
-3. The page heading and introduction explain what the visitor can review.
-4. The visitor scrolls through Education, Professional Experience, and Projects in a logical document order.
-5. The visitor can open the live project, inspect its public source, or download the approved résumé.
+3. The phoenix-journey background establishes a continuous visual path behind stable, readable content surfaces.
+4. The page heading and introduction explain what the visitor can review.
+5. The visitor follows résumé milestones along the trail through Education and Professional Experience, then reaches Projects in logical document order.
+6. The visitor can open the live project, inspect its public source, or download the approved résumé.
 
 ### Education and Experience Review Flow
 
 1. The visitor reaches a clearly labeled section.
 2. Entries appear newest first in both visual layout and DOM order.
-3. Each entry exposes its required title, organization or institution, date, and supporting details without requiring hover or interaction.
-4. On a narrow screen or with enlarged text, the same DOM order remains intact in a single column.
+3. On wide screens, year points follow the curved upper-right-to-lower-left trail and tooltips branch toward their assigned side without changing DOM sequence.
+4. Each entry exposes its required title, organization or institution, date, and supporting details without requiring hover or interaction.
+5. On a narrow screen or with enlarged text, the same DOM order remains intact in a single column beside a left-aligned trail.
 
 ### Project Exploration Flow
 
@@ -386,11 +428,15 @@ The filenames describe required asset roles, but the assets do not exist yet. Do
 ### React Page
 
 - `src/pages/PortfolioPage.jsx`
-  - Owns page composition, the page-level heading, introduction, primary sections, résumé action, and Portfolio-specific media.
+  - Owns page composition, the full-page journey-background reference, page-level heading, introduction, primary sections, résumé action, and Portfolio-specific media.
   - Replaces the `/portfolio` setup-route definition in `src/App.jsx`.
 
 ### Reusable Components
 
+- `src/components/PortfolioExperience.jsx`
+  - Renders the existing phoenix image, registered golden trail, mist and particles; it also owns scroll/pointer movement, cleanup, reveals, and opt-in spatial ambience.
+- `src/components/TimelineMilestone.jsx`
+  - Renders a visible year point with hover/focus preview, click/tap pinning, Escape dismissal, accessible state, and an anchored résumé tooltip.
 - `src/components/ResumeEntry.jsx`
   - Renders the shared semantic structure for education or work entries without forcing both data types into identical content.
 - `src/components/ProjectCard.jsx`
@@ -408,12 +454,12 @@ Component filenames may be consolidated when the rendered structures are too sma
 ### Styling
 
 - `src/pages/PortfolioPage.css`
-  - Owns Portfolio layout, timelines or entry grids, project presentation, résumé actions, image treatment, and responsive behavior.
+  - Owns the full-page phoenix canvas, wireframe-derived curved trail, positioned year points, anchored tooltips, project presentation, résumé actions, and responsive behavior.
   - Reuses global design tokens and shared primitives rather than redefining the palette.
 
 ### Assets
 
-- `src/assets/portfolio-phoenix-journey.jpg` — Portfolio-specific AI-created journey art.
+- `src/assets/portfolio-phoenix-journey.jpg` — Portfolio-specific AI-created full-page background and résumé-trail canvas.
 - `src/assets/portfolio-code-scroll.jpg` — Portfolio-specific AI-created documentation/code art.
 - `src/assets/portfolio-site-preview.png` — screenshot of the implemented website; not counted as AI-created by default.
 - `public/assets/resume-standard.pdf` — approved public résumé download.
@@ -429,6 +475,7 @@ Component filenames may be consolidated when the rendered structures are too sma
 
 - No API endpoint, Supabase table, authentication state, or environment variable is used by this feature.
 - External project URLs and the résumé asset are ordinary links, not data-service integrations.
+- Three.js rendering and Web Audio run entirely in the browser; no quiz service, outcome engine, or audio stream is used.
 
 ## Data and Validation
 
@@ -442,6 +489,7 @@ Component filenames may be consolidated when the rendered structures are too sma
   location: 'Boulder, Colorado',
   dates: '2024–Present',
   startYear: 2024,
+  trail: { x: '61%', y: '39%', side: 'left' },
 }
 ```
 
@@ -452,6 +500,7 @@ Validation rules:
 - `location` is optional and must be approved for publication.
 - `startYear` controls ordering but is not rendered as a substitute for `dates`.
 - Entries sort by `startYear` descending.
+- `trail.x`, `trail.y`, and `trail.side` control wireframe placement only and never determine chronological or DOM order.
 - An ongoing status is not inferred from an absent end year.
 
 ### Work Experience Data Shape
@@ -464,6 +513,7 @@ Validation rules:
   location: 'Tampa, Florida',
   dates: '2025–2026',
   startYear: 2025,
+  trail: { x: '68%', y: '27%', side: 'right' },
   responsibilities: [
     'Drafted, reviewed, and edited complex legal documents with close attention to accuracy.',
   ],
@@ -476,6 +526,7 @@ Validation rules:
 - Responsibility values must be non-empty, verified strings.
 - `id` values are unique and stable.
 - Entries sort by `startYear` descending.
+- Every entry has explicit percentage coordinates and a `left` or `right` tooltip side derived from the wireframe.
 - Array order preserves the intended reading order of responsibility statements.
 - Achievement metrics are omitted unless a verified source supports them.
 
@@ -529,10 +580,11 @@ Validation rules:
   id: 'portfolio-phoenix-journey',
   src: portfolioPhoenixJourney,
   alt: '',
-  width: 1600,
-  height: 900,
-  generatedWith: 'Recorded after the final asset is created',
+  width: 1200,
+  height: 800,
+  generatedWith: 'OpenAI built-in image generation tool',
   purpose: 'Connect education, professional analysis, and software development.',
+  placement: 'Full Portfolio page background behind the résumé trail',
 }
 ```
 
@@ -543,10 +595,12 @@ Validation rules:
 - `alt` is empty only when the image is decorative.
 - Each asset is specific to Portfolio and is not reused to satisfy another page's image count.
 - Both assets render at the deployed URL and have documented provenance.
+- The journey image is decorative in its CSS-background role; semantic headings, dates, and responsibilities provide the complete accessible narrative.
 
 ### Expected Rendering
 
 - Render Education, Professional Experience, and Projects from arrays rather than duplicating card markup.
+- Render Education and Professional Experience in newest-first DOM order before using independent trail metadata to position each point along the curve.
 - Use stable `id` values as React keys.
 - Sort copied arrays or keep source arrays intentionally ordered; do not mutate imported shared data during render.
 - Do not render empty metadata wrappers, empty responsibility lists, broken anchors, or false “Present” labels.
@@ -558,6 +612,7 @@ Validation rules:
 - Use the existing `HashRouter`; do not replace it with `BrowserRouter`.
 - Keep Portfolio under the existing shared `Main` layout.
 - Do not add a dependency for timelines, cards, icons, image loading, or PDF viewing.
+- Use `three` for the decorative WebGL environment; do not introduce an additional animation, audio, or 3D framework.
 - Do not query Supabase or another backend for static résumé data.
 - Import build-managed Portfolio images from `src/assets`.
 - Serve the approved résumé from `public/assets` so its stable public URL is not content-hashed.
@@ -591,46 +646,67 @@ A screenshot proves what the project looks like, while the two required AI image
 
 ### Prefer Simple CSS Structure
 
-A visual timeline can be built with semantic markup and CSS pseudo-elements. Avoiding a timeline package reduces bundle size and preserves control over DOM order, zoom behavior, focus, and narrow-screen presentation.
+The phoenix trail is built with semantic ordered lists, native buttons, and a decorative SVG curve based on `.omi/Untitled.png`. Wide screens distribute year points from the upper-right toward the lower-left and open tooltips on their assigned branch; narrow screens replace the curve with a left-side path and one tooltip column. Avoiding a timeline package reduces bundle size and preserves control over DOM order, zoom behavior, focus, and responsive presentation.
+
+### Treat the Wireframe as Layout Authority
+
+The Portfolio title occupies the upper-left of one continuous scene, while the phoenix remains visually dominant toward the upper-right. A curved path descends from the phoenix, bends through the middle, and travels diagonally to the lower-left. All six sourced résumé entries use explicit percentage coordinates along this curve; the wireframe's placeholder labels do not replace or reduce the approved content inventory.
+
+### Use Trail Points as Résumé Tooltips
+
+Dates remain scannable as visible year controls even while details are closed. Hover and focus provide a temporary preview, while click, tap, Enter, or Space pins the anchored panel. Escape dismisses it. Each panel contains the same semantic `ResumeEntry` HTML, so the visual tooltip treatment does not reduce content quality or keyboard access.
+
+### Use the Journey Artwork as the Page Canvas
+
+The journey illustration is the full Portfolio narrative canvas. A full-bleed background layer preserves one continuous visual metaphor, while translucent, high-contrast surfaces keep all professional content readable and independent of the artwork. It is not repeated as a separate hero figure.
+
+### Add Progressive WebGL Depth Without Turning Portfolio Into a Quiz
+
+Three.js supplies atmosphere and movement rather than a replacement scene or application logic. The existing phoenix image is mapped onto a responsive plane; document scroll changes its camera depth and framing, pointer movement adds small optional parallax, and a normalized glow curve follows the image's painted golden trail. Deterministic mist and ember particles add depth without introducing another environment. The Portfolio does not collect choices, sort visitors, impose timers, or calculate an outcome.
+
+### Keep Spatial Audio Optional
+
+The soundscape is synthesized locally with the Web Audio API and positioned with HRTF panning. It begins only after the visitor activates a clearly labeled toggle, can be suspended immediately, and does not carry information required to understand the page.
 
 ## Acceptance Criteria
 
 ### Route and Introduction
 
-- [ ] `/#/portfolio` renders `PortfolioPage` inside the shared layout.
+- [x] `/#/portfolio` renders `PortfolioPage` inside the shared layout.
 - [ ] Direct loading and refresh work in local preview and deployed GitHub Pages.
-- [ ] The setup placeholder no longer renders at `/portfolio`.
-- [ ] The page has exactly one descriptive `<h1>` and a concise professional introduction.
-- [ ] No separate résumé or project-detail route is added.
+- [x] The setup placeholder no longer renders at `/portfolio`.
+- [x] The page has exactly one descriptive `<h1>` and a concise professional introduction.
+- [x] The `<h1>` appears in pale gold over the upper-left image area without a surrounding hero card.
+- [x] No separate résumé or project-detail route is added.
 
 ### Education
 
-- [ ] The page contains a clearly labeled Education section.
-- [ ] At least one education entry renders.
+- [x] The page contains a clearly labeled Education section.
+- [x] At least one education entry renders.
 - [ ] Every entry includes institution, degree/program, and approved dates.
-- [ ] Entries appear by starting date descending in the DOM and visual presentation.
-- [ ] University of Colorado Law School precedes University of South Florida when both approved entries are used.
+- [x] Entries appear by starting date descending in the DOM and visual presentation.
+- [x] University of Colorado Law School precedes University of South Florida when both approved entries are used.
 - [ ] “Present,” location, and program details match owner-approved source content.
 
 ### Professional Experience
 
-- [ ] The page contains a clearly labeled Professional Experience section.
-- [ ] At least one work entry renders.
+- [x] The page contains a clearly labeled Professional Experience section.
+- [x] At least one work entry renders.
 - [ ] Every entry includes role, organization, approved dates, and at least one responsibility or achievement description.
-- [ ] Entries appear by starting date descending in the DOM and visual presentation.
-- [ ] Bay Area Legal Services appears before the 2021, 2019, and 2018 starting-date entries when all approved roles are used.
-- [ ] No invented metrics, achievements, or software-development implications appear.
+- [x] Entries appear by starting date descending in the DOM and visual presentation.
+- [x] Bay Area Legal Services appears before the 2021, 2019, and 2018 starting-date entries when all approved roles are used.
+- [x] No invented metrics, achievements, or software-development implications appear.
 
 ### Projects
 
-- [ ] The page contains a clearly labeled Projects section.
+- [x] The page contains a clearly labeled Projects section.
 - [ ] At least one complete project renders.
 - [ ] The initial portfolio project includes name, technology, purpose, description, and representative image.
 - [ ] The project wording describes only behavior present in the published build.
 - [ ] The live URL resolves to `https://omi-moitra.github.io`.
 - [ ] The source URL resolves to the public GitHub repository.
-- [ ] External links open in a new tab with `rel="noopener noreferrer"`.
-- [ ] Project content and links remain available if the preview image fails.
+- [x] External links open in a new tab with `rel="noopener noreferrer"`.
+- [x] Project content and links remain available if the preview image fails.
 
 ### Résumé
 
@@ -638,34 +714,50 @@ A visual timeline can be built with semantic markup and CSS pseudo-elements. Avo
 - [ ] A visible, keyboard-accessible “Download résumé (PDF)” link is present.
 - [ ] Activating the link downloads a valid, readable PDF with a meaningful filename.
 - [ ] The deployed asset request returns the PDF rather than the application shell.
-- [ ] Essential Education, Work, and Project content remains available in HTML.
+- [x] Essential Education, Work, and Project content remains available in HTML.
 - [ ] The published PDF and its metadata contain no unapproved private information.
 
 ### Visual Sections and AI Images
 
-- [ ] Education, Professional Experience, and Projects are three visibly distinct sections.
-- [ ] Section separation remains clear without relying only on color.
-- [ ] Two Portfolio-specific AI-created images render on the Portfolio page.
-- [ ] Neither required image is borrowed from Header, Home, Links, or stock-only inventory.
-- [ ] Each image complements résumé, professional-journey, documentation, or code content.
-- [ ] Each image has an appropriate informative or decorative alt-text decision.
-- [ ] The actual AI tool, purpose, filename, dimensions, optimization, placement, and alt-text decision are documented for both images.
-- [ ] The project screenshot is not counted as AI-created unless its origin truthfully supports that claim.
+- [x] Three.js renders the existing phoenix image itself with depth, mist, golden particles, and a glow registered to its painted trail.
+- [x] No replacement forest, copied visual environment, or newly generated background is introduced.
+- [x] Document scroll moves the rendered camera forward through the scene.
+- [x] Pointer movement adds restrained parallax without being required for navigation or comprehension.
+- [x] The WebGL scene falls back to the existing background and semantic content if renderer creation fails.
+- [x] Ambient sound is off by default, user-controlled, spatially positioned, and labeled with `aria-pressed`.
+- [x] No timer, branching questionnaire, visitor sorting, or outcome algorithm is included.
+- [x] `portfolio-phoenix-journey.jpg` fills the Portfolio-page canvas behind the content.
+- [x] The desktop trail follows the wireframe's upper-right curve and lower-left diagonal path.
+- [x] Education and Professional Experience points share the same continuous visual trail.
+- [x] Tooltip panels branch left or right from their assigned wireframe-aligned points.
+- [x] The résumé trail collapses to a left-aligned, single-column layout at narrow widths.
+- [x] Every résumé entry is represented by a visible year point on the trail.
+- [x] Each point opens its complete entry in an anchored tooltip panel.
+- [x] Tooltips preview on hover/focus, pin on activation, report expanded state, and close with Escape.
+- [x] Mobile tooltip panels open to the right of the left-aligned trail without leaving the viewport.
+- [x] Education, Professional Experience, and Projects are three visibly distinct sections.
+- [x] Section separation remains clear without relying only on color.
+- [x] Two Portfolio-specific AI-created images render on the Portfolio page.
+- [x] Neither required image is borrowed from Header, Home, Links, or stock-only inventory.
+- [x] Each image complements résumé, professional-journey, documentation, or code content.
+- [x] Each image has an appropriate informative or decorative alt-text decision.
+- [x] The actual AI tool, purpose, filename, dimensions, optimization, placement, and alt-text decision are documented for both images.
+- [x] The project screenshot is not counted as AI-created unless its origin truthfully supports that claim.
 
 ### Responsive, Accessible, and Quality
 
-- [ ] Content follows a logical heading and DOM order.
-- [ ] All actionable elements work by keyboard and have visible focus.
+- [x] Content follows a logical heading and DOM order.
+- [x] All actionable elements work by keyboard and have visible focus.
 - [ ] Text, controls, dates, tags, borders, and focus states meet project contrast requirements.
-- [ ] Content does not depend on hover, motion, color, image, or timeline position alone.
-- [ ] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
+- [x] Content does not depend on hover, motion, color, image, or timeline position alone.
+- [x] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
 - [ ] No horizontal overflow, clipped text, overlapping content, or hidden controls appear at 320px, 768px, 769px, desktop widths, or 200% zoom.
-- [ ] Content clears the fixed mobile navigation at 768px and below.
-- [ ] Images preserve aspect ratio, reserve stable space, and are optimized for their rendered sizes.
-- [ ] Optional image failures do not hide essential content.
-- [ ] Every changed file has its required format-appropriate TOC and current decision comments.
-- [ ] `npm run lint` succeeds.
-- [ ] `npm run build` succeeds.
+- [x] Content clears the fixed mobile navigation at 768px and below.
+- [x] Images preserve aspect ratio, reserve stable space, and are optimized for their rendered sizes.
+- [x] Optional image failures do not hide essential content.
+- [x] Every changed file has its required format-appropriate TOC and current decision comments.
+- [x] `npm run lint` succeeds.
+- [x] `npm run build` succeeds.
 
 ## Verification Plan
 
@@ -697,6 +789,8 @@ Also inspect the production output to confirm the résumé asset is copied into 
 - Navigate to Portfolio from desktop navigation and mobile bottom navigation.
 - Confirm shared active-link treatment identifies Portfolio correctly.
 - Tab through résumé, project-live, and project-source links in logical order.
+- Tab through every trail point, open each tooltip with Enter or Space, and close it with Escape.
+- Confirm pointer hover previews a tooltip and click pins it after the pointer leaves.
 - Activate each external link and inspect its destination and opener protections.
 - Activate the résumé download and confirm a PDF is saved.
 - Temporarily break each optional image path and confirm text and links remain usable.
@@ -718,6 +812,14 @@ Also inspect the production output to confirm the résumé asset is copied into 
 - Test at 200% browser zoom.
 - Check long institution, organization, role, and technology values for wrapping.
 - Confirm the last actionable content clears mobile bottom navigation.
+- Confirm the full-page journey background does not introduce horizontal overflow.
+- Confirm year points follow the wireframe-derived curve on wide screens while each semantic group remains newest first in the DOM.
+- Confirm the trail moves left and tooltips open in one right-hand content column at 768px and below.
+- Confirm scroll advances the WebGL camera smoothly and pointer movement causes only subtle parallax.
+- Confirm reduced-motion mode renders a static scene with immediately visible résumé milestones.
+- Confirm the page remains complete after WebGL renderer creation is intentionally blocked.
+- Confirm the ambience toggle starts suspended, accurately reports state, and stays clear of mobile navigation.
+- Confirm navigating away disposes the renderer and stops any active AudioContext.
 
 ### Accessibility Checks
 
@@ -751,6 +853,8 @@ For each of the two Portfolio images, record and inspect:
 - whether it is informative or decorative;
 - final alt text; and
 - rendered behavior at narrow and wide viewports.
+- journey-background coverage across the complete Portfolio page; and
+- readable content contrast over every visible part of the background.
 
 ## Warnings and Known Limitations
 
@@ -762,13 +866,15 @@ For each of the two Portfolio images, record and inspect:
 
 > **:warning: Project claim accuracy:** The initial project card describes this website. Update it to reflect only features that are actually implemented and deployed when Portfolio ships.
 
-> **:warning: AI image evidence:** Proposed filenames and concepts are not evidence that images were AI-generated. The requirement remains incomplete until two rendered files and their actual provenance records exist.
+> **:warning: Project preview:** The required real browser screenshot was not captured. The project card intentionally omits media instead of substituting thematic artwork and misrepresenting it as the implemented interface.
 
 > **:warning: External destinations:** GitHub and live-site links can change independently of the application. Verify both immediately before release.
 
+> **:warning: Progressive WebGL and audio:** GPU capability, WebGL support, reduced-motion settings, browser audio policies, and device power vary. The rendered environment and ambience must remain optional enhancements over the complete static image and HTML experience.
+
 > **:warning: PDF asset path:** A missing public résumé may appear to return the SPA shell depending on hosting behavior. Verify content, response, and file signature rather than accepting a successful navigation alone.
 
-> **:warning: Chronology:** Visual alternating timelines can produce a misleading reading order. Source-array order and DOM order must remain newest first regardless of decorative placement.
+> **:warning: Chronology:** Wireframe coordinates and tooltip branch sides are decorative placement metadata. Source-array order and DOM order must remain newest first regardless of visual position.
 
 ## Notes for AI and Contributors
 

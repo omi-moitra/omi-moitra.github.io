@@ -1,22 +1,23 @@
 // =============================================================================
 // src/App.jsx — application routes composed inside the shared Main layout
 // -----------------------------------------------------------------------------
-// 1. Imports & route metadata   layout, Home, setup views, and required paths
-// 2. App                        nested route registration and fallback
+// 1. Imports & route metadata   layout, lazy Portfolio, setup views, and paths
+// 2. Portfolio fallback         lightweight status while WebGL code loads
+// 3. App                        nested route registration and fallback
 // =============================================================================
 
+import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Main from './layouts/Main.jsx'
 import HomePage from './pages/HomePage.jsx'
 import SetupRoutePage from './pages/SetupRoutePage.jsx'
 import './App.css'
 
+// Three.js is isolated to the Portfolio route so the 3D enhancement does not
+// increase the initial JavaScript cost for every other public page.
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage.jsx'))
+
 const setupRouteDefinitions = [
-  {
-    path: '/portfolio',
-    title: 'Portfolio',
-    description: 'The portfolio route is ready for verified project and resume content.',
-  },
   {
     path: '/links',
     title: 'Links',
@@ -39,11 +40,27 @@ const setupRouteDefinitions = [
   },
 ]
 
+function PortfolioFallback() {
+  return (
+    <div className="setup-route" role="status" aria-live="polite">
+      <p>Loading portfolio experience…</p>
+    </div>
+  )
+}
+
 function App() {
   return (
     <Routes>
       <Route element={<Main />}>
         <Route path="/" element={<HomePage />} />
+        <Route
+          path="/portfolio"
+          element={
+            <Suspense fallback={<PortfolioFallback />}>
+              <PortfolioPage />
+            </Suspense>
+          }
+        />
         {setupRouteDefinitions.map((route) => (
           <Route
             key={route.path}
