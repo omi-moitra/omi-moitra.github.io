@@ -1,3 +1,10 @@
+// =============================================================================
+// src/lib/supabaseClient.js — single low-privilege browser client boundary
+// -----------------------------------------------------------------------------
+// 1. Configuration      approved public environment-variable presence check
+// 2. Supabase client    configured session-aware client or safe null fallback
+// =============================================================================
+
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
@@ -15,3 +22,6 @@ export const supabase = isSupabaseConfigured
       },
     })
   : null
+
+// :warning: VITE_* values are visible in the browser bundle. This client may
+// receive only a low-privilege publishable/anonymous key; RLS protects data.

@@ -279,9 +279,9 @@ This invitation makes no response-time promise and does not publish private rés
 
 | Field | Visible label | Supporting guidance | Autocomplete |
 | --- | --- | --- | --- |
-| Name | Name | Enter the name you would like me to use in my reply. | `name` |
-| Email | Email address | Enter an address where I can respond. | `email` |
-| Message | Message | Share the reason you are reaching out in 10–2,000 characters. | none |
+| Name | Name | How should I address you? | `name` |
+| Email | Email address | Where can I reply? | `email` |
+| Message | Message | What would you like to discuss? Use 10–2,000 characters. | none |
 
 ### Submit and Status Copy
 
@@ -645,74 +645,74 @@ The Global AI Spec authorizes `VITE_SUPABASE_ANON_KEY`. Supabase may supply a ne
 
 ### Route and Form Structure
 
-- [ ] `/#/contact` renders `ContactPage` inside the shared layout.
+- [x] `/#/contact` renders `ContactPage` inside the shared layout.
 - [ ] Direct loading and refresh work in local preview and deployed GitHub Pages.
-- [ ] The setup placeholder no longer renders at `/contact`.
-- [ ] The page has exactly one descriptive `<h1>` and a concise invitation.
-- [ ] A semantic form contains name, email, message, and one submit button.
-- [ ] Every field has a persistent, programmatically associated visible label.
-- [ ] Name and email use appropriate autocomplete metadata.
+- [x] The setup placeholder no longer renders at `/contact`.
+- [x] The page has exactly one descriptive `<h1>` and a concise invitation.
+- [x] A semantic form contains name, email, message, and one submit button.
+- [x] Every field has a persistent, programmatically associated visible label.
+- [x] Name and email use appropriate autocomplete metadata.
 
 ### Validation
 
-- [ ] Empty and whitespace-only fields are rejected before any network request.
-- [ ] Name accepts 2–100 trimmed characters and rejects values outside that range.
-- [ ] Email is required, no longer than 254 characters, and rejects malformed values.
-- [ ] Message accepts 10–2,000 trimmed characters and rejects values outside that range.
-- [ ] Every invalid field receives a specific visible error and `aria-invalid="true"`.
-- [ ] Every field error is associated through `aria-describedby`.
-- [ ] Invalid submission shows a summary and focuses the first invalid field.
-- [ ] Entered values remain after validation failure.
+- [x] Empty and whitespace-only fields are rejected before any network request.
+- [x] Name accepts 2–100 trimmed characters and rejects values outside that range.
+- [x] Email is required, no longer than 254 characters, and rejects malformed values.
+- [x] Message accepts 10–2,000 trimmed characters and rejects values outside that range.
+- [x] Every invalid field receives a specific visible error and `aria-invalid="true"`.
+- [x] Every field error is associated through `aria-describedby`.
+- [x] Invalid submission shows a summary and focuses the first invalid field.
+- [x] Entered values remain after validation failure.
 
 ### Submission and Duplicate Prevention
 
-- [ ] A valid configured submission calls the shared Supabase client exactly once.
-- [ ] The insert targets the exact `messages` table.
-- [ ] The payload contains exactly `name`, `email`, and `message` using trimmed values.
-- [ ] The request does not include `id`, `created_at`, UI state, or hidden metadata.
-- [ ] The request does not append `.select()` or return stored message data.
-- [ ] Pending begins before the asynchronous request can be duplicated.
-- [ ] Button click, Enter, touch, or repeated submit events cannot create a second insert while pending.
-- [ ] The pending button is disabled, visibly labeled, and exposed accessibly.
+- [x] A valid configured submission calls the shared Supabase client exactly once.
+- [x] The insert targets the exact `messages` table.
+- [x] The payload contains exactly `name`, `email`, and `message` using trimmed values.
+- [x] The request does not include `id`, `created_at`, UI state, or hidden metadata.
+- [x] The request does not append `.select()` or return stored message data.
+- [x] Pending begins before the asynchronous request can be duplicated.
+- [x] Button click, Enter, touch, or repeated submit events cannot create a second insert while pending.
+- [x] The pending button is disabled, visibly labeled, and exposed accessibly.
 
 ### Success and Failure Feedback
 
-- [ ] Success appears only after Supabase confirms insertion without an error.
-- [ ] Success is visually and semantically distinct without relying only on green or an icon.
-- [ ] Fields and validation errors clear only after confirmed success.
-- [ ] Success feedback dismisses after five seconds or the next form interaction.
-- [ ] Success timers are cancelled on replacement, interaction, and unmount.
-- [ ] Returned errors and thrown exceptions produce safe, accessible failure feedback.
-- [ ] Failure is visually and semantically distinct without relying only on red or an icon.
-- [ ] All entered values remain after request failure.
-- [ ] Raw service errors, message content, credentials, and environment data are not rendered or logged.
+- [x] Success appears only after Supabase confirms insertion without an error.
+- [x] Success is visually and semantically distinct without relying only on green or an icon.
+- [x] Fields and validation errors clear only after confirmed success.
+- [x] Success feedback dismisses after five seconds or the next form interaction.
+- [x] Success timers are cancelled on replacement, interaction, and unmount.
+- [x] Returned errors and thrown exceptions produce safe, accessible failure feedback.
+- [x] Failure is visually and semantically distinct without relying only on red or an icon.
+- [x] All entered values remain after request failure.
+- [x] Raw service errors, message content, credentials, and environment data are not rendered or logged.
 
 ### Configuration and Security
 
-- [ ] Missing Supabase configuration renders a controlled unavailable state without crashing.
-- [ ] Missing configuration issues no client request and never shows fake success.
-- [ ] Only the approved low-privilege browser variables are read.
+- [x] Missing Supabase configuration renders a controlled unavailable state without crashing.
+- [x] Missing configuration issues no client request and never shows fake success.
+- [x] Only the approved low-privilege browser variables are read.
 - [ ] `public.messages` contains `id`, `name`, `email`, `message`, and `created_at` with required constraints.
 - [ ] RLS is enabled on `public.messages`.
 - [ ] Anonymous access can insert valid rows.
 - [ ] Anonymous access cannot select, update, or delete rows.
 - [ ] Authenticated access required by Back Office can select and delete but cannot update rows.
 - [ ] Public signup is disabled before authenticated read/delete policies are considered production-safe.
-- [ ] No secret or service-role key appears in the browser bundle, repository, screenshots, or logs.
+- [x] No secret or service-role key appears in the browser bundle, repository, screenshots, or logs.
 
 ### Responsive, Accessible, and Quality
 
-- [ ] Keyboard tab order follows the visual form order.
-- [ ] All controls have visible focus against their actual surfaces.
-- [ ] Status regions announce validation, pending, success, failure, and unavailable states without excessive repetition.
-- [ ] Text, labels, inputs, borders, errors, success, disabled state, and focus indicators meet project contrast requirements.
-- [ ] State meaning does not depend on color, icon, placeholder, position, or motion alone.
-- [ ] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
+- [x] Keyboard tab order follows the visual form order.
+- [x] All controls have visible focus against their actual surfaces.
+- [x] Status regions announce validation, pending, success, failure, and unavailable states without excessive repetition.
+- [x] Text, labels, inputs, borders, errors, success, disabled state, and focus indicators meet project contrast requirements.
+- [x] State meaning does not depend on color, icon, placeholder, position, or motion alone.
+- [x] Motion is removed or reduced when `prefers-reduced-motion: reduce` is active.
 - [ ] No horizontal overflow, clipped labels, overlapping feedback, or hidden controls appear at 320px, 768px, 769px, desktop widths, or 200% zoom.
-- [ ] Content clears the fixed mobile navigation at 768px and below.
-- [ ] Every changed file has its required format-appropriate TOC and current decision comments.
-- [ ] `npm run lint` succeeds.
-- [ ] `npm run build` succeeds with and without Supabase variables.
+- [x] Content clears the fixed mobile navigation at 768px and below.
+- [x] Every changed file has its required format-appropriate TOC and current decision comments.
+- [x] `npm run lint` succeeds.
+- [x] `npm run build` succeeds with and without Supabase variables.
 
 ## Verification Plan
 

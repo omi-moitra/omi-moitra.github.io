@@ -9,6 +9,7 @@
 import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Main from './layouts/Main.jsx'
+import ContactPage from './pages/ContactPage.jsx'
 import HomePage from './pages/HomePage.jsx'
 import LinksPage from './pages/LinksPage.jsx'
 import SetupRoutePage from './pages/SetupRoutePage.jsx'
@@ -19,11 +20,6 @@ import './App.css'
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage.jsx'))
 
 const setupRouteDefinitions = [
-  {
-    path: '/contact',
-    title: 'Contact',
-    description: 'The contact route is ready for its validated message form.',
-  },
   {
     path: '/login',
     title: 'Administrator Login',
@@ -49,6 +45,7 @@ function App() {
     <Routes>
       <Route element={<Main />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/links" element={<LinksPage />} />
         <Route
           path="/portfolio"
