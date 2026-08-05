@@ -47,6 +47,7 @@ After this feature is complete:
 - A reusable `Main` layout component that renders Header, route content, and Footer in document order.
 - A semantic Header visible at the top of every route.
 - A sticky Header that remains available during vertical scrolling.
+- Route-aware full Header gradients for Home, Portfolio, Links, and Contact.
 - A reusable desktop navigation containing Home, Portfolio, Links, and Contact.
 - An icon-based bottom navigation at 768px and below.
 - Consistent active, hover, focus-visible, and current-page states.
@@ -100,7 +101,15 @@ After this feature is complete:
 
 - Use a semantic `<header>` element.
 - Keep the Header visible while scrolling with `position: sticky` and `top: 0` unless testing proves a fixed Header is necessary.
-- Give the Header a consistent background, spacing, border/shadow treatment, and stacking level on every route.
+- Give the Header consistent spacing, border/shadow treatment, and stacking level while changing its full background gradient by active public route:
+
+  - Home: `#1E2A44` → `#3B82F6` → `#14B8A6`;
+  - Portfolio: `#D62828` → `#F97316` → `#FACC15`;
+  - Links: `#7C3AED` → `#EC4899` → `#D62828`; and
+  - Contact: `#EC4899` → `#A855F7` → `#7C3AED` → `#3B82F6` → `#14B8A6`.
+
+- Derive the active Header theme from React Router location rather than direct location mutation.
+- Place brand and desktop-navigation text on restrained dark translucent backing surfaces so contrast remains stable across every gradient stop.
 - Place the personal logo and its Home link in the Header.
 - Above 768px, show the public navigation horizontally at the top.
 - At 768px and below, hide the desktop link row while retaining the branded Header/logo area.
@@ -450,6 +459,11 @@ The logo combines identity and a familiar Home affordance. Its alt text describe
 
 - [x] A semantic Header appears at the top of every route with consistent styling.
 - [x] The Header remains visible during vertical scrolling.
+- [x] Home uses the Code gradient across the full sticky Header.
+- [x] Portfolio uses the Phoenix gradient across the full sticky Header.
+- [x] Links uses the Creative gradient across the full sticky Header.
+- [x] Contact uses the requested magenta → violet → royal violet → sapphire → teal gradient across the full sticky Header.
+- [x] Brand and desktop-navigation content retain readable backing surfaces across every Header gradient.
 - [x] One AI-generated personal logo is visible, responsive, and free of distortion/overflow.
 - [x] The supplied source logo has been resized/compressed or replaced by an optimized derivative appropriate for repeated Header delivery.
 - [x] The logo has intrinsic sizing or a stable aspect ratio that prevents layout shift.

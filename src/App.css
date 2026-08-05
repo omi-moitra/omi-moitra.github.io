@@ -2,7 +2,7 @@
    Shared application layout — Header, navigation, route content, and Footer
    --------------------------------------------------------------------------
    1. Shell & Skip Link       full-height composition and keyboard shortcut
-   2. Header & Brand          sticky brand presentation and logo sizing
+   2. Header & Brand          sticky route gradients and readable brand surface
    3. Navigation              shared desktop/mobile link states and icons
    4. Main & Setup Route      responsive content container and route placeholder
    5. Footer                  approved public contact and copyright content
@@ -37,13 +37,31 @@
 }
 
 .site-header {
+  --header-gradient: var(--gradient-code);
+
   position: sticky;
   top: 0;
   z-index: var(--layer-header);
   min-height: var(--header-height);
-  border-bottom: 1px solid var(--color-border);
-  background: rgb(255 255 255 / 96%);
+  border-bottom: 1px solid color-mix(in srgb, var(--white) 42%, transparent);
+  background: var(--header-gradient);
   box-shadow: var(--shadow-small);
+}
+
+.site-header--home {
+  --header-gradient: var(--gradient-code);
+}
+
+.site-header--portfolio {
+  --header-gradient: var(--gradient-phoenix);
+}
+
+.site-header--links {
+  --header-gradient: var(--gradient-creative);
+}
+
+.site-header--contact {
+  --header-gradient: var(--gradient-contact);
 }
 
 .site-header::after {
@@ -51,8 +69,8 @@
   right: 0;
   bottom: -1px;
   left: 0;
-  height: 3px;
-  background: var(--gradient-phoenix);
+  height: 2px;
+  background: color-mix(in srgb, var(--white) 48%, transparent);
   content: '';
 }
 
@@ -72,7 +90,12 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
-  border-radius: var(--radius-small);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--white) 34%, transparent);
+  border-radius: var(--radius-medium);
+  color: var(--white);
+  background: color-mix(in srgb, var(--obsidian) 34%, transparent);
+  backdrop-filter: blur(0.45rem);
   text-decoration: none;
 }
 
@@ -86,7 +109,7 @@
   width: 3.5rem;
   height: 3.5rem;
   flex: 0 0 auto;
-  border: 2px solid var(--silver);
+  border: 2px solid color-mix(in srgb, var(--white) 72%, transparent);
   border-radius: var(--radius-medium);
   object-fit: cover;
   aspect-ratio: 1;
@@ -98,7 +121,7 @@
 }
 
 .brand-link__name {
-  color: var(--midnight-blue);
+  color: var(--white);
   font-family: var(--font-heading);
   font-size: clamp(1.05rem, 2vw, 1.3rem);
   font-weight: 700;
@@ -106,7 +129,7 @@
 }
 
 .brand-link__role {
-  color: var(--color-text-muted);
+  color: var(--silver);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
 }
@@ -175,6 +198,27 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.8;
+}
+
+.desktop-navigation .navigation-link {
+  border-color: color-mix(in srgb, var(--white) 24%, transparent);
+  color: var(--white);
+  background: color-mix(in srgb, var(--obsidian) 28%, transparent);
+  backdrop-filter: blur(0.4rem);
+  text-shadow: 0 0.1rem 0.4rem var(--obsidian);
+}
+
+.desktop-navigation .navigation-link:hover {
+  border-color: color-mix(in srgb, var(--white) 72%, transparent);
+  color: var(--white);
+  background: color-mix(in srgb, var(--obsidian) 48%, transparent);
+}
+
+.desktop-navigation .navigation-link--active,
+.desktop-navigation .navigation-link--active:hover {
+  border-color: var(--white);
+  color: var(--white);
+  background: var(--obsidian);
 }
 
 .mobile-navigation {

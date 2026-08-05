@@ -18,6 +18,9 @@
   --emerald: #22c55e;
   --sapphire: #3b82f6;
   --magenta: #ec4899;
+  /* Requested Contact-header bridge stop; it supplements rather than replaces
+     the canonical royal-violet value used by the Creative gradient. */
+  --contact-violet: #a855f7;
   --graphite: #374151;
   --cool-gray: #64748b;
   --silver: #e2e8f0;
@@ -41,6 +44,14 @@
     var(--royal-violet),
     var(--magenta),
     var(--phoenix-red)
+  );
+  --gradient-contact: linear-gradient(
+    135deg,
+    var(--magenta),
+    var(--contact-violet),
+    var(--royal-violet),
+    var(--sapphire),
+    var(--teal)
   );
 
   --color-page: var(--snow);
