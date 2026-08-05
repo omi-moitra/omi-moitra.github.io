@@ -109,7 +109,7 @@ After this feature is complete:
   - Contact: `#EC4899` → `#A855F7` → `#7C3AED` → `#3B82F6` → `#14B8A6`.
 
 - Derive the active Header theme from React Router location rather than direct location mutation.
-- Place brand and desktop-navigation text on restrained dark translucent backing surfaces so contrast remains stable across every gradient stop.
+- Present the brand and desktop navigation directly on the Header gradient without card or button containers; preserve legibility with strong text color, weight, and restrained text shadow.
 - Place the personal logo and its Home link in the Header.
 - Above 768px, show the public navigation horizontally at the top.
 - At 768px and below, hide the desktop link row while retaining the branded Header/logo area.
@@ -463,7 +463,7 @@ The logo combines identity and a familiar Home affordance. Its alt text describe
 - [x] Portfolio uses the Phoenix gradient across the full sticky Header.
 - [x] Links uses the Creative gradient across the full sticky Header.
 - [x] Contact uses the requested magenta → violet → royal violet → sapphire → teal gradient across the full sticky Header.
-- [x] Brand and desktop-navigation content retain readable backing surfaces across every Header gradient.
+- [x] Brand and desktop-navigation content appear directly on each Header gradient without card or button containers and remain readable through color, weight, and text shadow.
 - [x] One AI-generated personal logo is visible, responsive, and free of distortion/overflow.
 - [x] The supplied source logo has been resized/compressed or replaced by an optimized derivative appropriate for repeated Header delivery.
 - [x] The logo has intrinsic sizing or a stable aspect ratio that prevents layout shift.

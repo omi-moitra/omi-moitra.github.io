@@ -2,7 +2,7 @@
    Shared application layout — Header, navigation, route content, and Footer
    --------------------------------------------------------------------------
    1. Shell & Skip Link       full-height composition and keyboard shortcut
-   2. Header & Brand          sticky route gradients and readable brand surface
+   2. Header & Brand          sticky route gradients and unboxed brand content
    3. Navigation              shared desktop/mobile link states and icons
    4. Main & Setup Route      responsive content container and route placeholder
    5. Footer                  approved public contact and copyright content
@@ -90,13 +90,9 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-1) var(--space-2);
-  border: 1px solid color-mix(in srgb, var(--white) 34%, transparent);
-  border-radius: var(--radius-medium);
   color: var(--white);
-  background: color-mix(in srgb, var(--obsidian) 34%, transparent);
-  backdrop-filter: blur(0.45rem);
   text-decoration: none;
+  text-shadow: 0 0.1rem 0.5rem rgb(15 17 21 / 72%);
 }
 
 .brand-link:hover .brand-link__name {
@@ -109,8 +105,7 @@
   width: 3.5rem;
   height: 3.5rem;
   flex: 0 0 auto;
-  border: 2px solid color-mix(in srgb, var(--white) 72%, transparent);
-  border-radius: var(--radius-medium);
+  filter: drop-shadow(0 0.15rem 0.35rem rgb(15 17 21 / 48%));
   object-fit: cover;
   aspect-ratio: 1;
 }
@@ -201,24 +196,23 @@
 }
 
 .desktop-navigation .navigation-link {
-  border-color: color-mix(in srgb, var(--white) 24%, transparent);
+  border-color: transparent;
   color: var(--white);
-  background: color-mix(in srgb, var(--obsidian) 28%, transparent);
-  backdrop-filter: blur(0.4rem);
+  background: transparent;
   text-shadow: 0 0.1rem 0.4rem var(--obsidian);
 }
 
 .desktop-navigation .navigation-link:hover {
-  border-color: color-mix(in srgb, var(--white) 72%, transparent);
+  border-color: transparent;
   color: var(--white);
-  background: color-mix(in srgb, var(--obsidian) 48%, transparent);
+  background: transparent;
 }
 
 .desktop-navigation .navigation-link--active,
 .desktop-navigation .navigation-link--active:hover {
-  border-color: var(--white);
+  border-color: transparent;
   color: var(--white);
-  background: var(--obsidian);
+  background: transparent;
 }
 
 .mobile-navigation {
