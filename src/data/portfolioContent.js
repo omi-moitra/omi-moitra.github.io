@@ -1,20 +1,21 @@
 // =============================================================================
-// src/data/portfolioContent.js — sourced Portfolio content and asset metadata
+// src/data/portfolioContent.js — sourced Journey/Projects content and asset metadata
 // -----------------------------------------------------------------------------
-// 1. Imports              optimized Portfolio-specific generated artwork
+// 1. Imports              optimized route-specific generated artwork
 // 2. Introduction         concise professional background framing
 // 3. Education            newest-first resume-derived academic entries
 // 4. Experience           newest-first roles and sourced responsibilities
-// 5. Project              truthful current-site description and verified URLs
+// 5. Projects             re-export of verified shared project inventory
 // 6. Resume boundary      approval-gated public download metadata
 // 7. Image inventory      provenance, placement, dimensions, and alt decisions
 // =============================================================================
 
 import portfolioCodeScroll from '../assets/portfolio-code-scroll.jpg'
 import portfolioPhoenixJourney from '../assets/portfolio-phoenix-journey.jpg'
+export { projects } from './projects.js'
 
 export const portfolioIntroduction =
-  'My path to full stack development brings together hands-on application building with experience in legal research, risk analysis, precise documentation, and cross-functional communication. Explore the education, professional experience, and project work that shape how I approach requirements and build maintainable software.'
+  'My path to full stack development brings together hands-on application building with experience in legal research, risk analysis, precise documentation, and cross-functional communication. Explore the education and professional experience that shape how I approach requirements and build maintainable software.'
 
 const educationEntries = [
   {
@@ -106,32 +107,12 @@ export const professionalExperience = [...experienceEntries].sort(
   (first, second) => second.startYear - first.startYear,
 )
 
-export const projects = [
-  {
-    id: 'oishieka-fantasy-portfolio',
-    name: 'Oishieka Moitra Fantasy Portfolio',
-    technologies: ['React', 'Vite', 'JavaScript', 'React Router', 'CSS'],
-    purpose:
-      'Give recruiters and professional contacts one responsive place to review Oishieka’s professional profile, skills, education, experience, and current project work.',
-    description:
-      'A phoenix-inspired static React single-page application built for GitHub Pages. The current build uses reusable components, hash-based routing, semantic content, responsive navigation, and accessible presentation across its implemented public pages.',
-    // :warning: Do not substitute thematic art for the required actual website
-    // screenshot. This remains null until a browser capture is approved.
-    image: null,
-    imageAlt: '',
-    imageWidth: null,
-    imageHeight: null,
-    liveUrl: 'https://omi-moitra.github.io',
-    sourceUrl: 'https://github.com/omi-moitra/omi-moitra.github.io',
-  },
-]
-
 // :warning: The private source PDF has not been approved for unrestricted
 // publication. Keep this null so the page cannot emit a broken or unsafe link;
 // add metadata only when public/assets/resume-standard.pdf is owner-approved.
 export const resume = null
 
-// :warning: These images were generated specifically for Portfolio and do not
+// :warning: These images were generated specifically for Journey and Projects and do not
 // count Header, Home, favicon, or screenshot assets toward this feature's pair.
 export const portfolioImages = {
   journey: {
@@ -143,7 +124,7 @@ export const portfolioImages = {
     generatedOn: '2026-08-05',
     purpose:
       'Connect academic study, professional analysis, and software development as one progression.',
-    placement: 'Full Portfolio page background behind the résumé trail',
+    placement: 'Full Journey page background behind the résumé trail',
     // The image establishes atmosphere while the complete journey remains in
     // semantic HTML, so its CSS-background placement is intentionally silent.
     alt: '',
@@ -158,7 +139,7 @@ export const portfolioImages = {
     generatedOn: '2026-08-05',
     purpose:
       'Connect precise professional documentation with structured software systems.',
-    placement: 'Professional Experience conclusion',
+    placement: 'Projects page background and collection illustration',
     alt: '',
     loading: 'lazy',
   },

@@ -62,11 +62,11 @@ Build and deploy a professional portfolio that satisfies every Module 16 rubric 
 
 - A root-level React and Vite application written in JavaScript.
 - React Router with `HashRouter` for GitHub Pages-compatible client-side routing.
-- Public Home, Portfolio, Links, and Contact pages.
+- Public Home, Journey, Projects, Links, and Contact pages.
 - A shared public layout with a logo, desktop header navigation, mobile bottom navigation, and footer.
 - The Phoenix Codex visual system: cozy fantasy as the primary world, street-art marks as secondary energy, cyberpunk glow as a restrained accent, and code as the underlying magic-system metaphor.
 - A progressively enhanced Home vortex with a phoenix focal animation, a lightweight mobile composition, a static non-WebGL fallback, and a complete semantic HTML layer that loads first.
-- A combined Portfolio experience containing the plan's Phoenix Path journey and Crafted Worlds project presentation without adding competing top-level Journey or Projects routes.
+- Separate Journey and Projects experiences matching the plan's Phoenix Path and Crafted Worlds destinations.
 - A glowing, selectable résumé timeline and a settled editorial project-media grid whose motion never blocks reading or interaction.
 - Page-specific gradient currents, warm parchment surfaces, responsive performance budgets, and reduced-motion variants derived from the Phoenix Codex plan.
 - A hidden Login page that is reachable directly but absent from public navigation.
@@ -76,7 +76,7 @@ Build and deploy a professional portfolio that satisfies every Module 16 rubric 
 - Anonymous contact-message insertion without anonymous read or delete access.
 - Authenticated administrator login, session persistence, message reading, message viewing, message deletion, and logout.
 - Verified personal content derived from the resume and other approved sources.
-- Education, work experience, projects, and a downloadable approved resume on Portfolio.
+- Education, work experience, and a downloadable approved résumé on Journey, with verified project work on Projects.
 - At least three technical skills and three soft skills with icons and supporting descriptions on Home.
 - At least three external resource cards on Links.
 - Required AI-created logo and page-specific images, with generation details and accessibility decisions documented.
@@ -94,7 +94,7 @@ Build and deploy a professional portfolio that satisfies every Module 16 rubric 
 - Anonymous message listing, viewing, updating, or deleting.
 - A custom CMS, public blog, ecommerce, payments, or unrelated CRUD features.
 - Email notifications for contact submissions unless separately approved after required work passes.
-- A standalone Resume route; the required resume experience belongs on Portfolio.
+- A standalone Resume route; the required résumé experience belongs on Journey.
 - Skill percentages or proficiency claims not supported by verified content.
 - Publication of a phone number, postal code, home address, private credential, or unapproved personal information.
 - Dark mode, multiple languages, or multiple selectable themes until all required checkpoints pass and the enhancement has its own approved specification.
@@ -127,23 +127,23 @@ statement is implemented as a hierarchy, not as a collection of equally loud sty
    crafted worlds represent projects, and code/rune motifs connect fantasy with the
    developer story.
 
-### Required Route Adaptation
+### Required Route Model
 
 The plan's thematic names are subtitles, never replacements for clear navigation
-labels. The five conceptual destinations map to the rubric's four public routes:
+labels. Journey and Projects remain separate public routes:
 
 | Clear public label | Thematic subtitle | Implementation destination |
 | --- | --- | --- |
 | Home | Enter the Codex | `/` |
-| Journey | The Phoenix Path | Portfolio journey section at `/portfolio` |
-| Projects | Crafted Worlds | Portfolio projects section at `/portfolio` |
+| Journey | The Phoenix Path | `/journey` |
+| Projects | Crafted Worlds | `/projects` |
 | Links | Portals | `/links` |
 | Contact | Send a Message | `/contact` |
 
-Do not add Journey or Projects to the primary navigation. Deep-linked project case
-studies may be added later under `/portfolio/projects/:slug` only after the core
-Portfolio route, verified project data, and GitHub Pages refresh behavior pass. Until
-then, case-study details belong in accessible in-page panels or dialogs.
+Add both Journey and Projects to the primary navigation. Deep-linked project case
+studies may be added later under `/projects/:slug` only after the core Projects route,
+verified project data, and GitHub Pages refresh behavior pass. Until then, case-study
+details belong in accessible in-page panels or dialogs.
 
 ### Progressive Delivery Contract
 
@@ -152,10 +152,10 @@ expensive visual effect:
 
 1. **Foundation:** routing, shared shell, design tokens, typography, cards, buttons,
    gradient current, responsive behavior, focus states, and reduced-motion utilities.
-2. **Content:** verified Home, Portfolio, Links, Contact, authentication, and Back
+2. **Content:** verified Home, Journey, Projects, Links, Contact, authentication, and Back
    Office behavior rendered as complete semantic HTML with optimized static images.
-3. **Signature scenes:** Home vortex and phoenix, Portfolio journey depth and trail,
-   and the project media-wall entrance, each loaded progressively with static fallbacks.
+3. **Signature scenes:** Home vortex and phoenix, Journey depth and trail, and the
+   Projects media-wall entrance, each loaded progressively with static fallbacks.
 4. **Polish:** performance, keyboard and screen-reader checks, metadata, social image,
    favicon, cross-browser checks, and deployed-route verification.
 5. **Post-launch only:** theme chooser, sound, device tilt, advanced 3D transitions,
@@ -168,6 +168,7 @@ content, forms, résumé actions, links, and authentication workflows usable.
 ## Feature Index — Links Only
 
 - [`ai/features/setup-deploy.feature.md`](features/setup-deploy.feature.md)
+- [`ai/features/styling.feature.md`](features/styling.feature.md) — supporting cross-feature visual-system contract
 - [`ai/features/header-footer.feature.md`](features/header-footer.feature.md)
 - [`ai/features/home-page.feature.md`](features/home-page.feature.md)
 - [`ai/features/portfolio-page.feature.md`](features/portfolio-page.feature.md)
@@ -176,7 +177,7 @@ content, forms, résumé actions, links, and authentication workflows usable.
 - [`ai/features/login-page.feature.md`](features/login-page.feature.md)
 - [`ai/features/back-office.feature.md`](features/back-office.feature.md)
 
-All eight feature files plus this main file form the nine required AI specification documents. Do not keep the placeholder `ai/features/feature-name.feature.md` after the required specifications are created.
+The eight rubric-required feature files plus this main file remain the nine required AI specification documents. `styling.feature.md` is an additional supporting contract that translates the Phoenix Codex plan into shared implementation rules; it does not replace any rubric-required feature file. Do not keep the placeholder `ai/features/feature-name.feature.md` after the required specifications are created.
 
 The Setup & Deploy feature specification must not contain Supabase setup details, as directed by the rubric. Project-wide architecture may identify Supabase here, but feature-specific Supabase behavior and acceptance criteria belong in Contact, Login, and Back Office specifications.
 
@@ -187,7 +188,8 @@ The router must use `HashRouter`. Route paths inside React Router omit the hash,
 | React Router path | Deployed URL | Access | Purpose |
 | --- | --- | --- | --- |
 | `/` | `/#/` | Public | Introduction, technical skills, and soft skills/talents |
-| `/portfolio` | `/#/portfolio` | Public | Education, work experience, projects, creative HTML resume content, and approved resume download |
+| `/journey` | `/#/journey` | Public | Education, work experience, creative HTML résumé content, and approved résumé download |
+| `/projects` | `/#/projects` | Public | Verified project grid and accessible case-study experiences |
 | `/links` | `/#/links` | Public | At least three curated external resources |
 | `/contact` | `/#/contact` | Public | Validated Supabase-backed contact form |
 | `/login` | `/#/login` | Hidden public route | Administrator authentication; absent from all public navigation |
@@ -196,7 +198,7 @@ The router must use `HashRouter`. Route paths inside React Router omit the hash,
 ### Navigation Rules
 
 - Home is the default route.
-- Public navigation contains Home, Portfolio, Links, and Contact only.
+- Public navigation contains Home, Journey, Projects, Links, and Contact only.
 - Login and Back Office must never appear in the header, footer, mobile navigation, public page content, or other visible discovery links.
 - Above 768px, show horizontal navigation in the header.
 - At 768px and below, replace desktop links with an icon-based bottom navigation.
@@ -213,7 +215,7 @@ Use real, verified content rather than Vite starter text, lorem ipsum, generic c
 ### Home
 
 - Show Oishieka Moitra’s name, Full Stack Developer title, and a concise professional introduction.
-- Include clear calls to action for Portfolio and Contact.
+- Include clear calls to action for Journey, Projects, and Contact.
 - Present at least three technical skills with icons and meaningful descriptions.
 - Present at least three soft skills or talents with icons and meaningful descriptions.
 - Use at least three clearly separated visual sections.
@@ -223,19 +225,23 @@ Use real, verified content rather than Vite starter text, lorem ipsum, generic c
 - After required skills, include up to three verified featured projects, a Phoenix
   Path preview, and a final Contact invitation.
 
-### Portfolio
+### Journey
 
 - Show Education with institution, program or degree, and verified dates, newest first.
 - Show Work Experience with role, organization, verified dates, responsibilities, and verifiable achievements where available, newest first.
-- Show at least one project with name, technology, purpose, description, image, live link, and source link where applicable.
 - Keep essential resume information in semantic HTML rather than only inside a PDF.
 - Provide a working open/download link for the approved `public/assets/resume-standard.pdf`.
-- Include at least two portfolio-specific AI-created images.
-- Combine Journey and Projects on this route: use an accessible glowing timeline for
-  education/work and a settled editorial media wall for verified project case studies.
+- Use an accessible glowing timeline for education and work experience.
+- Include Journey-specific visual assets required by its owning feature specification.
+
+### Projects
+
+- Show at least one project with name, technology, purpose, description, image, live link, and source link where applicable.
+- Use a settled editorial media wall for verified project case studies.
+- Include Projects-specific visual assets required by its owning feature specification.
 - Treat three complete projects as the Phoenix Codex MVP target. Until three are
   supplied, render only verified entries and report the content gap openly.
-- Offer a separately approved creative résumé in addition to the required standard
+- Journey may offer a separately approved creative résumé in addition to the required standard
   résumé; never let the optional file break the standard download.
 
 ### Links
@@ -343,8 +349,8 @@ Only these client variables are permitted:
 - Add a dependency only when a required or separately approved feature needs it.
 - Commit `package.json` and `package-lock.json` together after dependency changes.
 - Prefer browser APIs and CSS for small interactions before adding another library.
-- `three` is permitted only for the approved Home vortex and Portfolio journey/media
-  enhancements. Keep scene code route-scoped and lazy-loaded; do not make Three.js a
+- `three` is permitted only for the approved Home vortex, Journey trail, and Projects
+  media enhancements. Keep scene code route-scoped and lazy-loaded; do not make Three.js a
   prerequisite for first paint or semantic content.
 - Framer Motion, particle libraries, Lottie, GSAP, Tailwind, and similar tools are not part of required scope.
 - If an optional feature later justifies one of these tools, document the decision in that feature’s approved specification and retest performance, accessibility, lint, and build.
@@ -414,7 +420,8 @@ Use these approved route color-stop sequences for the shared gradient current:
 | Route | Token sequence | Suggested use |
 | --- | --- | --- |
 | Home | `softCream` → `phoenixCoral` → `blushPink` → `radiantGold` → `arcaneViolet` | Welcoming Codex energy |
-| Portfolio | `radiantGold` → `phoenixCoral` → `plasmaPink` → `arcaneViolet` | Journey and crafted-world energy |
+| Journey | `radiantGold` → `phoenixCoral` → `plasmaPink` → `arcaneViolet` | Phoenix Path energy |
+| Projects | `spiritCyan` → `arcaneViolet` → `plasmaPink` → `solarOrange` | Crafted Worlds energy |
 | Links | `mintLight` → `spiritCyan` → `portalBlue` → `arcaneViolet` | Portal/resource energy |
 | Contact | `peachGlow` → `blushPink` → `lavenderMist` → `butterGold` | Calm dispatch energy |
 
@@ -423,7 +430,8 @@ The default CSS custom properties are route-specific:
 ```css
 :root {
   --gradient-home: linear-gradient(90deg, var(--soft-cream), var(--phoenix-coral), var(--blush-pink), var(--radiant-gold), var(--arcane-violet));
-  --gradient-portfolio: linear-gradient(90deg, var(--radiant-gold), var(--phoenix-coral), var(--plasma-pink), var(--arcane-violet));
+  --gradient-journey: linear-gradient(90deg, var(--radiant-gold), var(--phoenix-coral), var(--plasma-pink), var(--arcane-violet));
+  --gradient-projects: linear-gradient(90deg, var(--spirit-cyan), var(--arcane-violet), var(--plasma-pink), var(--solar-orange));
   --gradient-links: linear-gradient(90deg, var(--mint-light), var(--spirit-cyan), var(--portal-blue), var(--arcane-violet));
   --gradient-contact: linear-gradient(90deg, var(--peach-glow), var(--blush-pink), var(--lavender-mist), var(--butter-gold));
 }
@@ -449,7 +457,7 @@ The minimum inventory is:
 
 - one personal logo linked to Home;
 - two relevant Home images;
-- two portfolio-specific images; and
+- the Journey- and Projects-specific images required by their owning feature specifications; and
 - one relevant Links image.
 
 For each AI-created asset, document the generation tool, purpose, filename, optimization, and alt-text decision in the relevant feature specification or research file. Use empty alt text for purely decorative images. A stock asset does not count as AI-created merely because it was downloaded from an image library.
@@ -826,15 +834,16 @@ The project is complete only when every item below is true or has documented coa
 - [ ] Every modified comment-capable source file has an accurate TOC banner, every Markdown document has an appropriate linked TOC, and important decisions or limitations use current why-comments and `:warning:` annotations.
 - [ ] The implementation handoff reports verification and provides safe, exact staging commands and truthful ready-to-run commit messages for the relevant changes.
 - [ ] All public content is verified, proofread, professional, and free of Vite starter text, lorem ipsum, unsupported claims, invented metrics, and unapproved private information.
-- [ ] Home, Portfolio, Links, Contact, hidden Login, and protected Back Office routes work through `HashRouter` locally and on GitHub Pages.
+- [ ] Home, Journey, Projects, Links, Contact, hidden Login, and protected Back Office routes work through `HashRouter` locally and on GitHub Pages.
 - [ ] Header, footer, desktop navigation, mobile bottom navigation, logo link, focus states, and active states work consistently across public pages.
 - [ ] Home includes the required introduction, three technical skills, three soft skills, three visual sections, and two relevant AI-created images.
 - [ ] Home's Enter the Codex scene loads progressively, simplifies on mobile, pauses
   out of view, respects reduced motion, cleans up fully, and falls back to a poster.
-- [ ] Portfolio includes complete reverse-chronological Education, Work, and Projects sections, two portfolio-specific AI-created images, and a valid approved resume download.
-- [ ] Portfolio combines the Phoenix Path timeline and a stable Crafted Worlds media
-  grid, exposes accessible case-study detail, and never invents projects to reach the
-  three-project creative target.
+- [ ] Journey includes complete reverse-chronological Education and Work sections plus a valid approved résumé download.
+- [ ] Projects includes complete verified project entries and its required project-specific visual assets.
+- [ ] Journey presents the accessible Phoenix Path timeline, and Projects presents a
+  stable Crafted Worlds media grid with accessible case-study detail; neither route
+  invents content to appear complete.
 - [ ] Links contains at least three complete, responsive, accessible resource items and one relevant AI-created image.
 - [ ] Contact rejects invalid input, prevents duplicates, inserts exactly one valid message, reports failures safely, preserves failed input, and resets after success.
 - [ ] Missing Supabase configuration never crashes the application or exposes secrets.

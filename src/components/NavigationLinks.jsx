@@ -1,7 +1,7 @@
 // =============================================================================
 // src/components/NavigationLinks.jsx — shared desktop/mobile NavLink renderer
 // -----------------------------------------------------------------------------
-// 1. Icon metadata       dependency-free paths for four public destinations
+// 1. Icon metadata       dependency-free paths for five public destinations
 // 2. NavigationIcon      decorative mobile icon rendering
 // 3. NavigationLinks     shared active-aware public route list
 // =============================================================================
@@ -14,7 +14,11 @@ const iconPaths = {
     'M3 10.75 12 3l9 7.75',
     'M5 9.5V21h5v-6h4v6h5V9.5',
   ],
-  portfolio: [
+  journey: [
+    'M5 20c1.5-4.5 3.25-7.5 7-9.5 3.2-1.7 5-3.8 6.5-7.5',
+    'M4 20h4M16.5 3H20v3.5M11 15l2 2 3.5-4',
+  ],
+  projects: [
     'M4 7h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z',
     'M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2',
     'M2 12h20M10 12v2h4v-2',
@@ -58,7 +62,12 @@ function NavigationLinks({ showIcons = false }) {
             to={destination.to}
           >
             {showIcons && <NavigationIcon name={destination.icon} />}
-            <span>{destination.label}</span>
+            <span className="navigation-link__text">
+              <span>{destination.label}</span>
+              {!showIcons && (
+                <span className="navigation-link__subtitle">{destination.subtitle}</span>
+              )}
+            </span>
           </NavLink>
         </li>
       ))}

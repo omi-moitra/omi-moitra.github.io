@@ -1,73 +1,99 @@
 /* ==========================================================================
-   Global theme — canonical phoenix tokens and accessible responsive baseline
+   Global theme — Phoenix Codex tokens and accessible responsive baseline
    --------------------------------------------------------------------------
-   1. Brand Tokens        palette, gradients, type, spacing, and layout layers
+   1. Codex Tokens        raw palette, semantic roles, route currents, and scale
    2. Document Baseline   sizing, typography, media, focus, and wrapping
-   3. Reduced Motion      operating-system motion preference
+   3. Compatibility       color-mix fallback and forced-colors resilience
+   4. Reduced Motion      operating-system motion preference
    ========================================================================== */
 
 :root {
-  /* Canonical phoenixPalette values from ai/ai-spec.md. */
-  --phoenix-red: #d62828;
-  --obsidian: #0f1115;
-  --midnight-blue: #1e2a44;
-  --teal: #14b8a6;
-  --royal-violet: #7c3aed;
-  --blaze-orange: #f97316;
-  --solar-gold: #facc15;
-  --emerald: #22c55e;
-  --sapphire: #3b82f6;
-  --magenta: #ec4899;
-  /* Requested Contact-header bridge stop; it supplements rather than replaces
-     the canonical royal-violet value used by the Creative gradient. */
-  --contact-violet: #a855f7;
-  --graphite: #374151;
-  --cool-gray: #64748b;
-  --silver: #e2e8f0;
-  --snow: #f8fafc;
-  --white: #ffffff;
+  --parchment: #f5ebd8;
+  --soft-cream: #fff9ed;
+  --warm-ivory: #fffdf6;
+  --aged-paper: #e7d5b7;
+  --ink-black: #232126;
+  --charcoal: #37323b;
+  --warm-brown: #725e50;
+  --blush-pink: #f5b9c8;
+  --peach-glow: #f6be96;
+  --lavender-mist: #c9b9f4;
+  --sky-blue: #afcff2;
+  --mint-light: #aee3ce;
+  --butter-gold: #f4d889;
+  --phoenix-coral: #ff6559;
+  --solar-orange: #ff963d;
+  --radiant-gold: #ffd34e;
+  --plasma-pink: #f34da0;
+  --arcane-violet: #8757e8;
+  --portal-blue: #428bff;
+  --spirit-cyan: #35d5dc;
+  --renewal-green: #43c98a;
 
-  --gradient-phoenix: linear-gradient(
-    135deg,
-    var(--phoenix-red),
-    var(--blaze-orange),
-    var(--solar-gold)
+  --gradient-home: linear-gradient(
+    90deg,
+    var(--soft-cream),
+    var(--phoenix-coral),
+    var(--blush-pink),
+    var(--radiant-gold),
+    var(--arcane-violet)
   );
-  --gradient-code: linear-gradient(
-    135deg,
-    var(--midnight-blue),
-    var(--sapphire),
-    var(--teal)
+  --gradient-journey: linear-gradient(
+    90deg,
+    var(--radiant-gold),
+    var(--phoenix-coral),
+    var(--plasma-pink),
+    var(--arcane-violet)
   );
-  --gradient-creative: linear-gradient(
-    135deg,
-    var(--royal-violet),
-    var(--magenta),
-    var(--phoenix-red)
+  --gradient-projects: linear-gradient(
+    90deg,
+    var(--spirit-cyan),
+    var(--arcane-violet),
+    var(--plasma-pink),
+    var(--solar-orange)
+  );
+  --gradient-links: linear-gradient(
+    90deg,
+    var(--mint-light),
+    var(--spirit-cyan),
+    var(--portal-blue),
+    var(--arcane-violet)
   );
   --gradient-contact: linear-gradient(
-    135deg,
-    var(--magenta),
-    var(--contact-violet),
-    var(--royal-violet),
-    var(--sapphire),
-    var(--teal)
+    90deg,
+    var(--peach-glow),
+    var(--blush-pink),
+    var(--lavender-mist),
+    var(--butter-gold)
+  );
+  --gradient-neutral: linear-gradient(
+    90deg,
+    var(--aged-paper),
+    var(--lavender-mist),
+    var(--warm-brown)
   );
 
-  --color-page: var(--snow);
-  --color-surface: var(--white);
-  --color-text: var(--obsidian);
-  --color-text-muted: var(--graphite);
-  --color-border: var(--silver);
-  --color-focus: var(--royal-violet);
-  --color-success: var(--emerald);
-  --color-warning: var(--solar-gold);
-  --color-error: var(--phoenix-red);
-  --color-code: var(--silver);
+  --color-page: var(--parchment);
+  --color-surface: var(--warm-ivory);
+  --color-text: var(--ink-black);
+  --color-text-muted: var(--charcoal);
+  --color-border: var(--aged-paper);
+  --color-focus: var(--arcane-violet);
+  --color-on-dark: var(--warm-ivory);
+  --color-disabled: color-mix(in srgb, var(--charcoal) 72%, var(--warm-ivory));
+  --color-success: #176c46;
+  --color-warning: #8a5a00;
+  --color-error: #a92525;
+  --color-code: color-mix(in srgb, var(--lavender-mist) 35%, var(--soft-cream));
 
+  --font-display: 'WindSong', 'Brush Script MT', cursive;
   --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-body: Nunito, Lato, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 650;
+  --font-weight-bold: 800;
+  --font-weight-heavy: 850;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -79,12 +105,20 @@
   --space-8: 4rem;
   --page-gutter: clamp(1rem, 4vw, 2rem);
   --content-max-width: 75rem;
+  --text-max-width: 70ch;
+  --target-min-size: 2.75rem;
 
   --radius-small: 0.5rem;
   --radius-medium: 1rem;
   --radius-large: 1.5rem;
-  --shadow-small: 0 0.25rem 1rem rgb(15 17 21 / 8%);
-  --shadow-large: 0 1.25rem 4rem rgb(15 17 21 / 12%);
+  --shadow-small: 0 0.25rem 1rem color-mix(in srgb, var(--charcoal) 10%, transparent);
+  --shadow-large: 0 1.25rem 4rem color-mix(in srgb, var(--charcoal) 16%, transparent);
+
+  --duration-quick: 150ms;
+  --duration-standard: 220ms;
+  --duration-settle: 620ms;
+  --duration-ambient: 8s;
+  --ease-standard: cubic-bezier(0.2, 0.75, 0.2, 1);
 
   --header-height: 5rem;
   --mobile-navigation-height: 4.5rem;
@@ -97,6 +131,7 @@
   font-family: var(--font-body);
   color: var(--color-text);
   background: var(--color-page);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -120,8 +155,16 @@ body {
   min-height: 100svh;
   margin: 0;
   color: var(--color-text);
-  background: var(--color-page);
+  background:
+    radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--radiant-gold) 11%, transparent), transparent 22rem),
+    radial-gradient(circle at 88% 28%, color-mix(in srgb, var(--lavender-mist) 14%, transparent), transparent 28rem),
+    var(--color-page);
   line-height: 1.6;
+}
+
+::selection {
+  color: var(--ink-black);
+  background: var(--butter-gold);
 }
 
 button,
@@ -129,6 +172,12 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+button,
+input,
+select {
+  min-height: var(--target-min-size);
 }
 
 img,
@@ -149,6 +198,18 @@ a {
   overflow-wrap: anywhere;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
 #root {
   min-height: 100svh;
 }
@@ -156,6 +217,35 @@ a {
 :focus-visible {
   outline: 3px solid var(--color-focus);
   outline-offset: 3px;
+  box-shadow: 0 0 0 2px var(--warm-ivory);
+}
+
+@supports not (color: color-mix(in srgb, black, white)) {
+  body {
+    background: var(--color-page);
+  }
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid CanvasText;
+  }
+
+  a {
+    text-decoration-thickness: auto;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    border: 2px solid CanvasText;
+  }
+
+  .gradient-current {
+    background: CanvasText;
+    box-shadow: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

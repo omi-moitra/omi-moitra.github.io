@@ -1,7 +1,7 @@
 /* ==========================================================================
    Contact Page — accessible public inquiry form and resilient feedback states
    --------------------------------------------------------------------------
-   1. Page & Introduction     responsive composition and welcoming brand moment
+   1. Page & Introduction     calm parchment-dispatch composition
    2. Form Panel              solid form surface, heading, and field grid
    3. Controls & Actions      labels, guidance, validation, focus, and submit
    4. Feedback States        pending, success, failure, and configuration UI
@@ -28,8 +28,9 @@
   overflow: hidden;
   padding: clamp(var(--space-5), 5vw, var(--space-7));
   border-radius: var(--radius-large);
-  color: var(--white);
-  background: var(--midnight-blue);
+  border: 1px solid var(--aged-paper);
+  color: var(--ink-black);
+  background: var(--soft-cream);
   box-shadow: var(--shadow-large);
   isolation: isolate;
 }
@@ -39,8 +40,8 @@
   z-index: -1;
   inset: 0;
   background:
-    radial-gradient(circle at 90% 12%, rgb(236 72 153 / 38%), transparent 34%),
-    radial-gradient(circle at 14% 92%, rgb(20 184 166 / 30%), transparent 35%);
+    radial-gradient(circle at 90% 12%, color-mix(in srgb, var(--blush-pink) 38%, transparent), transparent 34%),
+    radial-gradient(circle at 14% 92%, color-mix(in srgb, var(--lavender-mist) 28%, transparent), transparent 35%);
   content: '';
 }
 
@@ -51,14 +52,14 @@
   left: var(--space-5);
   height: 0.35rem;
   border-radius: 999px 999px 0 0;
-  background: var(--gradient-phoenix);
+  background: var(--gradient-contact);
   content: '';
 }
 
 .contact-introduction__eyebrow,
 .contact-form-panel__heading > p:first-child {
   margin: 0 0 var(--space-3);
-  color: var(--solar-gold);
+  color: var(--arcane-violet);
   font-size: 0.82rem;
   font-weight: 850;
   letter-spacing: 0.1em;
@@ -68,7 +69,8 @@
 .contact-introduction h1 {
   max-width: 8ch;
   margin: 0;
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
+  font-weight: 500;
   font-size: clamp(3.2rem, 8vw, 5.8rem);
   line-height: 0.95;
   letter-spacing: -0.035em;
@@ -77,7 +79,7 @@
 
 .contact-introduction__lead {
   margin: var(--space-5) 0 0;
-  color: var(--silver);
+  color: var(--charcoal);
   font-size: clamp(1rem, 2vw, 1.16rem);
 }
 
@@ -91,18 +93,18 @@
 .contact-introduction__signal span {
   width: 0.7rem;
   height: 0.7rem;
-  border: 2px solid var(--white);
+  border: 2px solid var(--warm-ivory);
   border-radius: 50%;
-  background: var(--signal-color, var(--magenta));
-  box-shadow: 0 0 1rem var(--signal-color, var(--magenta));
+  background: var(--signal-color, var(--plasma-pink));
+  box-shadow: 0 0 1rem var(--signal-color, var(--plasma-pink));
 }
 
 .contact-introduction__signal span:nth-child(2) {
-  --signal-color: var(--royal-violet);
+  --signal-color: var(--arcane-violet);
 }
 
 .contact-introduction__signal span:nth-child(3) {
-  --signal-color: var(--teal);
+  --signal-color: var(--spirit-cyan);
 }
 
 .contact-form-panel {
@@ -110,7 +112,16 @@
   padding: clamp(var(--space-5), 5vw, var(--space-7));
   border: 1px solid var(--color-border);
   border-radius: var(--radius-large);
-  background: var(--white);
+  background:
+    linear-gradient(
+      color-mix(in srgb, var(--warm-ivory) 92%, transparent),
+      color-mix(in srgb, var(--warm-ivory) 92%, transparent)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 1.85rem,
+      color-mix(in srgb, var(--warm-brown) 8%, transparent) 1.85rem 1.9rem
+    );
   box-shadow: var(--shadow-large);
 }
 
@@ -119,12 +130,12 @@
 }
 
 .contact-form-panel__heading > p:first-child {
-  color: var(--royal-violet);
+  color: var(--arcane-violet);
 }
 
 .contact-form-panel__heading h2 {
   margin: 0;
-  color: var(--midnight-blue);
+  color: var(--charcoal);
   font-family: var(--font-heading);
   font-size: clamp(2rem, 5vw, 3.3rem);
   line-height: 1.05;
@@ -158,8 +169,18 @@
 }
 
 .contact-form__field--message,
+.contact-form__privacy,
 .contact-form__submit {
   grid-column: 1 / -1;
+}
+
+.contact-form__privacy {
+  margin: 0;
+  padding: var(--space-4);
+  border-left: 0.3rem solid var(--lavender-mist);
+  color: var(--charcoal);
+  background: color-mix(in srgb, var(--lavender-mist) 16%, var(--soft-cream));
+  font-size: 0.86rem;
 }
 
 .contact-form__label-row {
@@ -170,13 +191,13 @@
 }
 
 .contact-form__label-row label {
-  color: var(--midnight-blue);
+  color: var(--charcoal);
   font-size: 1rem;
   font-weight: 850;
 }
 
 .contact-form__label-row span {
-  color: var(--graphite);
+  color: var(--charcoal);
   font-size: 0.72rem;
   font-weight: 750;
   letter-spacing: 0.05em;
@@ -193,10 +214,10 @@
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  border: 2px solid var(--cool-gray);
+  border: 2px solid var(--warm-brown);
   border-radius: var(--radius-small);
-  color: var(--obsidian);
-  background: var(--snow);
+  color: var(--ink-black);
+  background: var(--soft-cream);
   transition: border-color 160ms ease-out, box-shadow 160ms ease-out;
 }
 
@@ -214,21 +235,21 @@
 
 .contact-form input:hover,
 .contact-form textarea:hover {
-  border-color: var(--midnight-blue);
+  border-color: var(--charcoal);
 }
 
 .contact-form input:focus-visible,
 .contact-form textarea:focus-visible {
-  border-color: var(--sapphire);
-  outline: 3px solid var(--sapphire);
+  border-color: var(--portal-blue);
+  outline: 3px solid var(--portal-blue);
   outline-offset: 2px;
-  box-shadow: 0 0 0 5px rgb(59 130 246 / 18%);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--portal-blue) 18%, transparent);
 }
 
 .contact-form input[aria-invalid='true'],
 .contact-form textarea[aria-invalid='true'] {
-  border-color: var(--phoenix-red);
-  background: color-mix(in srgb, var(--phoenix-red) 5%, var(--white));
+  border-color: var(--phoenix-coral);
+  background: color-mix(in srgb, var(--phoenix-coral) 5%, var(--warm-ivory));
 }
 
 .contact-form__count {
@@ -253,10 +274,10 @@
   min-height: 3.5rem;
   overflow: hidden;
   padding: var(--space-3) var(--space-5);
-  border: 2px solid var(--midnight-blue);
+  border: 2px solid var(--charcoal);
   border-radius: var(--radius-small);
-  color: var(--white);
-  background: var(--midnight-blue);
+  color: var(--warm-ivory);
+  background: var(--charcoal);
   font-weight: 850;
   cursor: pointer;
   transition: color 160ms ease-out, background-color 160ms ease-out;
@@ -268,35 +289,37 @@
   right: 0;
   left: 0;
   height: 0.25rem;
-  background: var(--gradient-code);
+  background: var(--gradient-contact);
   content: '';
 }
 
 .contact-form__submit:hover:not(:disabled) {
-  color: var(--obsidian);
-  background: var(--solar-gold);
+  color: var(--ink-black);
+  background: var(--radiant-gold);
   text-decoration: underline;
   text-underline-offset: 0.2rem;
 }
 
 .contact-form__submit:disabled {
-  border-color: var(--cool-gray);
-  color: var(--graphite);
-  background: var(--silver);
+  border-color: var(--warm-brown);
+  color: var(--charcoal);
+  background: var(--aged-paper);
   cursor: not-allowed;
 }
 
 .contact-feedback {
+  position: relative;
+  overflow: hidden;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: start;
   gap: var(--space-3);
   margin-bottom: var(--space-6);
   padding: var(--space-4);
-  border: 2px solid var(--feedback-border, var(--sapphire));
+  border: 2px solid var(--feedback-border, var(--portal-blue));
   border-radius: var(--radius-small);
-  color: var(--obsidian);
-  background: var(--feedback-background, var(--snow));
+  color: var(--ink-black);
+  background: var(--feedback-background, var(--soft-cream));
 }
 
 .contact-feedback__mark {
@@ -305,8 +328,8 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--white);
-  background: var(--feedback-border, var(--sapphire));
+  color: var(--warm-ivory);
+  background: var(--feedback-border, var(--portal-blue));
   font-weight: 900;
   line-height: 1;
 }
@@ -322,18 +345,44 @@
 
 .contact-feedback--validation,
 .contact-feedback--error {
-  --feedback-border: var(--phoenix-red);
-  --feedback-background: color-mix(in srgb, var(--phoenix-red) 8%, var(--white));
+  --feedback-border: var(--phoenix-coral);
+  --feedback-background: color-mix(in srgb, var(--phoenix-coral) 8%, var(--warm-ivory));
 }
 
 .contact-feedback--success {
   --feedback-border: var(--contact-success);
-  --feedback-background: color-mix(in srgb, var(--emerald) 12%, var(--white));
+  --feedback-background: color-mix(in srgb, var(--renewal-green) 12%, var(--warm-ivory));
+}
+
+.contact-feedback--success::after {
+  position: absolute;
+  right: 1rem;
+  bottom: -0.2rem;
+  color: var(--phoenix-coral);
+  content: '⌁';
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  opacity: 0;
+  animation: contact-feather-pass 780ms ease-out both;
+}
+
+@keyframes contact-feather-pass {
+  from {
+    opacity: 0;
+    transform: translateX(-3rem) rotate(-18deg);
+  }
+
+  40% { opacity: 0.75; }
+
+  to {
+    opacity: 0;
+    transform: translateX(1rem) rotate(8deg);
+  }
 }
 
 .contact-feedback--configuration {
-  --feedback-border: var(--royal-violet);
-  --feedback-background: color-mix(in srgb, var(--royal-violet) 8%, var(--white));
+  --feedback-border: var(--arcane-violet);
+  --feedback-background: color-mix(in srgb, var(--arcane-violet) 8%, var(--warm-ivory));
 }
 
 @media (max-width: 768px) {
@@ -369,5 +418,10 @@
   .contact-form textarea,
   .contact-form__submit {
     transition: none;
+  }
+
+  .contact-feedback--success::after {
+    display: none;
+    animation: none;
   }
 }

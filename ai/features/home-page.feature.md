@@ -32,8 +32,9 @@
 Create the default landing page for Oishieka Moitra’s portfolio. The page should immediately communicate who Oishieka is, what kind of developer she is, and which technical and professional strengths she brings, using an accessible phoenix-inspired fantasy/code presentation that remains concise and credible.
 
 The page implements the plan's “Enter the Codex” concept: semantic introduction and
-calls to action render first, while a progressively loaded vortex, phoenix, restrained
-dragon silhouette, ink fragments, and code particles create the signature atmosphere.
+calls to action render first, while a progressively loaded double-helix typographic
+ribbon vortex forms the full-page visual spine. One coral phoenix and one restrained ink-black dragon
+emerge from its opening behind alternating parchment content cards.
 
 After this feature is complete:
 
@@ -43,9 +44,9 @@ After this feature is complete:
 - at least three technical skills and three soft skills are presented with icons and meaningful supporting descriptions;
 - Introduction, Technical Skills, and Soft Skills are visually distinct sections;
 - at least two Home-specific AI-created images support the content and theme; and
-- a simplified vortex scene enhances the hero without owning text or navigation;
+- a simplified vortex scene extends behind the Home narrative without owning text or navigation;
 - optional featured-project, journey-preview, and contact-callout sections point into
-  the combined Portfolio and Contact routes using only verified content; and
+  the separate Projects, Journey, and Contact routes using only verified content; and
 - the page remains readable, operable, performant, and visually intentional from 320px through desktop widths.
 
 ## Feature Scope
@@ -57,7 +58,7 @@ After this feature is complete:
 - Prominent display of `Oishieka Moitra`.
 - Prominent display of `Full Stack Developer` or the approved shorter tagline.
 - A brief resume-derived professional introduction.
-- Clear React Router calls to action for Portfolio and Contact.
+- Clear React Router calls to action for Projects, Journey, and Contact.
 - A visually organized Technical Skills section with at least three complete skill items.
 - A visually organized Soft Skills or Talents section with at least three complete items.
 - A meaningful icon and supporting description for every skill item.
@@ -65,8 +66,8 @@ After this feature is complete:
 - At least two relevant Home-specific AI-created images.
 - AI image provenance, purpose, optimization, and alt-text documentation.
 - Phoenix Codex parchment, ink, pastel, magical-accent, and Home-gradient tokens.
-- A lazy-loaded, route-scoped Three.js vortex with static poster fallback, reduced-motion
-  frame, mobile particle reduction, visibility pausing, and full cleanup on unmount.
+- A lazy-loaded, route-scoped Three.js ribbon vortex with a static fallback, stable
+  reduced-motion frame, simplified mobile composition, and full cleanup on unmount.
 - Up to three verified featured-project previews, a Phoenix Path preview, and a final
   contact invitation after the required skill sections.
 - Semantic headings, keyboard access, visible focus, appropriate image alternatives, contrast, reduced-motion behavior, and responsive layout.
@@ -241,11 +242,32 @@ After this feature is complete:
 
 - Keep the hero's name, role, introduction, and calls to action in semantic HTML outside
   the canvas and usable before the scene loads.
-- Render the desktop vortex as a soft rotating ink circle with emerging color, one
-  guiding phoenix, at most one distant dragon silhouette, and restrained code/particle
-  details. Decorative creatures must not compete with the heading.
-- On mobile, use a simplified vertical composition, at most half the desktop particles,
-  lower-resolution assets, and a static or lightly animated fallback.
+- Place the approved `public/me.png` portrait inside the supplied circular gold-filigree
+  medallion frame, centered immediately above the concise hero card. Use the plan's WindSong display font for the page title;
+  keep supporting text, navigation, and controls in the interface font.
+- Render the vortex as two continuous, narrow typographic ticker ribbons with alternating
+  `arcaneViolet`, `portalBlue`, `inkBlack`, and `warmIvory` panels. Repeat only the phrases
+  `GOOD IDEAS`, `BETTER CODE`, `BUILD`, and `CODE`, separated by stars and graphic bursts.
+  Each ribbon is one-third of the original strip width. Offset the second strand by half a
+  turn so both ribbons form a readable double helix with alternating depth overlap. The paired
+  ribbons extend through a wide S-shaped helix: their upper curves open dramatically, then the path
+  gently funnels toward the bottom without forming a tightly wound tornado tail. Let the
+  printed texture repeat in compact sections so its words remain readable instead of stretching
+  across the longer curves. Keep the funnel geometry anchored and slide its repeating texture
+  continuously upward along both strands. Each consecutive panel must travel from the narrower
+  lower path into the same wide top curve, creating an endless central spin without rotating the
+  open-ended geometry or suggesting that either ribbon is unwinding. Do not add more than these
+  two strands or reduce them to glowing line paths. Keep both ribbons behind the portrait and its frame
+  so the visitor's image remains completely unobstructed.
+  Keep it centered as the full-page visual spine rather than containing it inside a hero card.
+- Place readable content cards on alternating sides of the vortex at wide widths. Preserve
+  document order independently of position, and return to one centered column when the
+  two-sided composition cannot retain comfortable reading width.
+- Use one `phoenixCoral` phoenix and at most one distant `inkBlack`/`charcoal` dragon in
+  the decorative background. Both emerge from the central opening but remain subordinate
+  to the heading and content surfaces.
+- On mobile, use a simplified vertical composition, lower rendering density, and a static
+  or lightly animated fallback.
 - Lazy-load the Three.js scene after the readable interface and poster are available.
 - Pause the render loop when the hero is outside the viewport and dispose all scene
   resources and listeners when Home unmounts.
@@ -301,10 +323,30 @@ Additional resume-listed technologies may be added only after content review: Ja
 
 | Asset role | Suggested content | Tool | Filename | Alt-text decision | Status |
 | --- | --- | --- | --- | --- | --- |
-| Hero illustration | Phoenix rising through structured software systems | OpenAI built-in image generation tool | `src/assets/home-phoenix-hero.jpg` | Informative: “A luminous phoenix rising through layered digital systems.” | Complete |
+| Vortex creature background | One coral phoenix and one ink-black dragon emerging around a clear central vortex lane | OpenAI built-in image generation tool | `src/assets/home-vortex-creatures.jpg` | Decorative empty alt because the image carries no professional information | Complete |
+| Portrait frame overlay | Circular antique-gold filigree medallion based on the user-supplied frame reference | OpenAI built-in image editing tool plus local chroma-key removal | `src/assets/home-portrait-frame.png` | Decorative empty alt; the portrait supplies the accessible name | Complete |
+| Retained hero source | Phoenix rising through structured software systems | OpenAI built-in image generation tool | `src/assets/home-phoenix-hero.jpg` | Informative when rendered | Retained but not rendered in the full-page composition |
 | Skills transition illustration | A visual bridge between technical systems and professional strengths | OpenAI built-in image generation tool | `src/assets/home-skills-bridge.jpg` | Informative: “A radiant feather connecting digital systems with research and communication symbols.” | Complete |
 
 #### Implemented Image Provenance
+
+**Home portrait frame**
+
+- **Purpose and placement:** Frame `public/me.png` in the centered Home introduction without changing or embedding the portrait itself.
+- **Prompt summary:** Preserve the supplied circular gold filigree medallion, open center, pointed silhouette, and antique-gold detail while replacing its checkerboard with a flat removable chroma key; add no text, portrait, shadow, or new ornament.
+- **Generated source:** OpenAI built-in image editing output, 1254 × 1254 PNG on a flat green chroma background.
+- **Optimization:** Local chroma-key removal produced an alpha PNG, then it was resized to 900 × 900 for its rendered context; transparent center and corners were validated before integration.
+- **Loading:** Eager because the frame is part of the initial portrait composition.
+- **Alt decision:** Empty alt text because the frame is decorative and the underlying portrait is labeled `Oishieka Moitra`.
+
+**Home vortex creatures**
+
+- **Purpose and placement:** Establish the decorative full-page emergence moment behind the fixed ribbon while leaving a clean central lane and quiet space for alternating cards.
+- **Prompt summary:** Create exactly one coral-red phoenix flying upper-left and one restrained ink-black dragon flying upper-right from the same central opening; use an editorial watercolor-and-ink fantasy style, canonical cream/parchment foundations, sparse violet/blue magic, no text, and abundant negative space.
+- **Generated source:** 1536 × 1024 PNG, 2,183,833 bytes.
+- **Optimization:** Converted with macOS `sips` to an 82-quality, 1536 × 1024 JPEG at 315,513 bytes, an 85.5% reduction.
+- **Loading:** Eager because the decorative emergence composition appears behind the initial viewport; intrinsic dimensions prevent avoidable layout shift.
+- **Alt decision:** Empty alt text because the phoenix and dragon are decorative atmosphere; the complete professional narrative remains in semantic HTML cards.
 
 **Home phoenix hero**
 
@@ -518,9 +560,10 @@ Home identity and skills are bundled as semantic text so they render immediately
 
 ### Progressive Vortex Rather Than a Canvas Application
 
-The vortex is an atmospheric layer behind or beside the hero. React and semantic HTML
-own all text, links, skills, and previews. This keeps first paint, accessibility,
-responsive layout, and failure recovery independent from GPU capability.
+The vortex is an atmospheric layer behind the complete Home narrative. React and
+semantic HTML own all text, links, skills, and previews, while CSS controls the
+alternating two-sided layout. This keeps first paint, accessibility, responsive layout,
+document order, and failure recovery independent from GPU capability.
 
 ## Acceptance Criteria
 

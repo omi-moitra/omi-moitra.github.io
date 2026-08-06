@@ -1,14 +1,15 @@
 // =============================================================================
 // src/data/navigation.js — canonical public navigation destinations
 // -----------------------------------------------------------------------------
-// 1. publicNavigation    shared labels, hash-router paths, and icon identifiers
+// 1. publicNavigation    clear labels, thematic subtitles, paths, and icons
 // =============================================================================
 
 // :warning: Login and Back Office are intentionally absent. Route hiding is not
 // security, but public navigation must never advertise administrator surfaces.
 export const publicNavigation = [
-  { label: 'Home', to: '/', icon: 'home' },
-  { label: 'Portfolio', to: '/portfolio', icon: 'portfolio' },
-  { label: 'Links', to: '/links', icon: 'links' },
-  { label: 'Contact', to: '/contact', icon: 'contact' },
+  { label: 'Home', subtitle: 'Enter the Codex', to: '/', icon: 'home' },
+  { label: 'Journey', subtitle: 'The Phoenix Path', to: '/journey', icon: 'journey' },
+  { label: 'Projects', subtitle: 'Crafted Worlds', to: '/projects', icon: 'projects' },
+  { label: 'Links', subtitle: 'Portals', to: '/links', icon: 'links' },
+  { label: 'Contact', subtitle: 'Send a Message', to: '/contact', icon: 'contact' },
 ]

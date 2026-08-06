@@ -4,7 +4,7 @@
 // 1. Imports & feedback copy    React state, shared client, validation, styles
 // 2. ContactPage state          controlled values, errors, guards, and lifecycle
 // 3. Event handlers             correction, local validation, and safe insertion
-// 4. Contact page rendering     introduction, feedback, fields, and submit state
+// 4. Contact page rendering     parchment dispatch, privacy notice, and feedback
 // =============================================================================
 
 import { useEffect, useRef, useState } from 'react'
@@ -287,6 +287,12 @@ function ContactPage() {
               </p>
             )}
           </div>
+
+          <p className="contact-form__privacy">
+            Your name, email address, message, and submission time are stored so
+            Oishieka can review and respond to your inquiry. They are not displayed
+            publicly by this website.
+          </p>
 
           <button
             className="contact-form__submit"

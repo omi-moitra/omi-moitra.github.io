@@ -1,13 +1,13 @@
-/* ========================================================================== 
-   Portfolio Page — professional journey, chronology, and selected work
+/* ==========================================================================
+   Journey & Projects — separate Phoenix Path and Crafted Worlds routes
    --------------------------------------------------------------------------
    1. Page Canvas            full-page phoenix background and readable overlays
-   2. WebGL Experience       rendered phoenix image, camera, and sound control
+   2. WebGL Experience       rendered phoenix image and progressive camera depth
    3. Journey Wireframe      upper-left title, curved path, positioned points
    4. Resume Tooltips        anchored milestones and semantic detail panels
-   5. Section System         atmospheric Projects and mobile résumé groups
-   6. Supporting Artwork     stable responsive Portfolio-specific media
-   7. Project Card           actual-site preview, tags, and external actions
+   5. Section System         route-specific panels and mobile résumé groups
+   6. Supporting Artwork     stable responsive Journey and Projects media
+   7. Project Media Wall     settled cards, details, and external actions
    8. Responsive ≤768px      left-aligned trail and single-column flow
    9. Reduced Motion         static, fully readable experience fallback
    ========================================================================== */
@@ -22,25 +22,38 @@
 
 /* The full-bleed fixed canvas keeps one continuous phoenix trail behind the
    long résumé rather than stretching or repeating the source illustration. */
-.portfolio-page::before {
+.journey-page::before,
+.projects-page::before {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 50%;
   z-index: -2;
   width: 100vw;
-  background-image:
-    linear-gradient(
-      color-mix(in srgb, var(--obsidian) 58%, transparent),
-      color-mix(in srgb, var(--midnight-blue) 72%, transparent)
-    ),
-    var(--portfolio-journey-background);
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
   content: '';
   transition: opacity 500ms ease-out;
   transform: translateX(-50%);
+}
+
+.journey-page::before {
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--ink-black) 58%, transparent),
+      color-mix(in srgb, var(--charcoal) 72%, transparent)
+    ),
+    var(--portfolio-journey-background);
+}
+
+.projects-page::before {
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--warm-ivory) 88%, transparent),
+      color-mix(in srgb, var(--parchment) 94%, transparent)
+    ),
+    var(--projects-background);
 }
 
 .portfolio-experience__canvas {
@@ -57,39 +70,12 @@
   transition: opacity 500ms ease-out;
 }
 
-.portfolio-page--webgl-ready::before {
+.journey-page.portfolio-page--webgl-ready::before {
   opacity: 0;
 }
 
 .portfolio-page--webgl-ready .portfolio-experience__canvas {
   opacity: 1;
-}
-
-.portfolio-sound-toggle {
-  position: fixed;
-  right: var(--space-5);
-  bottom: var(--space-5);
-  z-index: 10;
-  min-height: 3rem;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--sapphire);
-  border-radius: 999px;
-  color: var(--white);
-  background: color-mix(in srgb, var(--obsidian) 88%, transparent);
-  box-shadow: 0 0 1.5rem color-mix(in srgb, var(--sapphire) 38%, transparent);
-  backdrop-filter: blur(0.6rem);
-  cursor: pointer;
-  font-weight: 800;
-}
-
-.portfolio-sound-toggle:hover,
-.portfolio-sound-toggle[aria-pressed='true'] {
-  border-color: var(--teal);
-  color: var(--white);
-  background: color-mix(in srgb, var(--midnight-blue) 92%, transparent);
 }
 
 .portfolio-resume-journey {
@@ -113,11 +99,11 @@
 }
 
 .portfolio-resume-journey__path-particles {
-  stroke: color-mix(in srgb, var(--solar-gold) 68%, var(--white));
+  stroke: color-mix(in srgb, var(--radiant-gold) 68%, var(--warm-ivory));
   stroke-dasharray: 1 24;
   stroke-linecap: round;
   stroke-width: 5;
-  filter: drop-shadow(0 0 0.45rem var(--solar-gold));
+  filter: drop-shadow(0 0 0.45rem var(--radiant-gold));
   animation: journey-particles-flow 2.4s linear infinite;
 }
 
@@ -157,7 +143,7 @@
 
 .portfolio-eyebrow {
   margin: 0 0 var(--space-3);
-  color: var(--phoenix-red);
+  color: var(--phoenix-coral);
   font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.09em;
@@ -165,28 +151,69 @@
 }
 
 .portfolio-hero .portfolio-eyebrow {
-  color: color-mix(in srgb, var(--solar-gold) 78%, var(--white));
-  text-shadow: 0 0.2rem 1rem var(--obsidian);
+  color: color-mix(in srgb, var(--radiant-gold) 78%, var(--warm-ivory));
+  text-shadow: 0 0.2rem 1rem var(--ink-black);
 }
 
 .portfolio-hero h1 {
   max-width: 14ch;
   margin: 0;
-  color: color-mix(in srgb, var(--solar-gold) 70%, var(--white));
-  font-family: var(--font-heading);
+  color: color-mix(in srgb, var(--radiant-gold) 70%, var(--warm-ivory));
+  font-family: var(--font-display);
+  font-weight: 500;
   font-size: clamp(3rem, 8vw, 5.4rem);
   line-height: 0.95;
-  text-shadow: 0 0.3rem 1.5rem var(--obsidian), 0 0 2.5rem var(--blaze-orange);
+  text-shadow: 0 0.3rem 1.5rem var(--ink-black), 0 0 2.5rem var(--solar-orange);
   text-wrap: balance;
 }
 
 .portfolio-hero__introduction {
   max-width: 54ch;
   margin: var(--space-5) 0 0;
-  color: var(--white);
+  color: var(--warm-ivory);
   font-size: clamp(1rem, 2vw, 1.12rem);
   font-weight: 650;
-  text-shadow: 0 0.15rem 0.8rem var(--obsidian), 0 0.2rem 1.4rem var(--obsidian);
+  text-shadow: 0 0.15rem 0.8rem var(--ink-black), 0 0.2rem 1.4rem var(--ink-black);
+}
+
+.projects-hero {
+  position: relative;
+  max-width: 64rem;
+  padding: clamp(var(--space-7), 8vw, 7rem) 0 var(--space-6);
+  color: var(--ink-black);
+}
+
+.projects-hero::before {
+  position: absolute;
+  top: var(--space-6);
+  left: 0;
+  width: min(16rem, 60vw);
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--gradient-projects);
+  content: '';
+}
+
+.projects-hero .portfolio-eyebrow {
+  color: var(--arcane-violet);
+}
+
+.projects-hero h1 {
+  margin: 0;
+  color: var(--ink-black);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(3.2rem, 10vw, 7rem);
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.projects-hero > p:last-child {
+  max-width: var(--text-max-width);
+  margin: var(--space-5) 0 0;
+  color: var(--charcoal);
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  font-weight: var(--font-weight-semibold);
 }
 
 .portfolio-resume-link {
@@ -196,18 +223,18 @@
   justify-content: center;
   margin-top: var(--space-5);
   padding: var(--space-3) var(--space-5);
-  border: 2px solid var(--midnight-blue);
+  border: 2px solid var(--charcoal);
   border-radius: var(--radius-small);
-  color: var(--white);
-  background: var(--midnight-blue);
+  color: var(--warm-ivory);
+  background: var(--charcoal);
   font-weight: 800;
   text-align: center;
   text-decoration: none;
 }
 
 .portfolio-resume-link:hover {
-  color: var(--obsidian);
-  background: var(--solar-gold);
+  color: var(--ink-black);
+  background: var(--radiant-gold);
   text-decoration: underline;
   text-underline-offset: 0.25rem;
 }
@@ -222,33 +249,45 @@
 }
 
 .portfolio-section--education {
-  color: var(--white);
-  border-color: var(--cool-gray);
-  background: color-mix(in srgb, var(--obsidian) 84%, transparent);
+  color: var(--warm-ivory);
+  border-color: var(--warm-brown);
+  background: color-mix(in srgb, var(--ink-black) 84%, transparent);
 }
 
 .portfolio-section--education::before {
-  background: var(--gradient-creative);
+  background: var(--gradient-home);
 }
 
 .portfolio-section--experience {
-  color: var(--white);
-  border-color: var(--graphite);
-  background: color-mix(in srgb, var(--midnight-blue) 82%, transparent);
+  color: var(--warm-ivory);
+  border-color: var(--charcoal);
+  background: color-mix(in srgb, var(--charcoal) 82%, transparent);
 }
 
 .portfolio-section--experience::before {
-  background: var(--gradient-phoenix);
+  background: var(--gradient-journey);
 }
 
 .portfolio-section--projects {
-  color: var(--white);
-  border-color: var(--cool-gray);
-  background: color-mix(in srgb, var(--obsidian) 84%, transparent);
+  color: var(--ink-black);
+  border-color: var(--aged-paper);
+  background: color-mix(in srgb, var(--warm-ivory) 96%, transparent);
 }
 
 .portfolio-section--projects::before {
-  background: var(--gradient-code);
+  background: var(--gradient-projects);
+}
+
+.portfolio-section--projects .portfolio-eyebrow {
+  color: var(--arcane-violet);
+}
+
+.portfolio-section--projects .portfolio-section__heading h2 {
+  color: var(--ink-black);
+}
+
+.portfolio-section--projects .portfolio-section__heading > p:last-child {
+  color: var(--charcoal);
 }
 
 .portfolio-section__heading {
@@ -258,7 +297,7 @@
 
 .portfolio-section__heading h2 {
   margin: 0;
-  color: var(--white);
+  color: var(--warm-ivory);
   font-family: var(--font-heading);
   font-size: clamp(2rem, 5vw, 3.4rem);
   line-height: 1.05;
@@ -267,19 +306,19 @@
 
 .portfolio-section__heading > p:last-child {
   margin: var(--space-3) 0 0;
-  color: var(--silver);
+  color: var(--aged-paper);
 }
 
 .portfolio-section--experience .portfolio-eyebrow {
-  color: var(--solar-gold);
+  color: var(--radiant-gold);
 }
 
 .portfolio-section--experience .portfolio-section__heading h2 {
-  color: var(--white);
+  color: var(--warm-ivory);
 }
 
 .portfolio-section--experience .portfolio-section__heading > p:last-child {
-  color: var(--silver);
+  color: var(--aged-paper);
 }
 
 .portfolio-journey-group {
@@ -336,13 +375,13 @@
   display: inline-grid;
   place-items: center;
   padding: var(--space-2);
-  border: 2px solid var(--blaze-orange);
+  border: 2px solid var(--solar-orange);
   border-radius: 50%;
-  color: var(--obsidian);
-  background: var(--solar-gold);
+  color: var(--ink-black);
+  background: var(--radiant-gold);
   box-shadow:
-    0 0 0 0.3rem color-mix(in srgb, var(--obsidian) 75%, transparent),
-    0 0 1.5rem var(--solar-gold);
+    0 0 0 0.3rem color-mix(in srgb, var(--ink-black) 75%, transparent),
+    0 0 1.5rem var(--radiant-gold);
   cursor: pointer;
   font-size: 0.86rem;
   font-weight: 900;
@@ -353,8 +392,8 @@
 .timeline-milestone__trigger:hover,
 .timeline-milestone__trigger[aria-expanded='true'] {
   box-shadow:
-    0 0 0 0.35rem color-mix(in srgb, var(--obsidian) 78%, transparent),
-    0 0 2.5rem var(--solar-gold);
+    0 0 0 0.35rem color-mix(in srgb, var(--ink-black) 78%, transparent),
+    0 0 2.5rem var(--radiant-gold);
   transform: scale(1.08);
 }
 
@@ -364,7 +403,7 @@
   top: 50%;
   width: calc(50% - 1.4rem);
   height: 0.15rem;
-  background: var(--blaze-orange);
+  background: var(--solar-orange);
   content: '';
 }
 
@@ -402,9 +441,9 @@
   top: 1.45rem;
   width: 0.9rem;
   height: 0.9rem;
-  border-top: 1px solid var(--cool-gray);
-  border-right: 1px solid var(--cool-gray);
-  background: color-mix(in srgb, var(--obsidian) 94%, transparent);
+  border-top: 1px solid var(--warm-brown);
+  border-right: 1px solid var(--warm-brown);
+  background: color-mix(in srgb, var(--ink-black) 94%, transparent);
   content: '';
 }
 
@@ -433,18 +472,18 @@
 .resume-entry {
   min-width: 0;
   padding: clamp(var(--space-4), 4vw, var(--space-5));
-  border: 1px solid var(--cool-gray);
+  border: 1px solid var(--warm-brown);
   border-radius: var(--radius-medium);
-  color: var(--white);
-  background: color-mix(in srgb, var(--obsidian) 88%, transparent);
-  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--obsidian) 65%, transparent);
+  color: var(--warm-ivory);
+  background: color-mix(in srgb, var(--ink-black) 88%, transparent);
+  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--ink-black) 65%, transparent);
   backdrop-filter: blur(0.7rem);
   transition: border-color 180ms ease-out, box-shadow 180ms ease-out;
 }
 
 .resume-entry:hover {
-  border-color: var(--teal);
-  box-shadow: 0 0 2rem color-mix(in srgb, var(--sapphire) 24%, transparent);
+  border-color: var(--spirit-cyan);
+  box-shadow: 0 0 2rem color-mix(in srgb, var(--portal-blue) 24%, transparent);
 }
 
 .resume-entry__header {
@@ -456,7 +495,7 @@
 .resume-entry h3 {
   grid-column: 1;
   margin: 0;
-  color: var(--white);
+  color: var(--warm-ivory);
   font-family: var(--font-heading);
   font-size: clamp(1.35rem, 3vw, 1.7rem);
   line-height: 1.15;
@@ -466,7 +505,7 @@
   grid-column: 2;
   grid-row: 1 / 4;
   margin: 0;
-  color: var(--teal);
+  color: var(--spirit-cyan);
   font-weight: 800;
   white-space: nowrap;
 }
@@ -474,14 +513,14 @@
 .resume-entry__organization {
   grid-column: 1;
   margin: 0;
-  color: var(--silver);
+  color: var(--aged-paper);
   font-weight: 800;
 }
 
 .resume-entry__location {
   grid-column: 1;
   margin: 0;
-  color: var(--cool-gray);
+  color: var(--warm-brown);
   font-size: 0.92rem;
 }
 
@@ -490,11 +529,11 @@
   gap: var(--space-2);
   margin: var(--space-4) 0 0;
   padding-left: 1.25rem;
-  color: var(--silver);
+  color: var(--aged-paper);
 }
 
 .resume-entry__responsibilities li::marker {
-  color: var(--sapphire);
+  color: var(--portal-blue);
 }
 
 .portfolio-media {
@@ -507,7 +546,7 @@
   height: auto;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-medium);
-  background: var(--silver);
+  background: var(--aged-paper);
   box-shadow: var(--shadow-small);
   aspect-ratio: 3 / 2;
   object-fit: cover;
@@ -521,6 +560,7 @@
 .project-list {
   display: grid;
   gap: var(--space-5);
+  perspective: 80rem;
 }
 
 .project-card {
@@ -529,11 +569,27 @@
   align-items: center;
   gap: clamp(var(--space-5), 4vw, var(--space-7));
   padding: clamp(var(--space-4), 4vw, var(--space-6));
-  border: 1px solid var(--cool-gray);
+  border: 1px solid var(--warm-brown);
   border-radius: var(--radius-large);
-  background: color-mix(in srgb, var(--obsidian) 88%, transparent);
-  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--obsidian) 65%, transparent);
+  background: color-mix(in srgb, var(--ink-black) 88%, transparent);
+  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--ink-black) 65%, transparent);
   backdrop-filter: blur(0.7rem);
+}
+
+.portfolio-reveal--visible .project-card {
+  animation: project-card-settle var(--duration-settle) var(--ease-standard) both;
+}
+
+@keyframes project-card-settle {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem) rotate(-1.5deg) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .project-card__media {
@@ -547,7 +603,7 @@
 
 .project-card__eyebrow {
   margin: 0 0 var(--space-2);
-  color: var(--sapphire);
+  color: var(--portal-blue);
   font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.09em;
@@ -556,7 +612,7 @@
 
 .project-card h3 {
   margin: 0;
-  color: var(--white);
+  color: var(--warm-ivory);
   font-family: var(--font-heading);
   font-size: clamp(1.65rem, 4vw, 2.35rem);
   line-height: 1.1;
@@ -564,13 +620,13 @@
 
 .project-card__purpose {
   margin: var(--space-4) 0 0;
-  color: var(--silver);
+  color: var(--aged-paper);
   font-weight: 800;
 }
 
 .project-card__content > p:not([class]) {
   margin: var(--space-3) 0 0;
-  color: var(--silver);
+  color: var(--aged-paper);
 }
 
 .project-card__technologies {
@@ -584,10 +640,10 @@
 
 .project-card__technologies li {
   padding: var(--space-1) var(--space-3);
-  border: 1px solid var(--sapphire);
+  border: 1px solid var(--portal-blue);
   border-radius: 999px;
-  color: var(--white);
-  background: var(--midnight-blue);
+  color: var(--warm-ivory);
+  background: var(--charcoal);
   font-size: 0.88rem;
   font-weight: 800;
 }
@@ -599,32 +655,146 @@
   margin-top: var(--space-5);
 }
 
-.project-card__links a {
+.project-card__links a,
+.project-card__links button,
+.portfolio-resume-actions a {
   min-height: 3rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-4);
-  border: 2px solid var(--midnight-blue);
+  border: 2px solid var(--charcoal);
   border-radius: var(--radius-small);
-  color: var(--white);
-  background: var(--midnight-blue);
+  color: var(--warm-ivory);
+  background: var(--charcoal);
   font-weight: 800;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
+  font: inherit;
 }
 
 .project-card__links a:last-child {
-  color: var(--white);
+  color: var(--warm-ivory);
   background: transparent;
 }
 
-.project-card__links a:hover {
-  color: var(--white);
-  background: var(--sapphire);
+.project-card__links a:hover,
+.project-card__links button:hover,
+.portfolio-resume-actions a:hover {
+  color: var(--warm-ivory);
+  background: var(--portal-blue);
   text-decoration: underline;
   text-underline-offset: 0.25rem;
+}
+
+.portfolio-resume-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--warm-brown);
+}
+
+.portfolio-resume-actions p {
+  margin: 0;
+  font-weight: 800;
+}
+
+.project-case-study-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-dialog);
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--ink-black) 78%, transparent);
+  backdrop-filter: blur(0.45rem);
+}
+
+.project-case-study {
+  width: min(100%, 54rem);
+  max-height: calc(100svh - (2 * var(--space-4)));
+  overflow: auto;
+  padding: clamp(var(--space-5), 5vw, var(--space-7));
+  border: 2px solid var(--aged-paper);
+  border-top: 0.4rem solid var(--phoenix-coral);
+  border-radius: var(--radius-large);
+  color: var(--ink-black);
+  background: var(--warm-ivory);
+  box-shadow: 0 1.5rem 5rem color-mix(in srgb, var(--ink-black) 42%, transparent);
+}
+
+.project-case-study__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.project-case-study__header p {
+  margin: 0 0 var(--space-2);
+  color: var(--arcane-violet);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.project-case-study h2,
+.project-case-study h3 {
+  margin: 0;
+  color: var(--ink-black);
+  font-family: var(--font-heading);
+}
+
+.project-case-study__header button {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--charcoal);
+  border-radius: var(--radius-small);
+  color: var(--warm-ivory);
+  background: var(--charcoal);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.project-case-study__summary {
+  display: grid;
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+
+.project-case-study__summary > div,
+.project-case-study__section {
+  padding: var(--space-4);
+  border: 1px solid var(--aged-paper);
+  border-radius: var(--radius-medium);
+  background: var(--soft-cream);
+}
+
+.project-case-study__summary dt {
+  color: var(--warm-brown);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.project-case-study__summary dd {
+  margin: var(--space-2) 0 0;
+}
+
+.project-case-study__section + .project-case-study__section {
+  margin-top: var(--space-4);
+}
+
+.project-case-study__section ul,
+.project-case-study__section p {
+  margin-bottom: 0;
 }
 
 .portfolio-page--enhanced .portfolio-reveal {
@@ -632,9 +802,9 @@
   filter: blur(0.3rem);
   transform: translateY(2.25rem) scale(0.985);
   transition:
-    opacity 700ms ease-out,
-    filter 700ms ease-out,
-    transform 850ms cubic-bezier(0.2, 0.75, 0.2, 1);
+    opacity var(--duration-settle) ease-out,
+    filter var(--duration-settle) ease-out,
+    transform 850ms var(--ease-standard);
 }
 
 .portfolio-page--enhanced .resume-timeline > li:nth-child(odd).portfolio-reveal {
@@ -680,17 +850,17 @@
     position: relative;
     display: block;
     padding: var(--space-5);
-    border: 1px solid var(--cool-gray);
+    border: 1px solid var(--warm-brown);
     border-radius: var(--radius-large);
     backdrop-filter: blur(0.6rem);
   }
 
   .portfolio-journey-group--education {
-    background: color-mix(in srgb, var(--obsidian) 84%, transparent);
+    background: color-mix(in srgb, var(--ink-black) 84%, transparent);
   }
 
   .portfolio-journey-group--experience {
-    background: color-mix(in srgb, var(--midnight-blue) 82%, transparent);
+    background: color-mix(in srgb, var(--charcoal) 82%, transparent);
   }
 
   .portfolio-journey-group__heading {
@@ -700,7 +870,7 @@
     margin: 0 0 var(--space-5);
     overflow: visible;
     clip: auto;
-    color: var(--white);
+    color: var(--warm-ivory);
     font-family: var(--font-heading);
     font-size: clamp(2rem, 8vw, 3rem);
     line-height: 1.05;
@@ -711,16 +881,21 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .portfolio-page::before {
-    background-attachment: scroll;
-    background-position: 58% top;
+  .project-case-study__header,
+  .portfolio-resume-actions {
+    align-items: stretch;
+    flex-direction: column;
   }
 
-  .portfolio-sound-toggle {
-    right: var(--space-3);
-    bottom: calc(
-      var(--mobile-navigation-height) + var(--space-3) + env(safe-area-inset-bottom, 0px)
-    );
+  .project-case-study__header button,
+  .portfolio-resume-actions a {
+    width: 100%;
+  }
+
+  .journey-page::before,
+  .projects-page::before {
+    background-attachment: scroll;
+    background-position: 58% top;
   }
 
   .resume-timeline {
@@ -738,8 +913,8 @@
     width: 0.4rem;
     display: block;
     border-radius: 999px;
-    background: var(--gradient-phoenix);
-    box-shadow: 0 0 1.5rem var(--solar-gold);
+    background: var(--gradient-journey);
+    box-shadow: 0 0 1.5rem var(--radiant-gold);
     content: '';
     transform: none;
   }
@@ -822,6 +997,16 @@
     border-radius: var(--radius-medium);
   }
 
+  .project-case-study-backdrop {
+    padding: var(--space-2);
+  }
+
+  .project-case-study {
+    max-height: calc(100svh - (2 * var(--space-2)));
+    padding: var(--space-4);
+    border-radius: var(--radius-medium);
+  }
+
   .portfolio-hero {
     min-height: 65svh;
     padding-inline: var(--space-2);
@@ -845,6 +1030,7 @@
   }
 
   .project-card__links a,
+  .project-card__links button,
   .portfolio-resume-link {
     width: 100%;
   }
@@ -864,6 +1050,10 @@
   }
 
   .portfolio-resume-journey__path-particles {
+    animation: none;
+  }
+
+  .portfolio-reveal--visible .project-card {
     animation: none;
   }
 }

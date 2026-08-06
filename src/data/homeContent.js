@@ -7,7 +7,7 @@
 // 4. Image metadata      provenance-aware placement and accessibility details
 // =============================================================================
 
-import heroImage from '../assets/home-phoenix-hero.jpg'
+import vortexCreaturesImage from '../assets/home-vortex-creatures.jpg'
 import skillsBridgeImage from '../assets/home-skills-bridge.jpg'
 
 // :warning: These claims come from the approved resume-derived draft. Keep
@@ -20,7 +20,7 @@ export const homeHero = {
   introduction:
     'I’m Oishieka Moitra, a Full Stack Developer with hands-on experience building scalable web applications using JavaScript, React, Node.js, Express, MongoDB, and SQL. I combine software engineering practices such as RESTful API design, role-based authentication, and automated testing with a disciplined background in legal research, risk analysis, and clear documentation.',
   callsToAction: [
-    { label: 'View My Work', to: '/portfolio', variant: 'primary' },
+    { label: 'View My Work', to: '/projects', variant: 'primary' },
     { label: 'Contact Me', to: '/contact', variant: 'secondary' },
   ],
 }
@@ -82,15 +82,17 @@ export const professionalStrengths = [
 // :warning: Both records are Home-specific generated assets. The Header logo is
 // separate and must never be counted toward the two-image Home requirement.
 export const homeImages = {
-  hero: {
-    id: 'home-phoenix-hero',
-    src: heroImage,
-    width: 1200,
-    height: 800,
+  vortexCreatures: {
+    id: 'home-vortex-creatures',
+    src: vortexCreaturesImage,
+    width: 1536,
+    height: 1024,
     tool: 'OpenAI built-in image generation tool',
-    purpose: 'Connect the phoenix identity with thoughtful software craftsmanship.',
-    placement: 'Home introduction hero',
-    alt: 'A luminous phoenix rising through layered digital systems.',
+    purpose: 'Frame the full-page vortex with one guiding phoenix and one restrained dragon.',
+    placement: 'Decorative Home scene background',
+    // The creatures establish atmosphere only; the professional narrative stays
+    // in HTML cards, so announcing them would add noise without useful content.
+    alt: '',
     loading: 'eager',
   },
   skillsBridge: {

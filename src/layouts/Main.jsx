@@ -20,7 +20,7 @@ function focusMainContent(event) {
 
 function Main() {
   return (
-    <div className="site-shell">
+    <div className="site-shell" data-theme="cozy-fantasy">
       <a className="skip-link" href="#main-content" onClick={focusMainContent}>
         Skip to main content
       </a>

@@ -1,8 +1,8 @@
 // =============================================================================
 // src/components/Header.jsx — sticky brand header and responsive navigation
 // -----------------------------------------------------------------------------
-// 1. Route theme    active public-route gradient selection
-// 2. Header         logo Home link, desktop navigation, and mobile navigation
+// 1. Route theme    active public-route current selection
+// 2. Header         warm brand surface, navigation, and gradient current
 // =============================================================================
 
 import { Link, useLocation } from 'react-router-dom'
@@ -14,8 +14,9 @@ function Header() {
   const routeTheme =
     pathname === '/'
       ? 'home'
-      : ['portfolio', 'links', 'contact'].find((route) => pathname.startsWith(`/${route}`)) ||
-        'home'
+      : ['journey', 'projects', 'links', 'contact'].find((route) =>
+          pathname.startsWith(`/${route}`),
+        ) || 'neutral'
 
   return (
     <header className={`site-header site-header--${routeTheme}`}>
@@ -42,6 +43,8 @@ function Header() {
           <NavigationLinks />
         </nav>
       </div>
+
+      <div className="gradient-current" aria-hidden="true" />
 
       <MobileNavigation />
     </header>

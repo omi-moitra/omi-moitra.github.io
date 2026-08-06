@@ -7,7 +7,10 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const configuredSupabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim()
+const supabaseUrl = configuredSupabaseUrl
+  ?.replace(/\/rest\/v1\/?$/, '')
+  .replace(/\/+$/, '')
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const isSupabaseConfigured = Boolean(
