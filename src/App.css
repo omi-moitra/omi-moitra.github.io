@@ -5,7 +5,7 @@
    2. Header & Brand          warm surface, route current, and brand content
    3. Navigation              shared desktop/mobile link states and icons
    4. Main & Setup Route      responsive content container and route placeholder
-   5. Footer                  approved public contact and copyright content
+   5. Footer                  icon contact links and copyright
    6. Desktop ≥64rem          explicit horizontal-navigation boundary
    7. Mobile                  accessible overlay navigation
    8. Narrow Screens          320px brand and content refinements
@@ -626,49 +626,73 @@
 
 .site-footer__content {
   width: min(100%, var(--content-max-width));
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: start;
-  gap: var(--space-5) var(--space-7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
   margin-inline: auto;
-  padding: var(--space-7) var(--page-gutter);
+  padding: var(--space-5) var(--page-gutter);
 }
 
-.site-footer__heading {
-  margin: 0 0 var(--space-2);
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
-.site-footer__email,
-.site-footer__social-links a {
-  border-radius: var(--radius-small);
-  font-weight: 700;
-  text-underline-offset: 0.25rem;
-}
-
-.site-footer__email:hover,
-.site-footer__social-links a:hover {
-  text-decoration-thickness: 3px;
-}
-
-.site-footer__social-links {
+.site-footer__links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  justify-content: center;
+  gap: var(--space-3);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.site-footer__links a {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--warm-ivory) 44%, transparent);
+  border-radius: 50%;
+  color: var(--warm-ivory);
+  background: color-mix(in srgb, var(--warm-ivory) 7%, transparent);
+  transition:
+    color var(--duration-quick) ease-out,
+    background-color var(--duration-quick) ease-out,
+    border-color var(--duration-quick) ease-out,
+    transform var(--duration-quick) ease-out;
+}
+
+.site-footer__links a:hover {
+  border-color: var(--radiant-gold);
+  color: #232126;
+  background: var(--radiant-gold);
+  transform: translateY(-0.2rem);
+}
+
+.site-footer__links a:focus-visible {
+  outline-color: var(--radiant-gold);
+}
+
+.site-footer__links svg {
+  width: 1.45rem;
+  height: 1.45rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+}
+
+.site-footer__links a[aria-label^='GitHub'] svg,
+.site-footer__links a[aria-label^='LinkedIn'] svg {
+  fill: currentcolor;
+  stroke: none;
+}
+
 .site-footer__copyright {
-  grid-column: 1 / -1;
   margin: 0;
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--charcoal);
-  color: var(--aged-paper);
-  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--warm-ivory) 74%, transparent);
+  font-size: 0.85rem;
+  text-align: center;
 }
 
 @media (min-width: 25rem) {
@@ -716,10 +740,6 @@
     backdrop-filter: blur(0.35rem);
   }
 
-  .site-footer__content {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
