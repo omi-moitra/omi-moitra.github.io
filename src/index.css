@@ -154,6 +154,7 @@ body {
   min-width: 20rem;
   min-height: 100svh;
   margin: 0;
+  overflow-x: clip;
   color: var(--color-text);
   background:
     radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--radiant-gold) 11%, transparent), transparent 22rem),

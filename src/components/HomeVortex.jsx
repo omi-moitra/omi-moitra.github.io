@@ -27,28 +27,28 @@ import {
 import { phoenixCodexPalette } from '../data/phoenixCodexPalette.js'
 
 const RIBBON_WORDS = [
-  ['GOOD IDEAS', ''],
-  ['BETTER CODE', ''],
-  ['BUILD', ''],
-  ['CODE', ''],
-  ['GOOD IDEAS', ''],
-  ['BETTER CODE', ''],
-  ['BUILD', ''],
-  ['CODE', ''],
+  'GOOD IDEAS',
+  'BETTER CODE',
+  'BUILD',
+  'CODE',
+  'GOOD IDEAS',
+  'BETTER CODE',
+  'BUILD',
+  'CODE',
 ]
 
 const BAND_COLORS = [
-  phoenixCodexPalette.foundation.warmIvory,
-  phoenixCodexPalette.foundation.inkBlack,
-  phoenixCodexPalette.magic.arcaneViolet,
   phoenixCodexPalette.magic.portalBlue,
+  phoenixCodexPalette.magic.spiritCyan,
+  phoenixCodexPalette.foundation.inkBlack,
+  phoenixCodexPalette.foundation.warmIvory,
 ]
 
 function drawBurst(context, x, y, radius, color) {
   context.save()
   context.translate(x, y)
   context.strokeStyle = color
-  context.lineWidth = 12
+  context.lineWidth = 16
 
   for (let ray = 0; ray < 12; ray += 1) {
     const angle = (ray / 12) * Math.PI * 2
@@ -73,12 +73,12 @@ function createRibbonTexture() {
   context.textAlign = 'center'
   context.textBaseline = 'middle'
 
-  RIBBON_WORDS.forEach(([word, detail], index) => {
+  RIBBON_WORDS.forEach((word, index) => {
     const top = index * bandHeight
     const background = BAND_COLORS[index % BAND_COLORS.length]
-    const ink = background === phoenixCodexPalette.foundation.warmIvory
-      ? phoenixCodexPalette.foundation.inkBlack
-      : phoenixCodexPalette.foundation.warmIvory
+    const ink = background === phoenixCodexPalette.foundation.inkBlack
+      ? phoenixCodexPalette.foundation.warmIvory
+      : phoenixCodexPalette.foundation.inkBlack
 
     context.fillStyle = background
     context.fillRect(0, top, width, bandHeight + 2)
@@ -87,20 +87,17 @@ function createRibbonTexture() {
     context.translate(width / 2, top + bandHeight / 2)
     context.rotate(Math.PI / 2)
     context.fillStyle = ink
-    context.font = '900 184px Arial Black, Arial, sans-serif'
-    context.fillText(word, 0, -28, bandHeight * 0.84)
-    if (detail) {
-      context.font = '700 42px Arial, sans-serif'
-      context.letterSpacing = '5px'
-      context.fillText(detail.toUpperCase(), 0, 138, bandHeight * 0.78)
-    }
+    // Oversized condensed lettering fills the fabric width like the supplied
+    // ticker reference while maxWidth keeps long phrases inside each panel.
+    context.font = '900 680px "Arial Black", Impact, "Arial Narrow", sans-serif'
+    context.fillText(word, 0, 0, bandHeight * 0.9)
     context.restore()
 
-    drawBurst(context, 120, top + 112, 72, ink)
-    drawBurst(context, width - 116, top + bandHeight - 104, 58, ink)
+    drawBurst(context, 126, top + 108, 86, ink)
+    drawBurst(context, width - 122, top + bandHeight - 104, 72, ink)
 
     context.fillStyle = ink
-    context.font = '900 92px Arial, sans-serif'
+    context.font = '900 148px "Arial Black", Impact, sans-serif'
     context.fillText(index % 2 ? '✦' : '★', width - 132, top + 126)
     context.fillText(index % 2 ? '★' : '✦', 132, top + bandHeight - 116)
   })
@@ -111,13 +108,18 @@ function createRibbonTexture() {
   texture.minFilter = LinearFilter
   texture.wrapS = RepeatWrapping
   texture.wrapT = RepeatWrapping
-  // The extended funnel has substantially more physical path length than the
-  // original helix, so repeat the artwork more often to keep words compact.
-  texture.repeat.set(1, 4.5)
+  // One texture cycle spans nearly the full helix so each broad front-facing
+  // curve carries a dominant ticker phrase like the supplied reference.
+  texture.repeat.set(1, 1.15)
   return texture
 }
 
-function createRibbonGeometry(segmentCount, compactScene, phaseOffset = 0) {
+function createRibbonGeometry(
+  segmentCount,
+  compactScene,
+  phaseOffset = 0,
+  textureProgressOffset = 0,
+) {
   const vertexCount = (segmentCount + 1) * 2
   const positions = new Float32Array(vertexCount * 3)
   const uvs = new Float32Array(vertexCount * 2)
@@ -167,9 +169,9 @@ function createRibbonGeometry(segmentCount, compactScene, phaseOffset = 0) {
     positions[rightIndex * 3 + 2] = centerZ + side.z * breathingWidth * 0.5
 
     uvs[leftIndex * 2] = 0
-    uvs[leftIndex * 2 + 1] = progress
+    uvs[leftIndex * 2 + 1] = progress + textureProgressOffset
     uvs[rightIndex * 2] = 1
-    uvs[rightIndex * 2 + 1] = progress
+    uvs[rightIndex * 2 + 1] = progress + textureProgressOffset
 
     if (segment < segmentCount) {
       indices.push(leftIndex, rightIndex, leftIndex + 2)
@@ -208,15 +210,18 @@ function HomeVortex() {
     }
 
     renderer.setClearColor(0x000000, 0)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, compactScene ? 1.2 : 1.6))
+    // A full-screen transparent canvas is fill-rate heavy during scrolling.
+    // These caps preserve crisp ribbons without forcing high-DPI repaint cost.
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, compactScene ? 1 : 1.15))
     renderer.outputColorSpace = SRGBColorSpace
 
     const texture = createRibbonTexture()
-    const primaryGeometry = createRibbonGeometry(compactScene ? 220 : 320, compactScene)
+    const primaryGeometry = createRibbonGeometry(compactScene ? 160 : 240, compactScene)
     const partnerGeometry = createRibbonGeometry(
-      compactScene ? 220 : 320,
+      compactScene ? 160 : 240,
       compactScene,
       Math.PI,
+      0.5,
     )
     const material = new MeshBasicMaterial({ map: texture, side: DoubleSide })
     const primaryRibbon = new Mesh(primaryGeometry, material)
