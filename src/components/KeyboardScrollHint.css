@@ -1,0 +1,76 @@
+.keyboard-scroll-hint {
+  --keyboard-scroll-hint-color: #9b6800;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: var(--space-4) 0 0;
+  color: var(--keyboard-scroll-hint-color);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.keyboard-scroll-hint__keys {
+  display: inline-flex;
+  gap: 0.22rem;
+}
+
+.keyboard-scroll-hint__key {
+  display: grid;
+  width: 1.55rem;
+  height: 1.55rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid #f5d97f;
+  border-radius: 0.36rem;
+  color: #f5d97f;
+  background: rgb(24 22 14 / 88%);
+  box-shadow:
+    inset 0 0 0.35rem rgb(245 217 127 / 18%),
+    0 0 0.55rem rgb(245 217 127 / 38%);
+  animation: keyboard-scroll-hint-bob 1.65s ease-in-out infinite;
+}
+
+.keyboard-scroll-hint__key--down {
+  animation-delay: 0.22s;
+}
+
+.keyboard-scroll-hint__key svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  overflow: visible;
+}
+
+.keyboard-scroll-hint__key path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+@keyframes keyboard-scroll-hint-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow:
+      inset 0 0 0.35rem rgb(245 217 127 / 18%),
+      0 0 0.45rem rgb(245 217 127 / 30%);
+  }
+
+  50% {
+    transform: translateY(0.18rem);
+    box-shadow:
+      inset 0 0 0.5rem rgb(245 217 127 / 32%),
+      0 0 0.9rem rgb(245 217 127 / 68%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .keyboard-scroll-hint__key {
+    animation: none;
+  }
+}

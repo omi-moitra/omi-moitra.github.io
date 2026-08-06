@@ -1,19 +1,21 @@
 // =============================================================================
 // src/pages/HomePage.jsx — public identity, capabilities, and strengths landing
 // -----------------------------------------------------------------------------
-// 1. Imports & hidden route   lazy scene, router, content, and key sequence
-// 2. HomePage setup           invisible Login sequence and navigation callback
+// 1. Imports & hidden gate    lazy scene, router, content, and lotus threshold
+// 2. HomePage setup           route-scoped musical Login gate
 // 3. Scene                    fixed vortex, phoenix, dragon, and static fallback
 // 4. Hero                     centered portrait, concise identity, and actions
 // 5. Capabilities             alternating technical and professional cards
 // 6. Previews                 verified project, journey, and contact cards
 // =============================================================================
 
-import { lazy, Suspense, useCallback } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { Link } from 'react-router-dom'
 import portraitFrame from '../assets/home-portrait-frame.png'
 import portraitFrameSmall from '../assets/home-portrait-frame-450.png'
 import HomeJourneySpine from '../components/HomeJourneySpine.jsx'
+import KeyboardScrollHint from '../components/KeyboardScrollHint.jsx'
+import LotusGate from '../components/LotusGate.jsx'
 import SkillCard from '../components/SkillCard.jsx'
 import {
   homeHero,
@@ -21,23 +23,17 @@ import {
   professionalStrengths,
   technicalSkills,
 } from '../data/homeContent.js'
-import useKeySequence from '../hooks/useKeySequence.js'
 import { projects } from '../data/projects.js'
 import './HomePage.css'
 
-const LOGIN_OPEN_SEQUENCE = "heaven's library"
 const HomeVortex = lazy(() => import('../components/HomeVortex.jsx'))
 
 function HomePage() {
-  const navigate = useNavigate()
-  const openLogin = useCallback(() => navigate('/login'), [navigate])
-
-  // :warning: This gesture changes discoverability only. Authentication and
-  // RLS—not knowledge of the phrase—protect administrator data.
-  useKeySequence({ sequence: LOGIN_OPEN_SEQUENCE, onMatch: openLogin })
-
   return (
     <article className="home-page">
+      {/* :warning: The gate changes discoverability only. Supabase Auth and
+          RLS—not the phrase or petal melody—protect administrator data. */}
+      <LotusGate />
       <div className="home-scene" aria-hidden="true">
         <img
           className="home-scene__creatures"
@@ -133,6 +129,7 @@ function HomePage() {
             <h1 id="home-title">{homeHero.name}</h1>
             <p className="home-hero__title">{homeHero.title}</p>
             <p className="home-hero__tagline">{homeHero.tagline}</p>
+            <KeyboardScrollHint className="home-keyboard-scroll-hint" />
             <div className="home-hero__actions" role="group" aria-label="Home page actions">
               {homeHero.callsToAction.map((action) => (
                 <Link

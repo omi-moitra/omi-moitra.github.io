@@ -147,8 +147,11 @@ function HomeJourneySpine() {
     const topAnchor = page.querySelector('.home-portrait__photo')
     if (targets.length === 0) return undefined
     let isActive = true
+    let keyboardNavigationLockedUntil = 0
 
     function updateActiveSection() {
+      if (performance.now() < keyboardNavigationLockedUntil) return
+
       const focusLine = window.innerHeight * 0.46
       let nearestIndex = 0
       let nearestDistance = Number.POSITIVE_INFINITY
@@ -210,12 +213,53 @@ function HomeJourneySpine() {
       animationFrameRef.current = window.requestAnimationFrame(updateActiveSection)
     }
 
+    function navigateSections(event) {
+      if (
+        event.defaultPrevented ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        (event.key !== 'ArrowUp' && event.key !== 'ArrowDown')
+      ) {
+        return
+      }
+
+      const eventTarget = event.target
+      if (
+        eventTarget instanceof Element &&
+        eventTarget.closest('input, textarea, select, [contenteditable="true"]')
+      ) {
+        return
+      }
+
+      const direction = event.key === 'ArrowDown' ? 1 : -1
+      const nextIndex = Math.min(
+        Math.max(activeIndexRef.current + direction, 0),
+        targets.length - 1,
+      )
+
+      if (nextIndex === activeIndexRef.current) return
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      event.preventDefault()
+      activeIndexRef.current = nextIndex
+      setActiveIndex(nextIndex)
+      keyboardNavigationLockedUntil = prefersReducedMotion ? 0 : performance.now() + 700
+      targets[nextIndex].scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'center',
+        inline: 'nearest',
+      })
+    }
+
     const resizeObserver = new ResizeObserver(measureSpine)
     resizeObserver.observe(page)
     if (topAnchor) resizeObserver.observe(topAnchor)
     targets.forEach((target) => resizeObserver.observe(target))
     window.addEventListener('resize', measureSpine)
     window.addEventListener('scroll', scheduleActiveUpdate, { passive: true })
+    window.addEventListener('keydown', navigateSections)
     document.fonts?.ready.then(() => {
       if (isActive) measureSpine()
     })
@@ -227,6 +271,7 @@ function HomeJourneySpine() {
       resizeObserver.disconnect()
       window.removeEventListener('resize', measureSpine)
       window.removeEventListener('scroll', scheduleActiveUpdate)
+      window.removeEventListener('keydown', navigateSections)
     }
   }, [])
 

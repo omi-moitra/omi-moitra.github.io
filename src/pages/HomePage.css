@@ -562,6 +562,10 @@
   font-weight: 700;
 }
 
+.home-keyboard-scroll-hint {
+  --keyboard-scroll-hint-color: #986500;
+}
+
 .home-hero__actions {
   display: grid;
   flex-wrap: wrap;
