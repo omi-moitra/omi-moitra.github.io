@@ -210,6 +210,217 @@
   margin-left: auto;
 }
 
+/* The measured spine follows the real card centers, so content changes and
+   responsive reflow cannot detach the journey markers from their sections. */
+.home-spine {
+  --home-spine-glow: #f5d97f;
+
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.home-spine__line {
+  position: absolute;
+  top: var(--spine-start);
+  left: 50%;
+  z-index: 1;
+  width: 0.18rem;
+  height: var(--spine-length);
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--radiant-gold) 42%, transparent),
+    var(--radiant-gold) 8%,
+    var(--butter-gold) 50%,
+    var(--radiant-gold) 92%,
+    color-mix(in srgb, var(--radiant-gold) 42%, transparent)
+  );
+  box-shadow:
+    0 0 0.35rem color-mix(in srgb, var(--home-spine-glow) 82%, transparent),
+    0 0 1rem color-mix(in srgb, var(--home-spine-glow) 48%, transparent);
+  transform: translateX(-50%);
+}
+
+.home-spine__line::after {
+  position: absolute;
+  inset: 0 -0.24rem;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--home-spine-glow) 48%, transparent);
+  filter: blur(0.35rem);
+  content: '';
+  animation: home-spine-glow 2.4s ease-in-out infinite;
+}
+
+.home-spine__point {
+  position: absolute;
+  top: var(--point-y);
+  right: 0;
+  left: 0;
+  z-index: 3;
+  height: 0;
+}
+
+.home-spine__connector {
+  position: absolute;
+  top: 50%;
+  width: var(--connector-length);
+  height: 1px;
+  background: linear-gradient(
+    to var(--connector-direction, left),
+    var(--radiant-gold),
+    color-mix(in srgb, var(--radiant-gold) 18%, transparent)
+  );
+  box-shadow: 0 0 0.55rem color-mix(in srgb, var(--home-spine-glow) 68%, transparent);
+}
+
+.home-spine__point--left .home-spine__connector {
+  right: 50%;
+}
+
+.home-spine__point--right .home-spine__connector {
+  --connector-direction: right;
+  left: 50%;
+}
+
+.home-spine__point--center .home-spine__connector {
+  display: none;
+}
+
+.home-spine__orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.78rem;
+  height: 0.78rem;
+  border: 2px solid color-mix(in srgb, var(--warm-ivory) 78%, var(--radiant-gold));
+  border-radius: 50%;
+  background: var(--radiant-gold);
+  box-shadow:
+    0 0 0.4rem var(--home-spine-glow),
+    0 0 1rem color-mix(in srgb, var(--home-spine-glow) 78%, transparent);
+  transform: translate(-50%, -50%);
+  animation: home-spine-orb-pulse 2s var(--orb-delay) ease-in-out infinite;
+}
+
+.home-spine__point--active .home-spine__orb {
+  width: 1rem;
+  height: 1rem;
+  background: var(--warm-ivory);
+  box-shadow:
+    0 0 0.45rem var(--warm-ivory),
+    0 0 1.35rem var(--home-spine-glow),
+    0 0 2rem color-mix(in srgb, var(--home-spine-glow) 66%, transparent);
+}
+
+.home-spine__lotus-track {
+  position: absolute;
+  top: var(--lotus-start);
+  left: 50%;
+  z-index: 4;
+  width: 0;
+  height: 0;
+  transform: translateY(var(--lotus-offset));
+  transition: transform 760ms var(--ease-standard);
+}
+
+.home-spine__lotus {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4.8rem;
+  height: 3.6rem;
+  display: block;
+  filter: drop-shadow(
+    0 0 0.3rem color-mix(in srgb, var(--home-spine-glow) 62%, transparent)
+  );
+  transform: translate(-50%, -50%);
+}
+
+.home-spine__lotus-art {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: home-spine-lotus-breathe 1.8s ease-in-out infinite;
+}
+
+.home-spine__lotus-petal {
+  stroke: color-mix(in srgb, var(--ink-black) 58%, transparent);
+  stroke-width: 1.15;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+}
+
+.home-spine__lotus-petal--coral-up {
+  fill: url('#lotus-tip-coral-up');
+}
+
+.home-spine__lotus-petal--blue-up {
+  fill: url('#lotus-tip-blue-up');
+}
+
+.home-spine__lotus-petal--pale-up {
+  fill: url('#lotus-tip-pale-up');
+}
+
+.home-spine__lotus-petal--violet-up {
+  fill: url('#lotus-tip-violet-up');
+}
+
+.home-spine__lotus-petal--violet-left {
+  fill: url('#lotus-tip-violet-left');
+}
+
+.home-spine__lotus-petal--coral-left {
+  fill: url('#lotus-tip-coral-left');
+}
+
+.home-spine__lotus-petal--blue-right {
+  fill: url('#lotus-tip-blue-right');
+}
+
+.home-spine__lotus-petal--violet-right {
+  fill: url('#lotus-tip-violet-right');
+}
+
+.home-spine__lotus-petal--coral-down {
+  fill: url('#lotus-tip-coral-down');
+}
+
+.home-spine__lotus-veins {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ink-black) 58%, transparent);
+  stroke-linecap: round;
+  stroke-width: 0.7;
+  opacity: 0.65;
+}
+
+.home-spine__lotus-heart {
+  fill: #ffc64a;
+  stroke: color-mix(in srgb, var(--ink-black) 58%, transparent);
+  stroke-width: 1;
+}
+
+@keyframes home-spine-glow {
+  50% {
+    opacity: 0.42;
+    transform: scaleX(1.9);
+  }
+}
+
+@keyframes home-spine-orb-pulse {
+  50% {
+    box-shadow:
+      0 0 0.65rem var(--home-spine-glow),
+      0 0 1.5rem color-mix(in srgb, var(--home-spine-glow) 82%, transparent);
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+}
+
+@keyframes home-spine-lotus-breathe {
+  50% { transform: scale(1.08) translateY(-0.08rem); }
+}
+
 @supports (animation-timeline: view()) {
   .home-flow-card {
     animation: home-card-rise linear both;
@@ -686,5 +897,15 @@
   .home-project-preview:nth-child(even) {
     animation: none;
     transform: none;
+  }
+
+  .home-spine__line::after,
+  .home-spine__orb,
+  .home-spine__lotus-art {
+    animation: none;
+  }
+
+  .home-spine__lotus-track {
+    transition: none;
   }
 }

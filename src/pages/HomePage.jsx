@@ -13,6 +13,7 @@ import { lazy, Suspense, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import portraitFrame from '../assets/home-portrait-frame.png'
 import portraitFrameSmall from '../assets/home-portrait-frame-450.png'
+import HomeJourneySpine from '../components/HomeJourneySpine.jsx'
 import SkillCard from '../components/SkillCard.jsx'
 import {
   homeHero,
@@ -95,6 +96,8 @@ function HomePage() {
         </div>
       </div>
 
+      <HomeJourneySpine />
+
       <div className="home-intro">
         <figure className="home-portrait">
           <img
@@ -121,7 +124,11 @@ function HomePage() {
             decoding="async"
           />
         </figure>
-        <section className="home-hero home-flow-card home-flow-card--center" aria-labelledby="home-title">
+        <section
+          className="home-hero home-flow-card home-flow-card--center"
+          data-home-spine-section="hero"
+          aria-labelledby="home-title"
+        >
           <div className="home-hero__copy">
             <h1 id="home-title">{homeHero.name}</h1>
             <p className="home-hero__title">{homeHero.title}</p>
@@ -141,7 +148,11 @@ function HomePage() {
         </section>
       </div>
 
-      <section className="home-section home-section--technical home-flow-card home-flow-card--right" aria-labelledby="technical-title">
+      <section
+        className="home-section home-section--technical home-flow-card home-flow-card--right"
+        data-home-spine-section="technical-skills"
+        aria-labelledby="technical-title"
+      >
         <div className="home-section__heading">
           <p className="home-section__eyebrow">Build the system</p>
           <h2 id="technical-title">Technical Skills</h2>
@@ -157,7 +168,11 @@ function HomePage() {
         </ul>
       </section>
 
-      <section className="home-section home-section--strengths home-flow-card home-flow-card--left" aria-labelledby="strengths-title">
+      <section
+        className="home-section home-section--strengths home-flow-card home-flow-card--left"
+        data-home-spine-section="professional-strengths"
+        aria-labelledby="strengths-title"
+      >
         <div className="home-strengths__introduction">
           <div className="home-section__heading">
             <p className="home-section__eyebrow">Understand the whole problem</p>
@@ -187,7 +202,11 @@ function HomePage() {
         </ul>
       </section>
 
-      <section className="home-codex-preview home-flow-card home-flow-card--right" aria-labelledby="codex-preview-title">
+      <section
+        className="home-codex-preview home-flow-card home-flow-card--right"
+        data-home-spine-section="selected-work"
+        aria-labelledby="codex-preview-title"
+      >
         <div className="home-section__heading">
           <p className="home-section__eyebrow">Crafted worlds</p>
           <h2 id="codex-preview-title">Selected Work</h2>
@@ -205,7 +224,11 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="home-journey-preview home-flow-card home-flow-card--left" aria-labelledby="journey-preview-title">
+      <section
+        className="home-journey-preview home-flow-card home-flow-card--left"
+        data-home-spine-section="journey"
+        aria-labelledby="journey-preview-title"
+      >
         <div>
           <p className="home-section__eyebrow">The Phoenix Path</p>
           <h2 id="journey-preview-title">A journey through research, systems, and code.</h2>
@@ -219,7 +242,11 @@ function HomePage() {
         </Link>
       </section>
 
-      <section className="home-contact-callout home-flow-card home-flow-card--right" aria-labelledby="home-contact-title">
+      <section
+        className="home-contact-callout home-flow-card home-flow-card--right"
+        data-home-spine-section="contact"
+        aria-labelledby="home-contact-title"
+      >
         <p className="home-section__eyebrow">Send a message</p>
         <h2 id="home-contact-title">Have a role, project, or collaboration in mind?</h2>
         <Link className="home-action home-action--secondary" to="/contact">
