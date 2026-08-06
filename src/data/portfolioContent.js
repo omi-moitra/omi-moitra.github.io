@@ -108,10 +108,13 @@ export const professionalExperience = [...experienceEntries].sort(
   (first, second) => second.startYear - first.startYear,
 )
 
-// :warning: The private source PDF has not been approved for unrestricted
-// publication. Keep this null so the page cannot emit a broken or unsafe link;
-// add metadata only when public/assets/resume-standard.pdf is owner-approved.
-export const resume = null
+// The owner explicitly approved the named project resume for public download.
+// Keep the public filename stable so bookmarks survive future content updates.
+export const resume = {
+  href: '/Oishieka-Moitra-Resume.pdf',
+  downloadName: 'Oishieka-Moitra-Resume.pdf',
+  label: 'Download Resume',
+}
 
 // :warning: These images were generated specifically for Journey and Projects and do not
 // count Header, Home, favicon, or screenshot assets toward this feature's pair.

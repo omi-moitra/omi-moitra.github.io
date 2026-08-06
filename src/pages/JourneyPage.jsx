@@ -29,21 +29,22 @@ function JourneyPage() {
       <PortfolioExperience imageSource={portfolioImages.journey.src} />
 
       <div className="portfolio-resume-journey">
+        {resume ? (
+          <a
+            className="portfolio-resume-link portfolio-resume-link--floating"
+            href={resume.href}
+            download={resume.downloadName}
+          >
+            {resume.label}
+          </a>
+        ) : null}
+
         <section className="portfolio-hero" aria-labelledby="journey-title">
           <div className="portfolio-hero__copy">
             <p className="portfolio-eyebrow">The Phoenix Path</p>
             <h1 id="journey-title">Journey &amp; Experience</h1>
             <p className="portfolio-hero__introduction">{portfolioIntroduction}</p>
 
-            {resume ? (
-              <a
-                className="portfolio-resume-link"
-                href={resume.href}
-                download={resume.downloadName}
-              >
-                {resume.label}
-              </a>
-            ) : null}
           </div>
         </section>
 
