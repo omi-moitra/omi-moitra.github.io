@@ -49,7 +49,7 @@ function NavigationIcon({ name }) {
   )
 }
 
-function NavigationLinks({ showIcons = false }) {
+function NavigationLinks({ showIcons = false, onNavigate }) {
   return (
     <ul className="navigation-list">
       {publicNavigation.map((destination) => (
@@ -60,6 +60,7 @@ function NavigationLinks({ showIcons = false }) {
             }
             end={destination.to === '/'}
             to={destination.to}
+            onClick={onNavigate}
           >
             {showIcons && <NavigationIcon name={destination.icon} />}
             <span className="navigation-link__text">

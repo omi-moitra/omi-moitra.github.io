@@ -11,6 +11,7 @@
 // =============================================================================
 
 import portfolioCodeScroll from '../assets/portfolio-code-scroll.jpg'
+import portfolioCodeScrollSmall from '../assets/portfolio-code-scroll-600.jpg'
 import portfolioPhoenixJourney from '../assets/portfolio-phoenix-journey.jpg'
 export { projects } from './projects.js'
 
@@ -133,6 +134,8 @@ export const portfolioImages = {
   codeScroll: {
     id: 'portfolio-code-scroll',
     src: portfolioCodeScroll,
+    srcSet: `${portfolioCodeScrollSmall} 600w, ${portfolioCodeScroll} 1200w`,
+    sizes: '(min-width: 64rem) 55rem, 100vw',
     width: 1200,
     height: 800,
     tool: 'OpenAI built-in image generation tool',

@@ -5,7 +5,7 @@
    2. Actions & Feedback     accessible buttons, counts, and status treatments
    3. Message Table          semantic responsive scroll region and row actions
    4. Dialogs                overlay, metadata, message, confirmation, and focus
-   5. Responsive             narrow layout, table containment, mobile-nav offset
+   5. Responsive             narrow layout and progressive table containment
    6. Reduced Motion         remove nonessential transitions and entrances
    ========================================================================== */
 
@@ -17,7 +17,7 @@
   --back-office-error-text: #751313;
   --back-office-error-surface: #fff4f4;
 
-  min-height: calc(100svh - var(--header-height));
+  min-height: auto;
   padding-block: clamp(var(--space-6), 6vw, var(--space-8));
 }
 
@@ -119,6 +119,7 @@
 
 .back-office-page__header {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-6);
@@ -191,6 +192,12 @@
 
 .back-office-button--logout {
   flex: 0 0 auto;
+  width: 100%;
+}
+
+.back-office-dialog__heading .back-office-button,
+.back-office-dialog__actions .back-office-button {
+  width: 100%;
 }
 
 .back-office-feedback {
@@ -362,19 +369,19 @@
   z-index: var(--layer-dialog);
   display: grid;
   place-items: center;
-  padding: var(--space-4);
+  padding: var(--space-2);
   background: color-mix(in srgb, var(--ink-black) 78%, transparent);
   animation: back-office-backdrop-in 150ms ease-out;
 }
 
 .back-office-dialog {
   width: min(100%, 42rem);
-  max-height: calc(100svh - (2 * var(--space-4)));
+  max-height: calc(100svh - (2 * var(--space-2)));
   overflow: auto;
   padding: clamp(var(--space-4), 5vw, var(--space-6));
   border: 2px solid var(--portal-blue);
   border-top: 0.4rem solid var(--spirit-cyan);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-medium);
   color: var(--ink-black);
   background: var(--warm-ivory);
   box-shadow: 0 1.5rem 5rem color-mix(in srgb, var(--ink-black) 45%, transparent);
@@ -394,6 +401,7 @@
 
 .back-office-dialog__heading {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-5);
@@ -405,7 +413,7 @@
 
 .back-office-dialog__metadata {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: var(--space-3);
   margin: var(--space-5) 0;
 }
@@ -453,40 +461,39 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 25rem) {
+  .back-office-dialog-backdrop {
+    padding: var(--space-4);
+  }
+
+  .back-office-dialog {
+    max-height: calc(100svh - (2 * var(--space-4)));
+    border-radius: var(--radius-large);
+  }
+
+  .back-office-dialog__actions .back-office-button {
+    width: auto;
+  }
+}
+
+@media (min-width: 48.0625rem) {
   .back-office-page,
   .protected-gate {
-    min-height: auto;
-    padding-bottom: calc(var(--mobile-navigation-height) + var(--space-7));
+    min-height: calc(100svh - var(--header-height));
   }
 
   .back-office-page__header,
   .back-office-dialog__heading {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .back-office-button--logout,
   .back-office-dialog__heading .back-office-button {
-    width: 100%;
+    width: auto;
   }
 
   .back-office-dialog__metadata {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 400px) {
-  .back-office-dialog-backdrop {
-    padding: var(--space-2);
-  }
-
-  .back-office-dialog {
-    max-height: calc(100svh - (2 * var(--space-2)));
-    border-radius: var(--radius-medium);
-  }
-
-  .back-office-dialog__actions .back-office-button {
-    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

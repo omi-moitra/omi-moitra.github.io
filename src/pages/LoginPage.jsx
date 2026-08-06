@@ -17,6 +17,7 @@ import {
   normalizeLoginValues,
   validateLoginValues,
 } from '../utils/loginValidation.js'
+import { reportDevelopmentError } from '../utils/reportDevelopmentError.js'
 import './LoginPage.css'
 
 const LOGIN_CLOSE_SEQUENCE = 'flaws'
@@ -64,6 +65,7 @@ function LoginPage() {
         if (!isCurrentCheck) return
 
         if (error) {
+          reportDevelopmentError('Administrator session check failed.', error)
           setPhase('session-error')
           setFeedbackMessage(serviceFailureMessage)
           return
@@ -77,7 +79,8 @@ function LoginPage() {
         }
 
         setPhase('ready')
-      } catch {
+      } catch (error) {
+        reportDevelopmentError('Administrator session check was interrupted.', error)
         if (isCurrentCheck) {
           setPhase('session-error')
           setFeedbackMessage(serviceFailureMessage)
@@ -159,12 +162,14 @@ function LoginPage() {
       if (!isMounted.current) return
 
       if (error || !data.session) {
+        if (error) reportDevelopmentError('Administrator sign-in failed.', error)
         showAuthenticationFailure(credentialFailureMessage)
         return
       }
 
       navigate('/back-office', { replace: true })
-    } catch {
+    } catch (error) {
+      reportDevelopmentError('Administrator sign-in was interrupted.', error)
       if (isMounted.current) showAuthenticationFailure(serviceFailureMessage)
     } finally {
       submissionGuard.current = false

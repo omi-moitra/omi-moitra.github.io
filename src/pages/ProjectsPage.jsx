@@ -3,7 +3,7 @@
 // -----------------------------------------------------------------------------
 // 1. Imports             verified projects, generated artwork, and route styles
 // 2. Introduction        clear page purpose and independent Projects identity
-// 3. Project collection  settled media wall and accessible case-study dialogs
+// 3. Project collection  settled media wall and direct case-study routes
 // =============================================================================
 
 import ProjectCard from '../components/ProjectCard.jsx'
@@ -44,6 +44,8 @@ function ProjectsPage() {
         >
           <img
             src={portfolioImages.codeScroll.src}
+            srcSet={portfolioImages.codeScroll.srcSet}
+            sizes={portfolioImages.codeScroll.sizes}
             width={portfolioImages.codeScroll.width}
             height={portfolioImages.codeScroll.height}
             alt=""

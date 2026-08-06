@@ -16,6 +16,7 @@ import {
   normalizeContactValues,
   validateContactValues,
 } from '../utils/contactValidation.js'
+import { reportDevelopmentError } from '../utils/reportDevelopmentError.js'
 import './ContactPage.css'
 
 const feedbackCopy = {
@@ -97,6 +98,14 @@ function ContactPage() {
     // window. Set this synchronous guard before beginning any async operation.
     if (submissionGuard.current) return
 
+    const honeypotValue = event.currentTarget.elements.namedItem('website')?.value
+    if (honeypotValue) {
+      setValues(initialContactValues)
+      setErrors(initialContactErrors)
+      setFeedbackType('success')
+      return
+    }
+
     const normalizedValues = normalizeContactValues(values)
     const validationErrors = validateContactValues(normalizedValues)
     const firstInvalidField = fieldOrder.find((field) => validationErrors[field])
@@ -132,6 +141,7 @@ function ContactPage() {
       if (!isMounted.current) return
 
       if (error) {
+        reportDevelopmentError('Contact submission failed.', error)
         setFeedbackType('error')
         return
       }
@@ -139,9 +149,10 @@ function ContactPage() {
       setValues(initialContactValues)
       setErrors(initialContactErrors)
       setFeedbackType('success')
-    } catch {
+    } catch (error) {
       // Raw service errors can contain implementation details and are neither
       // rendered nor logged; the visitor receives stable recovery guidance.
+      reportDevelopmentError('Contact submission was interrupted.', error)
       if (isMounted.current) setFeedbackType('error')
     } finally {
       submissionGuard.current = false
@@ -201,6 +212,17 @@ function ContactPage() {
           onFocusCapture={handleFormFocus}
           onSubmit={handleSubmit}
         >
+          <div className="contact-form__honeypot" aria-hidden="true">
+            <label htmlFor="contact-website">Website</label>
+            <input
+              id="contact-website"
+              name="website"
+              type="text"
+              autoComplete="off"
+              tabIndex="-1"
+            />
+          </div>
+
           <div className="contact-form__field">
             <div className="contact-form__label-row">
               <label htmlFor="contact-name">Name</label>

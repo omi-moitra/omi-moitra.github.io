@@ -9,6 +9,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 import App from './App.jsx'
+import { ThemeProvider } from './theme/ThemeContext.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
@@ -16,7 +17,9 @@ createRoot(document.getElementById('root')).render(
     {/* :warning: HashRouter keeps every GitHub Pages request at the domain root.
         Replacing it with BrowserRouter requires server rewrites Pages cannot provide. */}
     <HashRouter>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </HashRouter>
   </StrictMode>,
 )

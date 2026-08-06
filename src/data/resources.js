@@ -6,8 +6,11 @@
 // =============================================================================
 
 import linksMdnWebPlatform from '../assets/links-mdn-web-platform.jpg'
+import linksMdnWebPlatformSmall from '../assets/links-mdn-web-platform-600.jpg'
 import linksReactComponents from '../assets/links-react-components.jpg'
+import linksReactComponentsSmall from '../assets/links-react-components-600.jpg'
 import linksSupabaseData from '../assets/links-supabase-data.jpg'
+import linksSupabaseDataSmall from '../assets/links-supabase-data-600.jpg'
 
 // :warning: Revalidate these official destinations before release. Every URL
 // must remain HTTPS and every consumer must preserve safe new-tab attributes.
@@ -20,6 +23,7 @@ export const resources = [
     url: 'https://developer.mozilla.org/en-US/',
     actionLabel: 'Visit MDN Web Docs',
     image: linksMdnWebPlatform,
+    imageSrcSet: `${linksMdnWebPlatformSmall} 600w, ${linksMdnWebPlatform} 1200w`,
     imageAlt:
       'Luminous digital library representing web-platform documentation and browser standards.',
     imageWidth: 1200,
@@ -34,6 +38,7 @@ export const resources = [
     url: 'https://react.dev/',
     actionLabel: 'Visit React Documentation',
     image: linksReactComponents,
+    imageSrcSet: `${linksReactComponentsSmall} 600w, ${linksReactComponents} 1200w`,
     imageAlt: 'Interface components connected into a larger application constellation.',
     imageWidth: 1200,
     imageHeight: 800,
@@ -47,6 +52,7 @@ export const resources = [
     url: 'https://supabase.com/docs',
     actionLabel: 'Visit Supabase Documentation',
     image: linksSupabaseData,
+    imageSrcSet: `${linksSupabaseDataSmall} 600w, ${linksSupabaseData} 1200w`,
     imageAlt: 'Secure data vault connected to web application services.',
     imageWidth: 1200,
     imageHeight: 800,

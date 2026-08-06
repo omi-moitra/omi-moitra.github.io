@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import DeleteMessageDialog from '../components/DeleteMessageDialog.jsx'
 import MessageDialog from '../components/MessageDialog.jsx'
 import { supabase } from '../lib/supabaseClient.js'
+import { reportDevelopmentError } from '../utils/reportDevelopmentError.js'
 import './BackOfficePage.css'
 
 const fetchErrorMessage = 'Messages could not be loaded. Try again.'
@@ -92,6 +93,7 @@ function BackOfficePage() {
       if (!isMounted.current || currentVersion !== requestVersion.current) return
 
       if (error || !Array.isArray(data) || !data.every(hasValidMessageShape)) {
+        if (error) reportDevelopmentError('Message list request failed.', error)
         setMessages([])
         setPhase('error')
         return
@@ -99,7 +101,8 @@ function BackOfficePage() {
 
       setMessages(data)
       setPhase(data.length === 0 ? 'empty' : 'ready')
-    } catch {
+    } catch (error) {
+      reportDevelopmentError('Message list request was interrupted.', error)
       if (isMounted.current && currentVersion === requestVersion.current) {
         setMessages([])
         setPhase('error')
@@ -178,6 +181,7 @@ function BackOfficePage() {
       if (!isMounted.current) return
 
       if (error || !data || data.id !== selectedId) {
+        if (error) reportDevelopmentError('Message deletion failed.', error)
         setDeleteError(deleteErrorMessage)
         return
       }
@@ -189,7 +193,8 @@ function BackOfficePage() {
       })
       setPhase(messages.length === 1 ? 'empty' : 'ready')
       setPendingDeleteMessage(null)
-    } catch {
+    } catch (error) {
+      reportDevelopmentError('Message deletion was interrupted.', error)
       if (isMounted.current) setDeleteError(deleteErrorMessage)
     } finally {
       deleteGuard.current = false
@@ -209,6 +214,7 @@ function BackOfficePage() {
       if (!isMounted.current) return
 
       if (error) {
+        reportDevelopmentError('Administrator sign-out failed.', error)
         setLogoutError(logoutErrorMessage)
         return
       }
@@ -217,7 +223,8 @@ function BackOfficePage() {
       // the outer session gate independently prevents Back from restoring it.
       clearPrivateState()
       navigate('/login', { replace: true })
-    } catch {
+    } catch (error) {
+      reportDevelopmentError('Administrator sign-out was interrupted.', error)
       if (isMounted.current) setLogoutError(logoutErrorMessage)
     } finally {
       logoutGuard.current = false

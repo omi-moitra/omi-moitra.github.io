@@ -8,7 +8,9 @@
 // =============================================================================
 
 import vortexCreaturesImage from '../assets/home-vortex-creatures.jpg'
+import vortexCreaturesImageSmall from '../assets/home-vortex-creatures-768.jpg'
 import skillsBridgeImage from '../assets/home-skills-bridge.jpg'
+import skillsBridgeImageSmall from '../assets/home-skills-bridge-600.jpg'
 
 // :warning: These claims come from the approved resume-derived draft. Keep
 // changes traceable to an approved source and never add unsupported metrics.
@@ -85,6 +87,8 @@ export const homeImages = {
   vortexCreatures: {
     id: 'home-vortex-creatures',
     src: vortexCreaturesImage,
+    srcSet: `${vortexCreaturesImageSmall} 768w, ${vortexCreaturesImage} 1536w`,
+    sizes: '100vw',
     width: 1536,
     height: 1024,
     tool: 'OpenAI built-in image generation tool',
@@ -98,6 +102,8 @@ export const homeImages = {
   skillsBridge: {
     id: 'home-skills-bridge',
     src: skillsBridgeImage,
+    srcSet: `${skillsBridgeImageSmall} 600w, ${skillsBridgeImage} 1200w`,
+    sizes: '(min-width: 59.4375rem) 42vw, 100vw',
     width: 1200,
     height: 800,
     tool: 'OpenAI built-in image generation tool',

@@ -5,14 +5,14 @@
    2. Professional Portals   verified shortcuts in quiet glowing cards
    3. Collection & Cards     semantic responsive grid and stable card surfaces
    4. Card Media & Content   artwork framing, copy hierarchy, external action
-   5. Responsive ≤768px      compact spacing and single-column composition
+   5. Responsive Layout      compact base and wider-screen collections
    6. Motion Preference      static interaction treatment when motion is reduced
    ========================================================================== */
 
 .links-page {
   position: relative;
   display: grid;
-  gap: clamp(var(--space-7), 7vw, var(--space-8));
+  gap: var(--space-7);
   padding-block: clamp(var(--space-6), 6vw, var(--space-8));
   isolation: isolate;
 }
@@ -37,7 +37,7 @@
 .links-hero {
   position: relative;
   max-width: 58rem;
-  padding: clamp(var(--space-5), 5vw, var(--space-7)) 0;
+  padding: var(--space-6) 0;
 }
 
 .links-hero::before {
@@ -145,14 +145,14 @@
   margin: 0;
   color: var(--charcoal);
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-size: clamp(1.8rem, 10vw, 2.25rem);
   line-height: 1.05;
-  text-wrap: balance;
+  text-wrap: wrap;
 }
 
 .resource-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(var(--space-4), 3vw, var(--space-6));
   margin: 0;
   padding: 0;
@@ -283,24 +283,24 @@
   opacity: 0.82;
 }
 
-@media (max-width: 768px) {
-  .links-page {
-    gap: var(--space-7);
-  }
-
-  .links-hero {
-    padding-block: var(--space-6);
-  }
-
-  .resource-grid {
-    grid-template-columns: minmax(0, 1fr);
+@media (min-width: 25rem) {
+  .links-collection__heading h2 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    text-wrap: balance;
   }
 }
 
-@media (max-width: 25rem) {
-  .links-collection__heading h2 {
-    font-size: clamp(1.8rem, 10vw, 2.25rem);
-    text-wrap: wrap;
+@media (min-width: 48.0625rem) {
+  .links-page {
+    gap: clamp(var(--space-7), 7vw, var(--space-8));
+  }
+
+  .links-hero {
+    padding-block: clamp(var(--space-5), 5vw, var(--space-7));
+  }
+
+  .resource-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   }
 }
 

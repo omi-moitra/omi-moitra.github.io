@@ -10,6 +10,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { isSupabaseConfigured, supabase } from '../lib/supabaseClient.js'
+import { reportDevelopmentError } from '../utils/reportDevelopmentError.js'
 
 const verificationErrorMessage =
   'Administrator access could not be verified. Try again or sign out.'
@@ -45,6 +46,7 @@ function RequireSession() {
         if (!isActive || currentVersion !== verificationVersion.current) return
 
         if (sessionError) {
+          reportDevelopmentError('Protected session lookup failed.', sessionError)
           setPhase('error')
           return
         }
@@ -60,12 +62,14 @@ function RequireSession() {
         if (!isActive || currentVersion !== verificationVersion.current) return
 
         if (userError || !userData.user) {
+          if (userError) reportDevelopmentError('Protected user lookup failed.', userError)
           setPhase('error')
           return
         }
 
         setPhase('authenticated')
-      } catch {
+      } catch (error) {
+        reportDevelopmentError('Administrator verification was interrupted.', error)
         if (isActive && currentVersion === verificationVersion.current) {
           setPhase('error')
         }
@@ -115,13 +119,15 @@ function RequireSession() {
     try {
       const { error } = await supabase.auth.signOut()
       if (error) {
+        reportDevelopmentError('Session cleanup failed.', error)
         setIsClearingSession(false)
         signOutGuard.current = false
         return
       }
 
       navigate('/login', { replace: true })
-    } catch {
+    } catch (error) {
+      reportDevelopmentError('Session cleanup was interrupted.', error)
       setIsClearingSession(false)
       signOutGuard.current = false
     }

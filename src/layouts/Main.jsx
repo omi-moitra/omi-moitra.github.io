@@ -8,6 +8,7 @@
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer.jsx'
 import Header from '../components/Header.jsx'
+import RouteMetadata from '../components/RouteMetadata.jsx'
 
 function focusMainContent(event) {
   // A normal fragment link would replace HashRouter's route fragment. Preventing
@@ -21,6 +22,7 @@ function focusMainContent(event) {
 function Main() {
   return (
     <div className="site-shell" data-theme="cozy-fantasy">
+      <RouteMetadata />
       <a className="skip-link" href="#main-content" onClick={focusMainContent}>
         Skip to main content
       </a>

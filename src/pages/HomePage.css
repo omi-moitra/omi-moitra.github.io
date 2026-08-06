@@ -6,9 +6,9 @@
    3. Portrait & Hero     gold filigree medallion, identity, and navigation
    4. Skills & Media      skill collections and supporting illustration
    5. Narrative Previews  projects, journey, and contact invitation
-   6. Responsive ≤950px   readable single-column flow over a quieter scene
+   6. Responsive Layout   readable base flow with alternating desktop placement
    7. Reduced Motion      stable cards and rendered vortex frame
-   8. Narrow ≤400px       compact card, action, and skill treatment
+   8. Narrow Base         compact card, action, and skill treatment
    ========================================================================== */
 
 .home-page {
@@ -17,7 +17,7 @@
   width: 100vw;
   min-height: 100svh;
   margin-left: -50vw;
-  padding: clamp(5rem, 11vh, 8rem) 0 var(--space-8);
+  padding: var(--space-6) 0 var(--space-8);
   overflow: clip;
   isolation: isolate;
 }
@@ -62,10 +62,10 @@
 
 .home-scene__creatures {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: var(--space-4);
+  left: 50%;
   z-index: 0;
-  width: 100%;
+  width: 150%;
   height: auto;
   max-width: none;
   opacity: 0.86;
@@ -73,6 +73,7 @@
   object-position: top center;
   -webkit-mask-image: linear-gradient(to bottom, #000 0 58%, transparent 96%);
   mask-image: linear-gradient(to bottom, #000 0 58%, transparent 96%);
+  transform: translateX(-50%);
 }
 
 .home-vortex-stage {
@@ -87,12 +88,13 @@
   bottom: -6%;
   left: 50%;
   z-index: 1;
-  width: min(68vw, 64rem);
+  width: min(72vw, 26rem);
   height: 112%;
   overflow: visible;
   filter: drop-shadow(0 1rem 1.2rem color-mix(in srgb, var(--ink-black) 28%, transparent));
   transform: translateX(-50%);
   transition: opacity 250ms ease-out;
+  opacity: 0.72;
 }
 
 .home-vortex-fallback__shadow,
@@ -165,11 +167,11 @@
 }
 
 .home-media--vortex-ready .home-vortex {
-  opacity: 1;
+  opacity: 0.72;
 }
 
 .home-media--vortex-ready .home-vortex-fallback {
-  opacity: 0;
+  opacity: 0.72;
 }
 
 .home-media--webgl-unavailable .home-vortex {
@@ -179,11 +181,13 @@
 .home-flow-card {
   position: relative;
   z-index: 2;
-  width: min(36rem, calc(50% - clamp(7rem, 15vw, 13rem)));
+  width: min(calc(100% - 2 * var(--page-gutter)), 42rem);
+  margin-right: auto;
+  margin-left: auto;
   margin-bottom: clamp(8rem, 18vh, 14rem);
   border: 1px solid var(--aged-paper);
-  border-radius: var(--radius-large);
-  background: color-mix(in srgb, var(--warm-ivory) 95%, transparent);
+  border-radius: var(--radius-medium);
+  background: color-mix(in srgb, var(--warm-ivory) 96%, transparent);
   box-shadow:
     var(--shadow-large),
     0.5rem 0.6rem 0 color-mix(in srgb, var(--lavender-mist) 26%, transparent);
@@ -192,16 +196,16 @@
 
 .home-flow-card--left {
   margin-right: auto;
-  margin-left: max(var(--page-gutter), calc((100vw - var(--content-max-width)) / 2 + var(--page-gutter)));
+  margin-left: auto;
 }
 
 .home-flow-card--right {
-  margin-right: max(var(--page-gutter), calc((100vw - var(--content-max-width)) / 2 + var(--page-gutter)));
+  margin-right: auto;
   margin-left: auto;
 }
 
 .home-flow-card--center {
-  width: min(calc(100% - 2 * var(--page-gutter)), 40rem);
+  width: min(calc(100% - 2 * var(--page-gutter)), 42rem);
   margin-right: auto;
   margin-left: auto;
 }
@@ -238,7 +242,7 @@
 .home-codex-preview,
 .home-journey-preview,
 .home-contact-callout {
-  padding: clamp(var(--space-5), 4vw, var(--space-7));
+  padding: var(--space-5) var(--space-4);
 }
 
 .home-hero::before,
@@ -275,7 +279,7 @@
   z-index: 4;
   width: clamp(16rem, 27vw, 22rem);
   aspect-ratio: 1;
-  margin: 0 auto -2.5rem;
+  margin: 0 auto -1.75rem;
   filter: drop-shadow(0 1rem 1.5rem color-mix(in srgb, var(--ink-black) 22%, transparent));
 }
 
@@ -348,7 +352,7 @@
 }
 
 .home-hero__actions {
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
   gap: var(--space-3);
   margin-top: var(--space-5);
@@ -356,6 +360,7 @@
 }
 
 .home-action {
+  width: 100%;
   min-height: 3rem;
   display: inline-flex;
   align-items: center;
@@ -591,42 +596,84 @@
   margin-top: var(--space-5);
 }
 
-@media (max-width: 950px) {
+@media (min-width: 25rem) {
   .home-page {
     padding-top: var(--space-7);
   }
 
-  .home-flow-card,
-  .home-flow-card--left,
-  .home-flow-card--right,
+  .home-flow-card {
+    border-radius: var(--radius-large);
+  }
+
+  .home-hero,
+  .home-section,
+  .home-codex-preview,
+  .home-journey-preview,
+  .home-contact-callout {
+    padding: clamp(var(--space-5), 4vw, var(--space-7));
+  }
+
+  .home-hero__actions {
+    display: flex;
+  }
+
+  .home-portrait {
+    margin-bottom: -2.5rem;
+  }
+
+  .home-action {
+    width: auto;
+  }
+
+  .skill-card {
+  padding: var(--space-4);
+  }
+}
+
+@media (min-width: 59.4375rem) {
+  .home-page {
+    padding-top: clamp(5rem, 11vh, 8rem);
+  }
+
+  .home-flow-card {
+    width: min(36rem, calc(50% - clamp(7rem, 15vw, 13rem)));
+    background: color-mix(in srgb, var(--warm-ivory) 95%, transparent);
+  }
+
+  .home-flow-card--left {
+    margin-right: auto;
+    margin-left: max(var(--page-gutter), calc((100vw - var(--content-max-width)) / 2 + var(--page-gutter)));
+  }
+
+  .home-flow-card--right {
+    margin-right: max(var(--page-gutter), calc((100vw - var(--content-max-width)) / 2 + var(--page-gutter)));
+    margin-left: auto;
+  }
+
   .home-flow-card--center {
-    width: min(calc(100% - 2 * var(--page-gutter)), 42rem);
+    width: min(calc(100% - 2 * var(--page-gutter)), 40rem);
     margin-right: auto;
     margin-left: auto;
   }
 
-  .home-flow-card {
-    background: color-mix(in srgb, var(--warm-ivory) 96%, transparent);
+  .home-media--vortex-ready .home-vortex {
+    opacity: 1;
   }
 
-  .home-vortex {
+  .home-media--vortex-ready .home-vortex-fallback {
     opacity: 0;
   }
 
-  .home-media--vortex-ready .home-vortex {
-    opacity: 0.72;
-  }
-
   .home-vortex-fallback {
-    width: min(72vw, 26rem);
-    opacity: 0.72;
+    width: min(68vw, 64rem);
+    opacity: 1;
   }
 
   .home-scene__creatures {
-    top: var(--space-4);
-    left: 50%;
-    width: 150%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: none;
   }
 }
 
@@ -639,36 +686,5 @@
   .home-project-preview:nth-child(even) {
     animation: none;
     transform: none;
-  }
-}
-
-@media (max-width: 25rem) {
-  .home-page {
-    padding-top: var(--space-6);
-  }
-
-  .home-hero,
-  .home-section,
-  .home-codex-preview,
-  .home-journey-preview,
-  .home-contact-callout {
-    padding: var(--space-5) var(--space-4);
-    border-radius: var(--radius-medium);
-  }
-
-  .home-hero__actions {
-    display: grid;
-  }
-
-  .home-portrait {
-    margin-bottom: -1.75rem;
-  }
-
-  .home-action {
-    width: 100%;
-  }
-
-  .skill-card {
-    padding: var(--space-4);
   }
 }

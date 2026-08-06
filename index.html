@@ -5,10 +5,11 @@
      1. Document metadata       identity, discovery, favicon, and viewport
      2. Application bootstrap   root mount point and Vite entry module
      ======================================================================== -->
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="canonical" href="https://omi-moitra.github.io/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,7 +22,21 @@
       content="Oishieka Moitra’s full stack developer portfolio, professional journey, selected work, resources, and contact form."
     />
     <meta name="theme-color" content="#F5EBD8" />
+    <script>
+      ;(() => {
+        const storedTheme = localStorage.getItem('omi-portfolio-theme')
+        const preference = ['light', 'dark', 'system'].includes(storedTheme)
+          ? storedTheme
+          : 'system'
+        const resolvedTheme = preference === 'system'
+          ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+          : preference
+        document.documentElement.dataset.theme = resolvedTheme
+        document.documentElement.style.colorScheme = resolvedTheme
+      })()
+    </script>
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://omi-moitra.github.io/#/" />
     <meta property="og:title" content="Oishieka Moitra | Full Stack Developer" />
     <meta
       property="og:description"

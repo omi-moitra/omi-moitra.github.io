@@ -8,24 +8,31 @@
 
 import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import RequireSession from './components/RequireSession.jsx'
+import StatusPanel from './components/StatusPanel.jsx'
 import Main from './layouts/Main.jsx'
-import BackOfficePage from './pages/BackOfficePage.jsx'
-import ContactPage from './pages/ContactPage.jsx'
 import HomePage from './pages/HomePage.jsx'
-import LinksPage from './pages/LinksPage.jsx'
-import LoginPage from './pages/LoginPage.jsx'
 import './App.css'
 
 // Route-level imports keep the Journey scene and Projects case-study code out
 // of the initial Home bundle and out of each other's route payloads.
 const JourneyPage = lazy(() => import('./pages/JourneyPage.jsx'))
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage.jsx'))
+const ProjectPage = lazy(() => import('./pages/ProjectPage.jsx'))
+const ContactPage = lazy(() => import('./pages/ContactPage.jsx'))
+const LinksPage = lazy(() => import('./pages/LinksPage.jsx'))
+const LoginPage = lazy(() => import('./pages/LoginPage.jsx'))
+const RequireSession = lazy(() => import('./components/RequireSession.jsx'))
+const BackOfficePage = lazy(() => import('./pages/BackOfficePage.jsx'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'))
+
+function SuspendedRoute({ label, children }) {
+  return <Suspense fallback={<RouteFallback label={label} />}>{children}</Suspense>
+}
 
 function RouteFallback({ label }) {
   return (
-    <div className="setup-route" role="status" aria-live="polite">
-      <p>Loading {label}…</p>
+    <div className="status-page">
+      <StatusPanel title={`Loading ${label}…`} message="Preparing this page." />
     </div>
   )
 }
@@ -35,9 +42,9 @@ function App() {
     <Routes>
       <Route element={<Main />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/links" element={<LinksPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/contact" element={<SuspendedRoute label="contact"><ContactPage /></SuspendedRoute>} />
+        <Route path="/links" element={<SuspendedRoute label="links"><LinksPage /></SuspendedRoute>} />
+        <Route path="/login" element={<SuspendedRoute label="sign in"><LoginPage /></SuspendedRoute>} />
         <Route
           path="/journey"
           element={
@@ -54,12 +61,25 @@ function App() {
             </Suspense>
           }
         />
+        <Route
+          path="/projects/:projectSlug"
+          element={<SuspendedRoute label="project"><ProjectPage /></SuspendedRoute>}
+        />
         <Route path="/portfolio" element={<Navigate to="/journey" replace />} />
-        <Route element={<RequireSession />}>
-          <Route path="/back-office" element={<BackOfficePage />} />
+        <Route path="/work" element={<Navigate to="/projects" replace />} />
+        <Route path="/about" element={<Navigate to="/journey" replace />} />
+        <Route path="/playground" element={<Navigate to="/links" replace />} />
+        <Route
+          element={<SuspendedRoute label="administrator access"><RequireSession /></SuspendedRoute>}
+        >
+          <Route
+            path="/back-office"
+            element={<SuspendedRoute label="messages"><BackOfficePage /></SuspendedRoute>}
+          />
         </Route>
         <Route path="/backoffice" element={<Navigate to="/back-office" replace />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/admin" element={<Navigate to="/back-office" replace />} />
+        <Route path="*" element={<SuspendedRoute label="page"><NotFoundPage /></SuspendedRoute>} />
       </Route>
     </Routes>
   )

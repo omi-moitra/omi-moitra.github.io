@@ -5,7 +5,7 @@
    2. Login Panel           solid credential surface and heading hierarchy
    3. Form & Controls       labels, validation, focus, pending, and submit states
    4. Service Feedback     checking, error, retry, and configuration treatments
-   5. Responsive ≤768px    stacked composition and mobile navigation clearance
+   5. Responsive Layout    stacked base with a wider-screen portal split
    6. Motion Preference    static portal and controls when reduced motion is set
    ========================================================================== */
 
@@ -14,7 +14,7 @@
 
   width: min(100%, 58rem);
   display: grid;
-  grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
   gap: clamp(var(--space-5), 5vw, var(--space-7));
   margin-inline: auto;
@@ -23,7 +23,7 @@
 
 .login-portal {
   position: relative;
-  min-height: 32rem;
+  min-height: 16rem;
   overflow: hidden;
   display: grid;
   place-items: center;
@@ -109,10 +109,10 @@
 
 .login-panel {
   min-width: 0;
-  align-self: center;
-  padding: clamp(var(--space-5), 5vw, var(--space-7));
+  align-self: stretch;
+  padding: var(--space-5);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-medium);
   background: var(--warm-ivory);
   box-shadow: var(--shadow-large);
 }
@@ -300,25 +300,25 @@
   }
 }
 
-@media (max-width: 768px) {
-  .login-page {
-    width: 100%;
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .login-portal {
-    min-height: 16rem;
-  }
-
+@media (min-width: 25rem) {
   .login-panel {
-    align-self: stretch;
+    padding: clamp(var(--space-5), 5vw, var(--space-7));
+    border-radius: var(--radius-large);
   }
 }
 
-@media (max-width: 25rem) {
+@media (min-width: 48.0625rem) {
+  .login-page {
+    width: min(100%, 58rem);
+    grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+  }
+
+  .login-portal {
+    min-height: 32rem;
+  }
+
   .login-panel {
-    padding: var(--space-5);
-    border-radius: var(--radius-medium);
+    align-self: center;
   }
 }
 

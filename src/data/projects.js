@@ -7,45 +7,43 @@
 export const projects = [
   {
     id: 'oishieka-fantasy-portfolio',
-    name: 'Oishieka Moitra Fantasy Portfolio',
+    slug: 'oishieka-fantasy-portfolio',
+    title: 'Oishieka Moitra Fantasy Portfolio',
+    subtitle: 'A responsive Phoenix Codex for professional work and experience.',
+    summary:
+      'A phoenix-inspired static React portfolio built for GitHub Pages with accessible presentation, progressive visual effects, and a protected message workflow.',
+    featured: true,
+    status: 'published',
+    year: 2026,
+    role: ['Portfolio Owner', 'Designer', 'Full Stack Developer'],
     technologies: ['React', 'Vite', 'JavaScript', 'React Router', 'CSS'],
-    purpose:
-      'Give recruiters and professional contacts one responsive place to review Oishieka’s professional profile, skills, education, experience, and current project work.',
-    description:
-      'A phoenix-inspired static React single-page application built for GitHub Pages. The current build uses reusable components, hash-based routing, semantic content, responsive navigation, and accessible presentation across its implemented public pages.',
+    categories: ['Portfolio', 'Frontend', 'Accessibility'],
     // :warning: Do not substitute thematic art for the required actual website
     // screenshot. This remains null until a browser capture is approved.
-    image: null,
-    imageAlt: '',
-    imageWidth: null,
-    imageHeight: null,
-    liveUrl: 'https://omi-moitra.github.io',
-    sourceUrl: 'https://github.com/omi-moitra/omi-moitra.github.io',
-    caseStudy: {
-      objective:
-        'Create one recruiter-friendly portfolio that presents professional history, technical capability, resources, contact options, and a protected message workflow without requiring a custom server.',
-      role: 'Portfolio owner, designer, and full stack developer',
-      architecture:
-        'A static React and Vite single-page application uses HashRouter for GitHub Pages. Supabase supplies contact-message persistence, email/password authentication, and Row Level Security for private administration.',
-      decisions: [
-        'Keep essential content in semantic HTML while treating Three.js as progressive decoration.',
-        'Keep the professional Journey and project case studies on separate focused routes.',
-        'Protect message data with both an authenticated route gate and database policies.',
-      ],
-      challenges: [
-        'Preserving direct-route refresh behavior on static GitHub Pages hosting.',
-        'Balancing a rich fantasy visual identity with accessibility and recruiter scanning.',
-        'Keeping anonymous contact insertion separate from authenticated message access.',
-      ],
-      solutions: [
-        'Used hash-based routing so every deployed route continues requesting the root document.',
-        'Loaded scene code progressively over complete semantic content and static artwork.',
-        'Centralized Supabase access and documented least-privilege RLS expectations.',
-      ],
-      outcome:
-        'The current application provides a responsive public portfolio, validated contact workflow, hidden administrator login, and protected message-management experience in one deployable static build.',
-      nextSteps:
-        'Add more owner-verified projects and screenshots, complete production Supabase verification, and continue reducing the route-scoped 3D bundle.',
+    coverImage: null,
+    links: {
+      live: 'https://omi-moitra.github.io',
+      repository: 'https://github.com/omi-moitra/omi-moitra.github.io',
     },
+    overview:
+      'The portfolio gives recruiters and professional contacts one responsive place to review Oishieka’s profile, skills, education, experience, project work, resources, and contact options without requiring a custom server.',
+    challenge:
+      'The experience needed to preserve direct-route refreshes on static hosting, balance a rich fantasy identity with recruiter-friendly scanning, and keep public contact submission separate from private message access.',
+    solution:
+      'Hash-based routing keeps deployed routes on the root document, semantic content remains complete beneath progressive Three.js decoration, and one shared Supabase client handles contact persistence and email/password authentication.',
+    outcome:
+      'The application provides a responsive public portfolio, validated contact workflow, hidden administrator login, and protected message-management experience in one static build.',
+    metrics: [],
+    gallery: [],
+    process: [
+      'Keep essential content in semantic HTML while treating Three.js as progressive decoration.',
+      'Keep the professional Journey and project case studies on separate focused routes.',
+      'Use HashRouter so direct project routes remain compatible with GitHub Pages.',
+    ],
+    lessons: [
+      'Add more owner-verified projects and screenshots.',
+      'Complete production Supabase verification.',
+      'Continue reducing the route-scoped 3D bundle.',
+    ],
   },
 ]

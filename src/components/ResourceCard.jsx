@@ -27,6 +27,8 @@ function ResourceCard({ resource }) {
         <div className="resource-card__media">
           <img
             src={resource.image}
+            srcSet={resource.imageSrcSet}
+            sizes="(min-width: 64rem) 30vw, 100vw"
             width={resource.imageWidth}
             height={resource.imageHeight}
             alt={resource.imageAlt}

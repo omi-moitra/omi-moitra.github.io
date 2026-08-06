@@ -12,6 +12,7 @@
 import { lazy, Suspense, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import portraitFrame from '../assets/home-portrait-frame.png'
+import portraitFrameSmall from '../assets/home-portrait-frame-450.png'
 import SkillCard from '../components/SkillCard.jsx'
 import {
   homeHero,
@@ -40,6 +41,8 @@ function HomePage() {
         <img
           className="home-scene__creatures"
           src={homeImages.vortexCreatures.src}
+          srcSet={homeImages.vortexCreatures.srcSet}
+          sizes={homeImages.vortexCreatures.sizes}
           width={homeImages.vortexCreatures.width}
           height={homeImages.vortexCreatures.height}
           alt={homeImages.vortexCreatures.alt}
@@ -96,9 +99,11 @@ function HomePage() {
         <figure className="home-portrait">
           <img
             className="home-portrait__photo"
-            src="/me.png"
-            width="1536"
-            height="1152"
+            src="/me-720.jpg"
+            srcSet="/me-720.jpg 720w, /me.png 1448w"
+            sizes="(min-width: 59.4375rem) 22rem, 16rem"
+            width="720"
+            height="540"
             alt="Oishieka Moitra"
             loading="eager"
             fetchPriority="high"
@@ -107,6 +112,8 @@ function HomePage() {
           <img
             className="home-portrait__frame"
             src={portraitFrame}
+            srcSet={`${portraitFrameSmall} 450w, ${portraitFrame} 900w`}
+            sizes="(min-width: 59.4375rem) 22rem, 16rem"
             alt=""
             width="900"
             height="900"
@@ -163,6 +170,8 @@ function HomePage() {
           <figure className="home-media home-media--bridge">
             <img
               src={homeImages.skillsBridge.src}
+              srcSet={homeImages.skillsBridge.srcSet}
+              sizes={homeImages.skillsBridge.sizes}
               width={homeImages.skillsBridge.width}
               height={homeImages.skillsBridge.height}
               alt={homeImages.skillsBridge.alt}
@@ -188,9 +197,9 @@ function HomePage() {
           {projects.slice(0, 3).map((project) => (
             <article className="home-project-preview" key={project.id}>
               <p>{project.technologies.slice(0, 3).join(' · ')}</p>
-              <h3>{project.name}</h3>
-              <p>{project.purpose}</p>
-              <Link to="/projects">Explore this project</Link>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+              <Link to={`/projects/${project.slug}`}>Explore this project</Link>
             </article>
           ))}
         </div>
