@@ -1,7 +1,7 @@
 // =============================================================================
 // src/components/PortfolioExperience.jsx — animated Journey phoenix experience
 // -----------------------------------------------------------------------------
-// 1. Scene helpers        image plane, registered gold trail, mist, particles
+// 1. Scene helpers        image plane, registered gold trail, and particles
 // 2. WebGL lifecycle     responsive render, visibility pause, and parallax
 // 3. Reveal lifecycle    progressive milestone materialization on intersection
 // =============================================================================
@@ -11,7 +11,6 @@ import {
   AdditiveBlending,
   BufferAttribute,
   BufferGeometry,
-  CanvasTexture,
   CatmullRomCurve3,
   Group,
   LinearFilter,
@@ -23,8 +22,6 @@ import {
   Points,
   PointsMaterial,
   Scene,
-  Sprite,
-  SpriteMaterial,
   SRGBColorSpace,
   TextureLoader,
   Vector2,
@@ -41,23 +38,7 @@ const createSeededRandom = () => {
   }
 }
 
-function createMistTexture() {
-  const canvas = document.createElement('canvas')
-  canvas.width = 128
-  canvas.height = 128
-  const context = canvas.getContext('2d')
-  const gradient = context.createRadialGradient(64, 64, 4, 64, 64, 64)
-
-  gradient.addColorStop(0, 'rgb(226 232 240 / 50%)')
-  gradient.addColorStop(0.38, 'rgb(59 130 246 / 17%)')
-  gradient.addColorStop(1, 'rgb(15 17 21 / 0%)')
-  context.fillStyle = gradient
-  context.fillRect(0, 0, 128, 128)
-
-  return new CanvasTexture(canvas)
-}
-
-function buildPhoenixScene(scene, imageSource, particleCount, mistCount, onImageReady) {
+function buildPhoenixScene(scene, imageSource, particleCount, onImageReady) {
   const random = createSeededRandom()
   const imageGroup = new Group()
   const disposableGeometries = []
@@ -127,27 +108,10 @@ function buildPhoenixScene(scene, imageSource, particleCount, mistCount, onImage
   })
   const particles = new Points(particleGeometry, particleMaterial)
 
-  const mistTexture = createMistTexture()
-  const mist = new Group()
-  for (let index = 0; index < mistCount; index += 1) {
-    const mistMaterial = new SpriteMaterial({
-      blending: AdditiveBlending,
-      depthWrite: false,
-      map: mistTexture,
-      opacity: 0.13,
-      transparent: true,
-    })
-    const sprite = new Sprite(mistMaterial)
-    sprite.position.set((random() - 0.5) * 13, (random() - 0.5) * 6.5, 0.4 + random())
-    sprite.scale.set(6 + random() * 6, 2 + random() * 2.4, 1)
-    mist.add(sprite)
-    disposableMaterials.push(mistMaterial)
-  }
-
   disposableGeometries.push(particleGeometry)
   disposableMaterials.push(particleMaterial)
   imageGroup.add(particles)
-  scene.add(imageGroup, mist)
+  scene.add(imageGroup)
 
   return {
     dispose() {
@@ -155,16 +119,24 @@ function buildPhoenixScene(scene, imageSource, particleCount, mistCount, onImage
       disposableGeometries.forEach((geometry) => geometry.dispose())
       disposableMaterials.forEach((material) => material.dispose())
       imageTexture?.dispose()
-      mistTexture.dispose()
     },
     imageGroup,
-    mist,
     particles,
   }
 }
 
-function PortfolioExperience({ imageSource }) {
+function PortfolioExperience({ focusPoint, imageSource, resetVersion }) {
   const canvasRef = useRef(null)
+  const focusPointRef = useRef(focusPoint)
+  const resetVersionRef = useRef(resetVersion)
+
+  useEffect(() => {
+    focusPointRef.current = focusPoint
+  }, [focusPoint])
+
+  useEffect(() => {
+    resetVersionRef.current = resetVersion
+  }, [resetVersion])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -193,7 +165,6 @@ function PortfolioExperience({ imageSource }) {
       scene,
       imageSource,
       compactScene ? 360 : 780,
-      compactScene ? 6 : 13,
       () => {
         page.classList.add('portfolio-page--webgl-ready')
         if (reducedMotion || document.hidden) renderScene(performance.now())
@@ -201,8 +172,12 @@ function PortfolioExperience({ imageSource }) {
     )
     const pointer = new Vector2()
     const currentPointer = new Vector2()
+    const currentFocus = new Vector3()
     let currentProgress = 0
     let targetProgress = 0
+    let currentFocusStrength = 0
+    let activeResetVersion = resetVersionRef.current
+    let isResetting = false
     let animationFrame = 0
     let imageScale = 1
     let isDocumentVisible = !document.hidden
@@ -220,6 +195,12 @@ function PortfolioExperience({ imageSource }) {
     }
 
     const updateScroll = () => {
+      if (isResetting && window.scrollY > 1) {
+        targetProgress = 0
+        return
+      }
+
+      isResetting = false
       const maximumScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
       targetProgress = Math.min(Math.max(window.scrollY / maximumScroll, 0), 1)
     }
@@ -232,20 +213,39 @@ function PortfolioExperience({ imageSource }) {
     }
 
     renderScene = (time = 0) => {
+      if (activeResetVersion !== resetVersionRef.current) {
+        activeResetVersion = resetVersionRef.current
+        isResetting = true
+        targetProgress = 0
+        pointer.set(0, 0)
+      }
+
       currentProgress += (targetProgress - currentProgress) * (reducedMotion ? 1 : 0.045)
       currentPointer.lerp(pointer, reducedMotion ? 1 : 0.035)
 
-      camera.position.x = Math.sin(currentProgress * Math.PI * 1.35) * 0.48 + currentPointer.x * 0.24
-      camera.position.y = 0.35 - currentProgress * 0.7 + currentPointer.y * 0.18
-      camera.position.z = 6 - currentProgress * 0.55
-      camera.lookAt(0, 0, 0)
+      const activeFocus = reducedMotion ? null : focusPointRef.current
+      const focusX = activeFocus ? (Number.parseFloat(activeFocus.x) - 50) / 34 : 0
+      const focusY = activeFocus ? (50 - Number.parseFloat(activeFocus.y)) / 42 : 0
+      currentFocus.x += (focusX - currentFocus.x) * 0.065
+      currentFocus.y += (focusY - currentFocus.y) * 0.065
+      currentFocusStrength += ((activeFocus ? 1 : 0) - currentFocusStrength) * 0.065
+
+      const pointerInfluence = 1 - currentFocusStrength * 0.72
+
+      camera.position.x =
+        Math.sin(currentProgress * Math.PI * 1.35) * 0.48 +
+        currentPointer.x * 0.24 * pointerInfluence +
+        currentFocus.x
+      camera.position.y =
+        0.35 - currentProgress * 0.7 +
+        currentPointer.y * 0.18 * pointerInfluence +
+        currentFocus.y
+      camera.position.z = 6 - currentProgress * 0.55 - currentFocusStrength * 0.9
+      camera.lookAt(currentFocus.x, currentFocus.y, 0)
       environment.imageGroup.scale.setScalar(imageScale * (1 + currentProgress * 0.035))
       environment.imageGroup.rotation.y = currentPointer.x * 0.012
       environment.imageGroup.rotation.x = -currentPointer.y * 0.008
       environment.particles.rotation.z = Math.sin(time * 0.00016) * 0.055
-      environment.mist.children.forEach((sprite, index) => {
-        sprite.position.x += Math.sin(time * 0.0001 + index) * 0.0008
-      })
       renderer.render(scene, camera)
 
       if (!reducedMotion && isDocumentVisible) {

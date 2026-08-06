@@ -41,8 +41,8 @@
 .journey-page::before {
   background-image:
     linear-gradient(
-      color-mix(in srgb, var(--ink-black) 58%, transparent),
-      color-mix(in srgb, var(--charcoal) 72%, transparent)
+      rgb(15 17 21 / 58%),
+      rgb(23 23 28 / 72%)
     ),
     var(--portfolio-journey-background);
 }
@@ -94,8 +94,29 @@
   pointer-events: none;
 }
 
+.portfolio-resume-journey__path-glow,
+.portfolio-resume-journey__path-line,
 .portfolio-resume-journey__path-particles {
   vector-effect: non-scaling-stroke;
+}
+
+.portfolio-resume-journey__path-glow {
+  stroke: #f5d97f;
+  stroke-linecap: round;
+  stroke-width: 10;
+  opacity: 0.48;
+  filter:
+    blur(3px)
+    drop-shadow(0 0 0.7rem rgb(245 217 127 / 82%))
+    drop-shadow(0 0 1.4rem rgb(245 217 127 / 48%));
+  animation: journey-path-glow-pulse 2.6s ease-in-out infinite;
+}
+
+.portfolio-resume-journey__path-line {
+  stroke: rgb(245 217 127 / 72%);
+  stroke-linecap: round;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 0.4rem #f5d97f);
 }
 
 .portfolio-resume-journey__path-particles {
@@ -107,9 +128,50 @@
   animation: journey-particles-flow 2.4s linear infinite;
 }
 
+.portfolio-resume-journey__lotus {
+  pointer-events: none;
+  will-change: transform;
+}
+
+.portfolio-resume-journey__lotus-object {
+  overflow: visible;
+}
+
+.portfolio-resume-journey__lotus-frame {
+  width: 96px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+}
+
+.portfolio-resume-journey__lotus-marker {
+  width: 84px;
+  height: 70px;
+  filter:
+    drop-shadow(0 0 0.35rem rgb(245 217 127 / 88%))
+    drop-shadow(0 0 0.9rem rgb(245 217 127 / 52%));
+}
+
+.portfolio-resume-journey__lotus-marker .lotus-marker__art {
+  animation: journey-lotus-breathe 1.8s ease-in-out infinite;
+}
+
 @keyframes journey-particles-flow {
   to {
     stroke-dashoffset: -100;
+  }
+}
+
+@keyframes journey-path-glow-pulse {
+  50% {
+    opacity: 0.72;
+    stroke-width: 13;
+  }
+}
+
+@keyframes journey-lotus-breathe {
+  50% {
+    transform: scale(1.07) translateY(-1px);
   }
 }
 
@@ -170,10 +232,16 @@
 .portfolio-hero__introduction {
   max-width: 54ch;
   margin: var(--space-5) 0 0;
-  color: var(--warm-ivory);
+  color: #f4d889;
   font-size: clamp(1rem, 2vw, 1.12rem);
   font-weight: 650;
   text-shadow: 0 0.15rem 0.8rem var(--ink-black), 0 0.2rem 1.4rem var(--ink-black);
+}
+
+.portfolio-keyboard-scroll-hint {
+  --keyboard-scroll-hint-color: #f5d97f;
+
+  text-shadow: 0 0 0.75rem rgb(245 217 127 / 48%);
 }
 
 .projects-hero {
@@ -239,15 +307,56 @@
   text-underline-offset: 0.25rem;
 }
 
-.portfolio-resume-link--floating {
+.portfolio-journey-actions {
   position: absolute;
   top: var(--space-4);
   right: var(--space-2);
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.portfolio-journey-actions .portfolio-resume-link {
+  width: auto;
   margin-top: 0;
   box-shadow:
     var(--shadow-small),
     0 0 1.2rem color-mix(in srgb, var(--radiant-gold) 28%, transparent);
+}
+
+.portfolio-timeline-reset {
+  width: 2.75rem;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  color: color-mix(in srgb, var(--radiant-gold) 68%, #fff);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  opacity: 0.62;
+}
+
+.portfolio-timeline-reset span {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--radiant-gold) 38%, transparent);
+  border-radius: 50%;
+  background: rgb(15 17 21 / 52%);
+}
+
+.portfolio-timeline-reset:hover,
+.portfolio-timeline-reset:focus-visible {
+  color: var(--radiant-gold);
+  background: transparent;
+  opacity: 1;
 }
 
 .portfolio-section {
@@ -366,6 +475,11 @@
   z-index: 4;
   min-height: 4.5rem;
   transform: translate(-50%, -50%);
+  transform-origin: center;
+  transition:
+    opacity 560ms ease,
+    filter 560ms ease,
+    transform 760ms var(--ease-standard);
 }
 
 .resume-timeline > li:hover,
@@ -433,6 +547,25 @@
   width: min(24rem, 20vw);
   animation: milestone-tooltip-open 240ms ease-out both;
   transform: translateY(-50%);
+}
+
+.timeline-milestone--selected .resume-entry {
+  animation: milestone-prezi-arrive 760ms var(--ease-standard) both;
+  transform-origin: center;
+}
+
+@keyframes milestone-prezi-arrive {
+  from {
+    opacity: 0;
+    filter: blur(0.45rem);
+    transform: perspective(50rem) translateY(2rem) rotateX(-7deg) scale(0.64);
+  }
+
+  to {
+    opacity: 1;
+    filter: none;
+    transform: perspective(50rem) translateY(0) rotateX(0) scale(1);
+  }
 }
 
 .timeline-milestone--left .timeline-milestone__tooltip {
@@ -960,6 +1093,17 @@
   transform: none;
 }
 
+.journey-page--timeline-focused .resume-timeline > li:not(.journey-point--active) {
+  opacity: 0.42;
+  filter: blur(0.08rem) saturate(0.7);
+  transform: scale(0.92);
+}
+
+.journey-page--timeline-focused .resume-timeline > li.journey-point--active {
+  z-index: 16;
+  transform: scale(1.025);
+}
+
 .timeline-milestone {
   display: grid;
   grid-template-columns: 4.5rem minmax(0, 1fr);
@@ -1087,7 +1231,7 @@
     padding: clamp(var(--space-6), 5vw, var(--space-8)) 0;
   }
 
-  .portfolio-resume-link--floating {
+  .portfolio-journey-actions {
     top: var(--space-6);
     right: 0;
   }
@@ -1141,6 +1285,16 @@
     left: var(--journey-x);
     width: auto;
     transform: translate(-50%, -50%);
+  }
+
+  .journey-page--timeline-focused .resume-timeline > li:not(.journey-point--active) {
+    opacity: 0.3;
+    filter: blur(0.12rem) saturate(0.62);
+    transform: translate(-50%, -50%) scale(0.74);
+  }
+
+  .journey-page--timeline-focused .resume-timeline > li.journey-point--active {
+    transform: translate(-50%, -50%) scale(1.08);
   }
 
   .timeline-milestone {
@@ -1221,11 +1375,35 @@
     animation: none;
   }
 
+  .timeline-milestone--selected .resume-entry {
+    animation: none;
+  }
+
+  .journey-page--timeline-focused .resume-timeline > li:not(.journey-point--active),
+  .journey-page--timeline-focused .resume-timeline > li.journey-point--active {
+    opacity: 1;
+    filter: none;
+    transition: none;
+    transform: none;
+  }
+
   .portfolio-resume-journey__path-particles {
+    animation: none;
+  }
+
+  .portfolio-resume-journey__path-glow,
+  .portfolio-resume-journey__lotus-marker .lotus-marker__art {
     animation: none;
   }
 
   .portfolio-reveal--visible .project-card {
     animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 48.0625rem) {
+  .journey-page--timeline-focused .resume-timeline > li:not(.journey-point--active),
+  .journey-page--timeline-focused .resume-timeline > li.journey-point--active {
+    transform: translate(-50%, -50%);
   }
 }

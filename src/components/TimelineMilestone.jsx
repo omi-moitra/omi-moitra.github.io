@@ -9,26 +9,30 @@
 import { useState } from 'react'
 import ResumeEntry from './ResumeEntry.jsx'
 
-function TimelineMilestone({ entry, kind }) {
-  const [isPinned, setIsPinned] = useState(false)
+function TimelineMilestone({ entry, isSelected, kind, onSelect }) {
   const [isPreviewed, setIsPreviewed] = useState(false)
   const isExperience = kind === 'experience'
   const milestoneName = isExperience ? entry.role : entry.institution
   const tooltipId = `${entry.id}-tooltip`
   const triggerId = `${entry.id}-trigger`
-  const isOpen = isPinned || isPreviewed
+  const isOpen = isSelected || isPreviewed
 
   const closeMilestone = (event) => {
     if (event.key !== 'Escape') return
 
-    setIsPinned(false)
+    onSelect(null)
     setIsPreviewed(false)
     event.currentTarget.blur()
   }
 
+  const toggleMilestone = () => {
+    if (isSelected) setIsPreviewed(false)
+    onSelect(isSelected ? null : entry.id)
+  }
+
   return (
     <div
-      className={`timeline-milestone timeline-milestone--${entry.trail.side}${isOpen ? ' timeline-milestone--open' : ''}`}
+      className={`timeline-milestone timeline-milestone--${entry.trail.side}${isOpen ? ' timeline-milestone--open' : ''}${isSelected ? ' timeline-milestone--selected' : ''}`}
       onMouseEnter={() => setIsPreviewed(true)}
       onMouseLeave={() => setIsPreviewed(false)}
     >
@@ -40,7 +44,7 @@ function TimelineMilestone({ entry, kind }) {
         aria-expanded={isOpen}
         aria-label={`${entry.startYear}: ${milestoneName}. ${isOpen ? 'Hide' : 'Show'} details.`}
         onBlur={() => setIsPreviewed(false)}
-        onClick={() => setIsPinned((currentValue) => !currentValue)}
+        onClick={toggleMilestone}
         onFocus={() => setIsPreviewed(true)}
         onKeyDown={closeMilestone}
       >
