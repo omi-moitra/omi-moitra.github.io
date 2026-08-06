@@ -1,22 +1,4 @@
 # Module 16 – The Phoenix Codex Portfolio
-
-## 🎯 Purpose
-
-> List **`three (3) challenging concepts`** applied in this project. List each concept only once, even if used in multiple places.
-
-This was my first project using Supabase, PostgreSQL, and Three.js. Before this project,
-my database experience came mainly from MongoDB and from writing and running SQL through
-DBeaver. That background helped me recognize ideas such as records, queries, validation,
-and CRUD operations, but each technology introduced a new architecture and a different
-way of thinking about data, security, or browser graphics.
-
-## 📝 How to Use the CONCEPTS.md Log
-
-> 1. Write the **`🔤 Name`** of the concept you found challenging.
-> 2. Describe its **`🎯 Purpose`** within the project.
-> 3. Explain in your own words **`❓ Why`** it was challenging
-> 4. If applicable, indicate **`📍 Where`** it was used in your project (file name and line number).
-
 ---
 
 ## ✏️ Concept - 01
