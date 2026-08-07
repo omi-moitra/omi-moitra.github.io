@@ -1,3 +1,10 @@
+// =============================================================================
+// src/pages/NotFoundPage.jsx — public wildcard route recovery
+// -----------------------------------------------------------------------------
+// Unknown hashes resolve to readable route content and a native router link back
+// to Home; no redirect hides the invalid address from the visitor.
+// =============================================================================
+
 import { Link } from 'react-router-dom'
 import StatusPanel from '../components/StatusPanel.jsx'
 

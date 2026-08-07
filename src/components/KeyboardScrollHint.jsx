@@ -1,3 +1,10 @@
+// =============================================================================
+// src/components/KeyboardScrollHint.jsx — reusable keyboard-navigation prompt
+// -----------------------------------------------------------------------------
+// The keycap artwork is decorative because the adjacent text supplies the full
+// instruction. Components that render this hint own the actual key behavior.
+// =============================================================================
+
 import './KeyboardScrollHint.css'
 
 function KeyboardScrollHint({ className = '' }) {

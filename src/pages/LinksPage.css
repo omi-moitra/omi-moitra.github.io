@@ -1,5 +1,12 @@
 /* ==========================================================================
    Links Page — searchable documentation codex
+   --------------------------------------------------------------------------
+   1. Page & Hero          route atmosphere and editorial introduction
+   2. Search & Filters     glass control panel, native input, and pressed chips
+   3. Collections          categorized shelves and responsive resource grid
+   4. Resource Cards       authority metadata, topic tags, and external action
+   5. Empty & Portals      recoverable no-results state and professional links
+   6. Responsive & A11y   one-to-three columns, reduced motion, forced colors
    ========================================================================== */
 
 .links-page {

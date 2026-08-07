@@ -1,3 +1,17 @@
+// =============================================================================
+// src/components/HomeJourneySpine.jsx — measured Home narrative navigator
+// -----------------------------------------------------------------------------
+// 1. Decorative lotus     local SVG marker used only by the visual spine
+// 2. Layout measurement   derive connector geometry from semantic card positions
+// 3. Active tracking      select the card nearest the viewport reading line
+// 4. Keyboard movement    ArrowUp/ArrowDown scroll between narrative sections
+// 5. Lifecycle cleanup    release observers, animation frames, and listeners
+//
+// The spine is progressive decoration: cards remain normal document-flow HTML,
+// and this component is hidden from assistive technology. Keyboard handling
+// never intercepts modified keys or typing inside editable controls.
+// =============================================================================
+
 import { useEffect, useRef, useState } from 'react'
 
 const sectionSelector = '[data-home-spine-section]'
@@ -131,6 +145,8 @@ function LotusMarker() {
 }
 
 function HomeJourneySpine() {
+  // Refs hold animation and selection state read by native event callbacks;
+  // React state is reserved for geometry that affects rendering.
   const spineRef = useRef(null)
   const activeIndexRef = useRef(0)
   const animationFrameRef = useRef(0)
@@ -150,6 +166,8 @@ function HomeJourneySpine() {
     let keyboardNavigationLockedUntil = 0
 
     function updateActiveSection() {
+      // Smooth programmatic scrolling temporarily locks proximity detection so
+      // intermediate cards do not steal the active marker during the journey.
       if (performance.now() < keyboardNavigationLockedUntil) return
 
       const focusLine = window.innerHeight * 0.46
@@ -173,6 +191,8 @@ function HomeJourneySpine() {
     }
 
     function measureSpine() {
+      // Measurements are relative to the full-width Home page, allowing the
+      // same spine to connect alternating cards after any responsive reflow.
       if (!isActive) return
       const pageRect = page.getBoundingClientRect()
       const spineX = pageRect.left + pageRect.width / 2
@@ -253,6 +273,8 @@ function HomeJourneySpine() {
       })
     }
 
+    // Images, fonts, and responsive copy can change card geometry without a
+    // window resize, so observe every participant as well as the page itself.
     const resizeObserver = new ResizeObserver(measureSpine)
     resizeObserver.observe(page)
     if (topAnchor) resizeObserver.observe(topAnchor)
@@ -281,6 +303,8 @@ function HomeJourneySpine() {
   const lineStart = spineStart ?? firstPoint?.y
   const activeLotusPosition = activeIndex === 0 ? lineStart : activePoint?.y
 
+  // No semantic information lives in the generated line, connectors, or lotus;
+  // the neighboring card headings and links remain the accessible interface.
   return (
     <div ref={spineRef} className="home-spine" aria-hidden="true">
       {firstPoint && lastPoint && (

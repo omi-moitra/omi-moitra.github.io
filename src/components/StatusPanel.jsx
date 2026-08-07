@@ -1,3 +1,11 @@
+// =============================================================================
+// src/components/StatusPanel.jsx — shared route and service-state presentation
+// -----------------------------------------------------------------------------
+// Neutral/loading states announce politely; callers may opt into `alert` for an
+// urgent failure. The heading remains an h1 because this panel replaces a route's
+// primary content in loading, configuration, authorization, and Not Found states.
+// =============================================================================
+
 function StatusPanel({ title, message, tone = 'neutral', role = 'status', children }) {
   return (
     <section

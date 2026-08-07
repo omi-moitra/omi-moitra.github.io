@@ -1,3 +1,11 @@
+/* ==========================================================================
+   Keyboard Scroll Hint — compact, non-interactive navigation instruction
+   --------------------------------------------------------------------------
+   1. Hint Layout       inline label and decorative paired keycaps
+   2. Theme Treatment   readable light/dark colors and dimensional key edges
+   3. Narrow Screens    preserve legibility without becoming primary content
+   ========================================================================== */
+
 .keyboard-scroll-hint {
   --keyboard-scroll-hint-color: #9b6800;
 

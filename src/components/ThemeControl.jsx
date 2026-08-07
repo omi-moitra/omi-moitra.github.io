@@ -1,3 +1,14 @@
+// =============================================================================
+// src/components/ThemeControl.jsx — accessible Light, Dark, and System chooser
+// -----------------------------------------------------------------------------
+// 1. ThemeIcon       decorative dependency-free icon for each preference
+// 2. ThemeControl    pressed-button group backed by the shared Theme context
+//
+// Buttons expose visible labels where space permits and always retain an
+// accessible name plus aria-pressed state. Resolution and persistence belong to
+// ThemeProvider so desktop and mobile controls cannot drift apart.
+// =============================================================================
+
 import { themeChoices, useTheme } from '../theme/themeContext.js'
 
 const themeLabels = {

@@ -1,6 +1,17 @@
+// =============================================================================
+// src/components/LotusMarker.jsx — shared Phoenix Codex lotus artwork
+// -----------------------------------------------------------------------------
+// 1. LotusArtwork     reusable SVG definitions, petals, veins, and center
+// 2. LotusMarker      decorative wrapper shared by Header and journey markers
+//
+// idPrefix is required whenever multiple lotuses render on one page: SVG paint
+// server IDs live in the document namespace and must not collide.
+// =============================================================================
+
 import './LotusMarker.css'
 
 function LotusArtwork({ idPrefix }) {
+  // Generate instance-scoped gradient IDs while keeping every petal path shared.
   const gradientId = (name) => `${idPrefix}-${name}`
 
   return (
@@ -79,6 +90,8 @@ function LotusArtwork({ idPrefix }) {
 }
 
 function LotusMarker({ className = '', idPrefix = 'lotus' }) {
+  // The surrounding component provides meaning when needed; this artwork is
+  // intentionally excluded from the accessibility tree.
   return (
     <span className={`lotus-marker ${className}`.trim()}>
       <svg className="lotus-marker__art" viewBox="0 0 96 80" aria-hidden="true" focusable="false">

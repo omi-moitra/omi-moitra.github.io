@@ -2,7 +2,8 @@
 // vite.config.js — Vite build configuration for the root GitHub Pages site
 // -----------------------------------------------------------------------------
 // 1. Imports        Vite and React plugin configuration
-// 2. Build config   React transform and root deployment base
+// 2. React plugin   JSX transform and Fast Refresh during local development
+// 3. Deploy base    root-relative assets for the username GitHub Pages site
 // =============================================================================
 
 import { defineConfig } from 'vite'

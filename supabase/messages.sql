@@ -7,6 +7,8 @@
 -- =============================================================================
 
 create table if not exists public.messages (
+  -- Database constraints repeat client validation because browser validation
+  -- is a usability layer and can never be the authoritative data boundary.
   id uuid primary key default gen_random_uuid(),
   name text not null
     constraint messages_name_length
@@ -25,6 +27,8 @@ create table if not exists public.messages (
 
 alter table public.messages enable row level security;
 
+-- Reset table privileges before applying the narrow contract. Authenticated
+-- users may administer records; public and authenticated visitors may submit.
 revoke all on table public.messages from anon, authenticated;
 grant insert on table public.messages to anon, authenticated;
 grant select, delete on table public.messages to authenticated;
@@ -33,6 +37,8 @@ drop policy if exists "Public visitors can submit messages" on public.messages;
 drop policy if exists "Authenticated administrator can read messages" on public.messages;
 drop policy if exists "Authenticated administrator can delete messages" on public.messages;
 
+-- Inserts accept only rows that already satisfy table constraints. No SELECT
+-- permission is granted to anon, so a visitor cannot read submitted messages.
 create policy "Public visitors can submit messages"
 on public.messages
 for insert

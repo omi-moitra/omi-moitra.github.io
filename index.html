@@ -22,6 +22,9 @@
       content="Oishieka Moitra’s full stack developer portfolio, professional journey, selected work, resources, and contact form."
     />
     <meta name="theme-color" content="#F5EBD8" />
+    <!-- Resolve the stored/System theme before React and CSS paint. This small
+         duplicate of ThemeProvider prevents a bright first-frame flash while
+         the provider remains authoritative after application startup. -->
     <script>
       ;(() => {
         const storedTheme = localStorage.getItem('omi-portfolio-theme')
@@ -49,6 +52,8 @@
     <title>Oishieka Moitra | Full Stack Developer</title>
   </head>
   <body>
+    <!-- All essential route content mounts here as semantic React HTML; visual
+         canvases and sound are progressive enhancements, never prerequisites. -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

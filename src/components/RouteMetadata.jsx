@@ -1,3 +1,14 @@
+// =============================================================================
+// src/components/RouteMetadata.jsx — route-aware document and social metadata
+// -----------------------------------------------------------------------------
+// 1. Static metadata      canonical titles and descriptions for public routes
+// 2. Project metadata     derive case-study copy from the verified data record
+// 3. DOM synchronization update title, description, Open Graph, and hash URL
+//
+// HashRouter keeps the pathname inside the deployed URL fragment; Open Graph
+// URLs therefore preserve `#${pathname}` for GitHub Pages compatibility.
+// =============================================================================
+
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { projects } from '../data/projects.js'
@@ -32,6 +43,8 @@ const routeMetadata = {
 }
 
 function updateMetaContent(selector, content) {
+  // Metadata is progressive enhancement. A missing optional tag should never
+  // interrupt route rendering, so updates are deliberately null-safe.
   const element = document.querySelector(selector)
   if (element) element.setAttribute('content', content)
 }
@@ -40,6 +53,8 @@ function RouteMetadata() {
   const { pathname } = useLocation()
 
   useEffect(() => {
+    // Dynamic project routes share one route pattern but need record-specific
+    // titles. Unknown slugs fall back to the same neutral Not Found metadata.
     const projectSlug = pathname.startsWith('/projects/')
       ? pathname.slice('/projects/'.length)
       : null

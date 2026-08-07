@@ -1,5 +1,12 @@
 // =============================================================================
 // src/components/ResourceCard.jsx — compact semantic codex entry
+// -----------------------------------------------------------------------------
+// 1. External icon      decorative cue for an off-site destination
+// 2. Classification    visible type, authority label, publisher, and tags
+// 3. Safe action        HTTPS catalog link with protected new-tab behavior
+//
+// The authority label distinguishes primary/official material from third-party
+// learning resources; callers must preserve that distinction in source data.
 // =============================================================================
 
 function ExternalLinkIcon() {
@@ -18,6 +25,8 @@ function ExternalLinkIcon() {
 }
 
 function ResourceCard({ resource, tone }) {
+  // A native anchor preserves expected browser behavior. The visually hidden
+  // suffix communicates new-tab context without crowding every compact card.
   return (
     <li className={`resource-card resource-card--${tone}`}>
       <article className="resource-card__article">

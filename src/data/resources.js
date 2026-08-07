@@ -3,6 +3,8 @@
 // -----------------------------------------------------------------------------
 // Official documentation and standards are prioritized. Community tutorials are
 // deliberately labeled as learning resources so their role is never ambiguous.
+// Collections own browse order and visual tone; entries own searchable metadata.
+// Every destination must remain HTTPS because cards always open a new browser tab.
 // =============================================================================
 
 export const resourceCollections = [

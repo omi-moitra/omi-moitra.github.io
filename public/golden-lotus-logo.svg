@@ -1,3 +1,5 @@
+<!-- Standalone Phoenix Codex brand asset used by favicon/social metadata. The
+     component version scopes gradient IDs separately for repeated inline use. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 80" role="img" aria-labelledby="title description">
   <title id="title">Lotus logo</title>
   <desc id="description">The gold, coral, blue, pale gold, and violet lotus used by the portfolio navigator.</desc>

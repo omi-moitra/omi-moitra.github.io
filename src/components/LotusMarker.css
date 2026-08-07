@@ -1,3 +1,10 @@
+/* ==========================================================================
+   Shared Lotus Marker — scalable decorative Phoenix Codex emblem
+   --------------------------------------------------------------------------
+   SVG paths own their gradient fills; this stylesheet owns size, structural
+   strokes, veins, and the golden center shared by Header and journey contexts.
+   ========================================================================== */
+
 .lotus-marker {
   display: block;
 }

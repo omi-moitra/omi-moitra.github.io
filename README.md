@@ -30,7 +30,8 @@ administrator message workflow.
   previews, and a progressively loaded Three.js vortex over a static fallback.
 - A separate Journey page with a selectable résumé timeline and progressive Three.js
   atmosphere, plus a focused Projects page with settled cards and accessible case studies.
-- Curated developer resources plus separately labeled verified professional portals.
+- Searchable Developer Codex with authoritative documentation, clearly labeled
+  learning resources, and separately presented professional portals.
 - Validated Supabase contact form with pending, success, error, configuration, and
   privacy feedback.
 - Hidden administrator Login and session-protected Back Office for viewing and deleting
@@ -47,7 +48,7 @@ The deployed application uses `HashRouter`, so route state appears after `/#/`.
 | `/` | Public | Home — Enter the Codex |
 | `/journey` | Public | The Phoenix Path — education, experience, and résumé |
 | `/projects` | Public | Crafted Worlds — verified projects and case studies |
-| `/links` | Public | Resources and verified Portals |
+| `/links` | Public | Searchable Developer Codex and verified portals |
 | `/contact` | Public | Contact form — Send a Message |
 | `/login` | Hidden public route | Administrator authentication |
 | `/back-office` | Authenticated | Private contact-message administration |

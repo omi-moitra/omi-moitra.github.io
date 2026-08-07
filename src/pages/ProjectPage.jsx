@@ -1,3 +1,12 @@
+// =============================================================================
+// src/pages/ProjectPage.jsx — data-driven project case study route
+// -----------------------------------------------------------------------------
+// 1. Record lookup       resolve the route slug against verified project data
+// 2. Missing state       provide a readable recovery path for unknown slugs
+// 3. Case-study sections omit optional content without leaving empty wrappers
+// 4. Actions             internal collection link and safe external destinations
+// =============================================================================
+
 import { Link, useParams } from 'react-router-dom'
 import StatusPanel from '../components/StatusPanel.jsx'
 import { projects } from '../data/projects.js'
@@ -28,6 +37,9 @@ function ProjectPage() {
     ['Solution', project.solution],
     ['Outcome', project.outcome],
   ].filter(([, content]) => content)
+
+  // Project data owns ordering and copy; the route owns semantic composition.
+  // This separation lets new verified records render without page-level edits.
 
   return (
     <article className="project-detail">

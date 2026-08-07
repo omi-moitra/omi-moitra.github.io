@@ -1,5 +1,11 @@
 // =============================================================================
 // src/pages/LinksPage.jsx — searchable developer documentation codex
+// -----------------------------------------------------------------------------
+// 1. Search helper       match normalized copy, classification, and topic tags
+// 2. Filter state        combine one category with the free-text query
+// 3. Results             render only non-empty shelves and announce the count
+// 4. Empty state         offer one action that restores the complete collection
+// 5. Portals             retain verified professional profiles as a secondary area
 // =============================================================================
 
 import { useMemo, useState } from 'react'
@@ -32,6 +38,8 @@ function LinksPage() {
   const [activeCategory, setActiveCategory] = useState(allCategory)
 
   const normalizedQuery = query.trim().toLocaleLowerCase()
+  // Derive filtered shelves without mutating the shared catalog. useMemo avoids
+  // rebuilding all searchable projections during unrelated renders.
   const visibleCollections = useMemo(
     () =>
       resourceCollections

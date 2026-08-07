@@ -1,4 +1,8 @@
+# Public portfolio content may be crawled. Hidden client routes remain omitted
+# from sitemap.xml; robots directives are discoverability controls, not security.
 User-agent: *
 Allow: /
 
+# Advertise only the canonical root document because HashRouter routes are URL
+# fragments and are not independent server resources.
 Sitemap: https://omi-moitra.github.io/sitemap.xml
