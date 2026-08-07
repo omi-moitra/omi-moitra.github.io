@@ -72,7 +72,7 @@ GitHub Pages.
 | `/journey` | `/#/journey` | Public | Education, experience, and résumé |
 | `/projects` | `/#/projects` | Public | Verified project collection |
 | `/projects/:projectSlug` | `/#/projects/:projectSlug` | Public | Project case study |
-| `/links` | `/#/links` | Public | Curated resources and professional profiles |
+| `/links` | `/#/links` | Public | Searchable developer codex and professional profiles |
 | `/contact` | `/#/contact` | Public | Validated message form |
 | `/login` | `/#/login` | Hidden public route | Administrator authentication |
 | `/back-office` | `/#/back-office` | Authenticated | Private message administration |
@@ -135,7 +135,7 @@ Professional experience:
 The approved résumé is available at `/Oishieka-Moitra-Resume.pdf` with the download name
 `Oishieka-Moitra-Resume.pdf`.
 
-### Projects and Professional Links
+### Projects and Developer Codex
 
 The project inventory begins with the published Oishieka Moitra Fantasy Portfolio. Its
 case study explains responsive React composition, `HashRouter`, semantic progressive
@@ -143,9 +143,11 @@ enhancement, Supabase contact storage and authentication, accessibility, and Git
 Pages deployment. The data model supports additional verified projects without changing
 page composition.
 
-Links presents GitHub and LinkedIn as verified professional portals with visible names,
-descriptions, and safe external-link behavior. The Footer repeats those destinations as
-icon-only links alongside email.
+Links is a searchable Developer Codex of official documentation, standards, technical
+references, and clearly labeled learning resources across web foundations, JavaScript,
+UI frameworks, 3D graphics, tooling, backend systems, and security. GitHub and LinkedIn
+remain as verified professional portals below the library; the Footer repeats those
+destinations as icon-only links alongside email.
 
 ## Visual System
 
@@ -201,7 +203,9 @@ a new tab with `noopener noreferrer`. Every icon link has an accessible name.
 Home loads readable identity and skill content before the lazy Three.js vortex. A static
 SVG/image composition remains available while WebGL loads or is unavailable. A glowing
 journey spine, lotus markers, keyboard-scroll hint, project preview, and contact callout
-guide visitors through the page.
+guide visitors through the page. When WebGL and motion preferences allow it, the same
+Three.js loop progressively adds scroll-linked depth, tilt, opacity, and restrained
+parallax to Home cards without moving their semantic content out of document flow.
 
 Journey combines a decorative phoenix scene with semantic Education and Experience
 lists. Selecting or focusing a milestone moves a lotus marker along the SVG path, opens
