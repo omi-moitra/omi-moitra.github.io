@@ -7,7 +7,7 @@
 // :warning: Login and Back Office are intentionally absent. Route hiding is not
 // security, but public navigation must never advertise administrator surfaces.
 export const publicNavigation = [
-  { label: 'Home', subtitle: 'Enter a', to: '/', icon: 'home' },
+  { label: 'Home', subtitle: 'Enter my Universe', to: '/', icon: 'home' },
   { label: 'Journey', subtitle: 'The Flight Path', to: '/journey', icon: 'journey' },
   { label: 'Projects', subtitle: 'Crafted Worlds', to: '/projects', icon: 'projects' },
   { label: 'Links', subtitle: 'Developer Codex', to: '/links', icon: 'links' },
