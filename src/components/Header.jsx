@@ -7,6 +7,7 @@
 
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import LotusMarker from './LotusMarker.jsx'
 import MobileNavigation from './MobileNavigation.jsx'
 import NavigationLinks from './NavigationLinks.jsx'
 import ThemeControl from './ThemeControl.jsx'
@@ -40,12 +41,9 @@ function Header() {
           to="/"
           aria-label="Oishieka Moitra portfolio home"
         >
-          <img
+          <LotusMarker
             className="brand-link__logo"
-            src="/personal-logo-header.png"
-            width="320"
-            height="320"
-            alt=""
+            idPrefix="header-lotus"
           />
           <span className="brand-link__text">
             <span className="brand-link__name">Oishieka Moitra</span>

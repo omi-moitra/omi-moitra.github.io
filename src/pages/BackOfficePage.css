@@ -47,8 +47,10 @@
   border: 1px solid color-mix(in srgb, var(--portal-blue) 35%, var(--aged-paper));
   border-top: 0.35rem solid var(--portal-blue);
   border-radius: var(--radius-large);
-  background: var(--warm-ivory);
-  box-shadow: var(--shadow-large);
+  background: var(--glass-bevel-overlay), var(--glass-surface-strong);
+  box-shadow: var(--glass-card-shadow);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 
 .protected-gate__panel h1,
@@ -105,8 +107,10 @@
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--portal-blue) 28%, var(--aged-paper));
   border-radius: var(--radius-large);
-  background: var(--warm-ivory);
-  box-shadow: var(--shadow-large);
+  background: var(--glass-bevel-overlay), var(--glass-surface-strong);
+  box-shadow: var(--glass-card-shadow);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 
 .back-office-page__header::before {

@@ -3,17 +3,20 @@
 // -----------------------------------------------------------------------------
 // 1. Texture artwork       bold words and symbols on canonical color panels
 // 2. Ribbon geometry       paired phase-offset strands forming a double helix
-// 3. Scene lifecycle       responsive rendering, motion preferences, and cleanup
+// 3. Card motion           scroll-linked DOM depth driven by the Three.js loop
+// 4. Scene lifecycle       responsive rendering, motion preferences, and cleanup
 // =============================================================================
 
 import { useEffect, useRef } from 'react'
 import {
+  BackSide,
   BufferAttribute,
   BufferGeometry,
   CanvasTexture,
-  DoubleSide,
+  FrontSide,
   Group,
   LinearFilter,
+  MathUtils,
   Mesh,
   MeshBasicMaterial,
   PerspectiveCamera,
@@ -27,22 +30,40 @@ import {
 import { phoenixCodexPalette } from '../data/phoenixCodexPalette.js'
 
 const RIBBON_WORDS = [
-  'GOOD IDEAS',
-  'BETTER CODE',
-  'BUILD',
-  'CODE',
-  'GOOD IDEAS',
-  'BETTER CODE',
-  'BUILD',
-  'CODE',
+  'Code',
+  'Create',
+  'Connect',
+  'Code',
+  'Create',
+  'Connect',
+  'Code',
+  'Create',
+  'Connect',
+  'Code',
+  'Create',
+  'Connect',
 ]
 
 const BAND_COLORS = [
+  phoenixCodexPalette.magic.phoenixCoral,
+  phoenixCodexPalette.magic.radiantGold,
   phoenixCodexPalette.magic.portalBlue,
-  phoenixCodexPalette.magic.spiritCyan,
   phoenixCodexPalette.foundation.inkBlack,
-  phoenixCodexPalette.foundation.warmIvory,
 ]
+
+const HOME_CARD_SELECTOR = '.home-flow-card, .skill-card, .home-project-preview'
+
+function getDocumentTop(element) {
+  let top = 0
+  let node = element
+
+  while (node) {
+    top += node.offsetTop
+    node = node.offsetParent
+  }
+
+  return top
+}
 
 function drawBurst(context, x, y, radius, color) {
   context.save()
@@ -61,15 +82,12 @@ function drawBurst(context, x, y, radius, color) {
   context.restore()
 }
 
-function createRibbonTexture() {
-  const canvas = document.createElement('canvas')
+function drawRibbonTexture(canvas) {
   const width = 1024
   const height = 4096
   const bandHeight = height / RIBBON_WORDS.length
-  canvas.width = width
-  canvas.height = height
-
   const context = canvas.getContext('2d')
+  context.clearRect(0, 0, width, height)
   context.textAlign = 'center'
   context.textBaseline = 'middle'
 
@@ -89,7 +107,7 @@ function createRibbonTexture() {
     context.fillStyle = ink
     // Oversized condensed lettering fills the fabric width like the supplied
     // ticker reference while maxWidth keeps long phrases inside each panel.
-    context.font = '900 680px "Arial Black", Impact, "Arial Narrow", sans-serif'
+    context.font = '400 680px "Offside", sans-serif'
     context.fillText(word, 0, 0, bandHeight * 0.9)
     context.restore()
 
@@ -101,6 +119,13 @@ function createRibbonTexture() {
     context.fillText(index % 2 ? '✦' : '★', width - 132, top + 126)
     context.fillText(index % 2 ? '★' : '✦', 132, top + bandHeight - 116)
   })
+}
+
+function createRibbonTexture() {
+  const canvas = document.createElement('canvas')
+  canvas.width = 1024
+  canvas.height = 4096
+  drawRibbonTexture(canvas)
 
   const texture = new CanvasTexture(canvas)
   texture.colorSpace = SRGBColorSpace
@@ -187,6 +212,15 @@ function createRibbonGeometry(
   return geometry
 }
 
+function createReadableRibbon(geometry, frontMaterial, backMaterial) {
+  const ribbon = new Group()
+  ribbon.add(
+    new Mesh(geometry, frontMaterial),
+    new Mesh(geometry, backMaterial),
+  )
+  return ribbon
+}
+
 function HomeVortex() {
   const canvasRef = useRef(null)
 
@@ -216,6 +250,13 @@ function HomeVortex() {
     renderer.outputColorSpace = SRGBColorSpace
 
     const texture = createRibbonTexture()
+    // Three.js mirrors a texture when a DoubleSide material turns away from
+    // the camera. A horizontally flipped back-face texture cancels that mirror
+    // so the lettering remains legible as either side of the helix comes forward.
+    const backTexture = texture.clone()
+    backTexture.repeat.x = -1
+    backTexture.offset.x = 1
+    backTexture.needsUpdate = true
     const primaryGeometry = createRibbonGeometry(compactScene ? 160 : 240, compactScene)
     const partnerGeometry = createRibbonGeometry(
       compactScene ? 160 : 240,
@@ -223,16 +264,100 @@ function HomeVortex() {
       Math.PI,
       0.5,
     )
-    const material = new MeshBasicMaterial({ map: texture, side: DoubleSide })
-    const primaryRibbon = new Mesh(primaryGeometry, material)
-    const partnerRibbon = new Mesh(partnerGeometry, material)
+    const frontMaterial = new MeshBasicMaterial({ map: texture, side: FrontSide })
+    const backMaterial = new MeshBasicMaterial({ map: backTexture, side: BackSide })
+    const primaryRibbon = createReadableRibbon(primaryGeometry, frontMaterial, backMaterial)
+    const partnerRibbon = createReadableRibbon(partnerGeometry, frontMaterial, backMaterial)
     const group = new Group()
     group.add(primaryRibbon, partnerRibbon)
     scene.add(group)
 
     const pointer = new Vector2()
+    const page = canvas.closest('.home-page')
+    const cardElements = !reducedMotion && page
+      ? Array.from(page.querySelectorAll(HOME_CARD_SELECTOR))
+      : []
+    const scrollMotion = new Vector2(window.scrollY, window.scrollY)
+    const cardStates = cardElements.map((element, index) => {
+      const isNested = !element.classList.contains('home-flow-card')
+      const direction = element.classList.contains('home-flow-card--left')
+        ? -1
+        : element.classList.contains('home-flow-card--right')
+          ? 1
+          : index % 2 === 0 ? -1 : 1
+
+      return {
+        direction,
+        documentTop: 0,
+        element,
+        height: 0,
+        isNested,
+      }
+    })
     let frame = 0
     let visible = true
+    let active = true
+
+    const updateCardLayout = () => {
+      cardStates.forEach((card) => {
+        card.documentTop = getDocumentTop(card.element)
+        card.height = card.element.offsetHeight
+      })
+    }
+
+    const updateCardMotion = () => {
+      if (!cardStates.length) return
+
+      const scrollY = window.scrollY
+      const viewportHeight = Math.max(window.innerHeight, 1)
+      scrollMotion.x = MathUtils.lerp(scrollMotion.x, scrollY, 0.14)
+      const scrollLag = MathUtils.clamp(scrollY - scrollMotion.x, -120, 120)
+
+      cardStates.forEach((card) => {
+        const cardTop = card.documentTop - scrollY
+        const revealStart = viewportHeight * (card.isNested ? 0.96 : 0.94)
+        const revealEnd = viewportHeight * (card.isNested ? 0.66 : 0.56)
+        const revealRange = Math.max(revealStart - revealEnd, 1)
+        const rawProgress = MathUtils.clamp(
+          (revealStart - cardTop) / revealRange,
+          0,
+          1,
+        )
+        const progress = rawProgress * rawProgress * (3 - 2 * rawProgress)
+        const viewportPosition = MathUtils.clamp(
+          (cardTop + card.height / 2 - viewportHeight / 2) / viewportHeight,
+          -1,
+          1,
+        )
+        const travelX = card.isNested ? 28 : 72
+        const hiddenY = card.isNested ? 32 : 64
+        const hiddenDepth = card.isNested ? -42 : -110
+        const floatY = progress * viewportPosition * (card.isNested ? -5 : -10)
+        const x = MathUtils.lerp(card.direction * travelX, 0, progress)
+          + progress * pointer.x * (card.isNested ? 1.5 : 3)
+        const y = MathUtils.lerp(hiddenY, floatY, progress)
+          + scrollLag * (card.isNested ? 0.025 : 0.045)
+        const z = MathUtils.lerp(hiddenDepth, 0, progress)
+        const rotateX = MathUtils.lerp(6, 0, progress) + scrollLag * 0.008
+        const rotateY = MathUtils.lerp(card.direction * -7, 0, progress)
+          + progress * pointer.x * (card.isNested ? 0.35 : 0.7)
+        const rotateZ = MathUtils.lerp(card.direction * -0.7, 0, progress)
+        const scale = MathUtils.lerp(0.94, 1, progress)
+        const opacity = MathUtils.lerp(0.05, 1, progress)
+        const blur = MathUtils.lerp(7, 0, progress)
+
+        card.element.style.opacity = opacity.toFixed(3)
+        card.element.style.filter = `blur(${blur.toFixed(2)}px)`
+        card.element.style.transform = [
+          'perspective(70rem)',
+          `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px)`,
+          `rotateX(${rotateX.toFixed(2)}deg)`,
+          `rotateY(${rotateY.toFixed(2)}deg)`,
+          `rotateZ(${rotateZ.toFixed(2)}deg)`,
+          `scale(${scale.toFixed(4)})`,
+        ].join(' ')
+      })
+    }
 
     const resize = () => {
       const { width, height } = container.getBoundingClientRect()
@@ -242,6 +367,7 @@ function HomeVortex() {
 
       const portraitCompensation = Math.min(1, Math.max(0.78, camera.aspect * 1.12))
       group.scale.setScalar(portraitCompensation)
+      updateCardLayout()
     }
 
     const updatePointer = (event) => {
@@ -256,12 +382,25 @@ function HomeVortex() {
       // Moving the repeating print upward through the fixed helix makes every
       // panel travel into the same broad top curve without rotating the open
       // geometry and exposing its ends like an unwinding strip.
-      if (!reducedMotion) texture.offset.y = (time * 0.00007) % 1
+      if (!reducedMotion) {
+        const textureProgress = (time * 0.00007) % 1
+        texture.offset.y = textureProgress
+        backTexture.offset.y = textureProgress
+      }
       group.rotation.y = reducedMotion ? 0 : pointer.x * 0.035
       group.rotation.x += ((reducedMotion ? 0 : -pointer.y * 0.035) - group.rotation.x) * 0.035
+      if (!reducedMotion) updateCardMotion()
       renderer.render(scene, camera)
       if (visible && !reducedMotion) frame = window.requestAnimationFrame(render)
     }
+
+    document.fonts?.load('400 680px "Offside"').then(() => {
+      if (!active) return
+      drawRibbonTexture(texture.image)
+      texture.needsUpdate = true
+      backTexture.needsUpdate = true
+      if (reducedMotion) render()
+    })
 
     const observer = 'IntersectionObserver' in window
       ? new IntersectionObserver(([entry]) => {
@@ -273,24 +412,40 @@ function HomeVortex() {
           if (!visible) window.cancelAnimationFrame(frame)
         })
       : null
+    const cardResizeObserver = cardStates.length && 'ResizeObserver' in window
+      ? new ResizeObserver(updateCardLayout)
+      : null
 
+    page?.classList.toggle('home-card-motion-ready', cardStates.length > 0)
     resize()
+    updateCardMotion()
     render()
     container.classList.add('home-media--vortex-ready')
     observer?.observe(container)
+    if (page) cardResizeObserver?.observe(page)
     window.addEventListener('resize', resize)
     if (!reducedMotion) window.addEventListener('pointermove', updatePointer, { passive: true })
 
     return () => {
+      active = false
       observer?.disconnect()
+      cardResizeObserver?.disconnect()
       window.cancelAnimationFrame(frame)
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', updatePointer)
       primaryGeometry.dispose()
       partnerGeometry.dispose()
-      material.dispose()
+      frontMaterial.dispose()
+      backMaterial.dispose()
       texture.dispose()
+      backTexture.dispose()
       renderer.dispose()
+      page?.classList.remove('home-card-motion-ready')
+      cardElements.forEach((element) => {
+        element.style.removeProperty('filter')
+        element.style.removeProperty('opacity')
+        element.style.removeProperty('transform')
+      })
       container.classList.remove('home-media--vortex-ready', 'home-media--webgl-unavailable')
     }
   }, [])

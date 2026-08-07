@@ -362,16 +362,19 @@
 .portfolio-section {
   position: relative;
   padding: clamp(var(--space-5), 5vw, var(--space-7));
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-large);
-  box-shadow: var(--shadow-large);
-  backdrop-filter: blur(0.6rem);
+  box-shadow: var(--glass-card-shadow);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 
 .portfolio-section--education {
   color: var(--warm-ivory);
   border-color: var(--warm-brown);
-  background: color-mix(in srgb, var(--ink-black) 84%, transparent);
+  background:
+    var(--glass-bevel-overlay),
+    color-mix(in srgb, var(--ink-black) 82%, transparent);
 }
 
 .portfolio-section--education::before {
@@ -381,7 +384,9 @@
 .portfolio-section--experience {
   color: var(--warm-ivory);
   border-color: var(--charcoal);
-  background: color-mix(in srgb, var(--charcoal) 82%, transparent);
+  background:
+    var(--glass-bevel-overlay),
+    color-mix(in srgb, var(--charcoal) 80%, transparent);
 }
 
 .portfolio-section--experience::before {
@@ -391,7 +396,7 @@
 .portfolio-section--projects {
   color: var(--ink-black);
   border-color: var(--aged-paper);
-  background: color-mix(in srgb, var(--warm-ivory) 96%, transparent);
+  background: var(--glass-bevel-overlay), var(--glass-surface);
 }
 
 .portfolio-section--projects::before {
@@ -619,15 +624,24 @@
   border: 1px solid var(--warm-brown);
   border-radius: var(--radius-medium);
   color: var(--warm-ivory);
-  background: color-mix(in srgb, var(--ink-black) 88%, transparent);
-  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--ink-black) 65%, transparent);
-  backdrop-filter: blur(0.7rem);
+  background:
+    var(--glass-bevel-overlay),
+    color-mix(in srgb, var(--ink-black) 84%, transparent);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 var(--glass-edge-shadow),
+    0 0.75rem 2.5rem color-mix(in srgb, var(--ink-black) 55%, transparent);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
   transition: border-color 180ms ease-out, box-shadow 180ms ease-out;
 }
 
 .resume-entry:hover {
   border-color: var(--spirit-cyan);
-  box-shadow: 0 0 2rem color-mix(in srgb, var(--portal-blue) 24%, transparent);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 var(--glass-edge-shadow),
+    0 0 2rem color-mix(in srgb, var(--portal-blue) 24%, transparent);
 }
 
 .resume-entry__header {
@@ -715,9 +729,15 @@
   padding: clamp(var(--space-4), 4vw, var(--space-6));
   border: 1px solid var(--warm-brown);
   border-radius: var(--radius-large);
-  background: color-mix(in srgb, var(--ink-black) 88%, transparent);
-  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--ink-black) 65%, transparent);
-  backdrop-filter: blur(0.7rem);
+  background:
+    var(--glass-bevel-overlay),
+    color-mix(in srgb, var(--ink-black) 84%, transparent);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 var(--glass-edge-shadow),
+    0 0.75rem 2.5rem color-mix(in srgb, var(--ink-black) 55%, transparent);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 
 .portfolio-reveal--visible .project-card {
@@ -883,10 +903,12 @@
 .project-detail__hero,
 .project-detail__facts,
 .project-detail__sections section {
-  border: 1px solid var(--aged-paper);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-large);
-  background: color-mix(in srgb, var(--warm-ivory) 94%, transparent);
-  box-shadow: var(--shadow-small);
+  background: var(--glass-bevel-overlay), var(--glass-surface-strong);
+  box-shadow: var(--glass-card-shadow);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 
 .project-detail__hero {
@@ -1011,15 +1033,21 @@
   padding: var(--space-5);
   border: 1px solid var(--warm-brown);
   border-radius: var(--radius-large);
-  backdrop-filter: blur(0.6rem);
+  box-shadow: var(--glass-card-shadow);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 
 .portfolio-journey-group--education {
-  background: color-mix(in srgb, var(--ink-black) 84%, transparent);
+  background:
+    var(--glass-bevel-overlay),
+    color-mix(in srgb, var(--ink-black) 82%, transparent);
 }
 
 .portfolio-journey-group--experience {
-  background: color-mix(in srgb, var(--charcoal) 82%, transparent);
+  background:
+    var(--glass-bevel-overlay),
+    color-mix(in srgb, var(--charcoal) 80%, transparent);
 }
 
 .portfolio-journey-group__heading {

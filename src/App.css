@@ -44,7 +44,7 @@
   z-index: var(--layer-header);
   min-height: var(--header-height);
   border-bottom: 1px solid var(--aged-paper);
-  background: color-mix(in srgb, var(--warm-ivory) 96%, transparent);
+  background: color-mix(in srgb, var(--color-header) 96%, transparent);
   box-shadow: none;
   backdrop-filter: blur(0.8rem);
   transition:
@@ -53,7 +53,7 @@
 }
 
 .site-header--scrolled {
-  background: color-mix(in srgb, var(--warm-ivory) 96%, transparent);
+  background: color-mix(in srgb, var(--color-header) 96%, transparent);
   box-shadow: var(--shadow-small);
 }
 
@@ -136,12 +136,15 @@
 }
 
 .brand-link__logo {
-  width: 3rem;
-  height: 3rem;
+  width: 3.2rem;
+  height: 2.4rem;
   flex: 0 0 auto;
-  filter: drop-shadow(0 0.15rem 0.35rem color-mix(in srgb, var(--ink-black) 48%, transparent));
-  object-fit: cover;
-  aspect-ratio: 1;
+  filter: drop-shadow(0 0 0.3rem color-mix(in srgb, #f5d97f 62%, transparent));
+  aspect-ratio: 4 / 3;
+}
+
+.brand-link__logo .lotus-marker__art {
+  animation: header-lotus-breathe 1.8s ease-in-out infinite;
 }
 
 .brand-link__text {
@@ -503,10 +506,12 @@
 .setup-route__card {
   width: min(100%, 42rem);
   padding: clamp(var(--space-5), 5vw, 3.5rem);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-medium);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-large);
+  background: var(--glass-bevel-overlay), var(--glass-surface-strong);
+  box-shadow: var(--glass-card-shadow);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 
 .setup-route__eyebrow {
@@ -557,10 +562,12 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: var(--space-4);
   padding: clamp(var(--space-5), 6vw, var(--space-7));
-  border: 1px solid var(--aged-paper);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-large);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-large);
+  background: var(--glass-bevel-overlay), var(--glass-surface-strong);
+  box-shadow: var(--glass-card-shadow);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 
 .status-panel__mark {
@@ -609,9 +616,21 @@
 }
 
 .site-footer {
+  --footer-foreground: var(--warm-ivory);
+  --footer-muted: color-mix(in srgb, var(--warm-ivory) 74%, transparent);
+  --footer-focus: var(--radiant-gold);
+
   position: relative;
-  color: var(--warm-ivory);
+  color: var(--footer-foreground);
   background: var(--ink-black);
+}
+
+:root[data-theme='dark'] .site-footer {
+  --footer-foreground: #232126;
+  --footer-muted: #232126;
+  --footer-focus: #232126;
+
+  background: var(--soft-vermilion);
 }
 
 .site-footer::before {
@@ -650,10 +669,10 @@
   height: 3rem;
   display: grid;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--warm-ivory) 44%, transparent);
+  border: 1px solid color-mix(in srgb, var(--footer-foreground) 44%, transparent);
   border-radius: 50%;
-  color: var(--warm-ivory);
-  background: color-mix(in srgb, var(--warm-ivory) 7%, transparent);
+  color: var(--footer-foreground);
+  background: color-mix(in srgb, var(--footer-foreground) 7%, transparent);
   transition:
     color var(--duration-quick) ease-out,
     background-color var(--duration-quick) ease-out,
@@ -669,7 +688,7 @@
 }
 
 .site-footer__links a:focus-visible {
-  outline-color: var(--radiant-gold);
+  outline-color: var(--footer-focus);
 }
 
 .site-footer__links svg {
@@ -690,15 +709,15 @@
 
 .site-footer__copyright {
   margin: 0;
-  color: color-mix(in srgb, var(--warm-ivory) 74%, transparent);
+  color: var(--footer-muted);
   font-size: 0.85rem;
   text-align: center;
 }
 
 @media (min-width: 25rem) {
   .brand-link__logo {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3.8rem;
+    height: 2.85rem;
   }
 
   .brand-link__role {
@@ -707,6 +726,16 @@
 
   .setup-route__card {
     border-radius: var(--radius-large);
+  }
+}
+
+@keyframes header-lotus-breathe {
+  50% { transform: scale(1.08) translateY(-0.08rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-link__logo .lotus-marker__art {
+    animation: none;
   }
 }
 
@@ -736,7 +765,7 @@
   }
 
   .site-header:not(.site-header--scrolled) {
-    background: color-mix(in srgb, var(--warm-ivory) 78%, transparent);
+    background: color-mix(in srgb, var(--color-header) 78%, transparent);
     backdrop-filter: blur(0.35rem);
   }
 

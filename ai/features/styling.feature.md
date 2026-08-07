@@ -100,8 +100,8 @@ state, labels, and focus treatment remain understandable without relying on colo
 
 - The sticky Header uses a translucent warm surface, brand lockup, route current, public
   navigation, theme controls, and mobile drawer trigger.
-- Cards use solid readable surfaces, ink text, restrained borders, and route-specific
-  detail rather than transparency behind long copy.
+- Cards use readable glass surfaces, ink text, restrained bevels, and route-specific
+  detail without ornamental frames competing with their content.
 - Buttons and links expose hover, active, disabled, and focus-visible states.
 - Forms use persistent labels, solid input surfaces, associated hints/errors, and clear
   pending/feedback panels.
@@ -112,10 +112,10 @@ state, labels, and focus treatment remain understandable without relying on colo
 
 ## Motion and Atmosphere
 
-Three.js is concentrated in the Home vortex and Journey phoenix scene. CSS owns route
-currents, card reveals, the lotus gate, feedback transitions, and other lightweight
-effects. Animation communicates atmosphere and state but never contains required copy or
-the only path to a control.
+Three.js is concentrated in the Home vortex, its progressive scroll-linked card motion,
+and the Journey phoenix scene. CSS owns the card-reveal fallback, route currents, the
+lotus gate, feedback transitions, and other lightweight effects. Animation communicates
+atmosphere and state but never contains required copy or the only path to a control.
 
 The hidden lotus gate intentionally uses synthesized ambient sound and musical petal
 notes after the visitor types its trigger. No other workflow depends on sound. Audio

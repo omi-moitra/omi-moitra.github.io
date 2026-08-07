@@ -67,12 +67,15 @@ The Home scene combines:
 - responsive phoenix/dragon artwork;
 - an SVG fallback with paired ribbon paths, colored bands, and code-like text;
 - a lazy `HomeVortex` Three.js canvas; and
-- pointer/scroll-aware atmosphere that never owns text or navigation.
+- pointer/scroll-aware atmosphere and progressive card motion that never own text or
+  navigation.
 
 The canvas uses a compact particle budget on smaller screens, respects reduced motion,
 responds only as enhancement, pauses when appropriate, and releases rendering resources
-on unmount. If JavaScript chunk loading, WebGL, or images fail, the hero and all later
-content remain readable.
+on unmount. Its Three.js loop also gives Home cards scroll-linked opacity, depth, tilt,
+and restrained parallax while keeping those cards as semantic HTML. CSS supplies the
+card-reveal fallback. If JavaScript chunk loading, WebGL, or images fail, the hero and
+all later content remain readable.
 
 ## Journey Spine
 

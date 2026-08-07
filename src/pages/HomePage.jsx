@@ -64,25 +64,25 @@ function HomePage() {
               />
             </defs>
             <use className="home-vortex-fallback__shadow" href="#home-vortex-fallback-path" />
-            <use className="home-vortex-fallback__band home-vortex-fallback__band--black" href="#home-vortex-fallback-path" />
+            <use className="home-vortex-fallback__band home-vortex-fallback__band--coral" href="#home-vortex-fallback-path" />
+            <use className="home-vortex-fallback__band home-vortex-fallback__band--gold" href="#home-vortex-fallback-path" />
             <use className="home-vortex-fallback__band home-vortex-fallback__band--blue" href="#home-vortex-fallback-path" />
-            <use className="home-vortex-fallback__band home-vortex-fallback__band--purple" href="#home-vortex-fallback-path" />
-            <use className="home-vortex-fallback__band home-vortex-fallback__band--ivory" href="#home-vortex-fallback-path" />
+            <use className="home-vortex-fallback__band home-vortex-fallback__band--black" href="#home-vortex-fallback-path" />
             <g className="home-vortex-fallback__partner">
               <use className="home-vortex-fallback__shadow" href="#home-vortex-fallback-partner-path" />
-              <use className="home-vortex-fallback__band home-vortex-fallback__band--black" href="#home-vortex-fallback-partner-path" />
+              <use className="home-vortex-fallback__band home-vortex-fallback__band--coral" href="#home-vortex-fallback-partner-path" />
+              <use className="home-vortex-fallback__band home-vortex-fallback__band--gold" href="#home-vortex-fallback-partner-path" />
               <use className="home-vortex-fallback__band home-vortex-fallback__band--blue" href="#home-vortex-fallback-partner-path" />
-              <use className="home-vortex-fallback__band home-vortex-fallback__band--purple" href="#home-vortex-fallback-partner-path" />
-              <use className="home-vortex-fallback__band home-vortex-fallback__band--ivory" href="#home-vortex-fallback-partner-path" />
+              <use className="home-vortex-fallback__band home-vortex-fallback__band--black" href="#home-vortex-fallback-partner-path" />
             </g>
             <text className="home-vortex-fallback__type">
               <textPath href="#home-vortex-fallback-path" startOffset="2%">
-                GOOD IDEAS ★ BETTER CODE ✦ BUILD ★ CODE ✦ GOOD IDEAS ★ BETTER CODE
+                Code • Create • Connect • Code • Create • Connect
               </textPath>
             </text>
             <text className="home-vortex-fallback__type home-vortex-fallback__type--partner">
               <textPath href="#home-vortex-fallback-partner-path" startOffset="4%">
-                GOOD IDEAS ✦ BETTER CODE ★ BUILD ✦ CODE ★ GOOD IDEAS ✦ BETTER CODE
+                Code • Create • Connect • Code • Create • Connect
               </textPath>
             </text>
           </svg>
