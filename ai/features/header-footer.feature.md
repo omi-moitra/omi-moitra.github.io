@@ -51,7 +51,7 @@ The canonical destinations are:
 | Home | Enter the Codex | `/` |
 | Journey | The Phoenix Path | `/journey` |
 | Projects | Crafted Worlds | `/projects` |
-| Links | Portals | `/links` |
+| Links | Developer Codex | `/links` |
 | Contact | Send a Message | `/contact` |
 
 Active links use `aria-current="page"` and a visual treatment beyond color alone. Login

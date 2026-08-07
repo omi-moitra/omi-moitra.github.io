@@ -17,8 +17,9 @@ const routeMetadata = {
     description: 'Explore selected full stack development work and case studies.',
   },
   '/links': {
-    title: `Professional Links | ${baseTitle}`,
-    description: 'Open Oishieka Moitra’s verified professional and development resources.',
+    title: `Developer Codex | ${baseTitle}`,
+    description:
+      'Browse Oishieka Moitra’s curated library of web documentation, standards, tutorials, and technical references.',
   },
   '/contact': {
     title: `Contact | ${baseTitle}`,

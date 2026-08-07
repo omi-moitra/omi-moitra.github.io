@@ -1,8 +1,5 @@
 // =============================================================================
-// src/components/ResourceCard.jsx — semantic card for one external resource
-// -----------------------------------------------------------------------------
-// 1. ExternalLinkIcon    decorative indicator for off-site navigation
-// 2. ResourceCard        resilient media, copy, and safe new-tab action
+// src/components/ResourceCard.jsx — compact semantic codex entry
 // =============================================================================
 
 function ExternalLinkIcon() {
@@ -20,40 +17,40 @@ function ExternalLinkIcon() {
   )
 }
 
-function ResourceCard({ resource }) {
+function ResourceCard({ resource, tone }) {
   return (
-    <li className={`resource-card resource-card--${resource.tone}`}>
+    <li className={`resource-card resource-card--${tone}`}>
       <article className="resource-card__article">
-        <div className="resource-card__media">
-          <img
-            src={resource.image}
-            srcSet={resource.imageSrcSet}
-            sizes="(min-width: 64rem) 30vw, 100vw"
-            width={resource.imageWidth}
-            height={resource.imageHeight}
-            alt={resource.imageAlt}
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+        <header className="resource-card__header">
+          <span className="resource-card__mark" aria-hidden="true">
+            {resource.mark}
+          </span>
+          <div className="resource-card__badges" aria-label="Resource classification">
+            <span>{resource.resourceType}</span>
+            <span>{resource.authority}</span>
+          </div>
+        </header>
 
         <div className="resource-card__content">
+          <p className="resource-card__source">{resource.source}</p>
           <h3>{resource.title}</h3>
-          <p>{resource.description}</p>
+          <p className="resource-card__description">{resource.description}</p>
 
-          {/* :warning: target and rel are a single security contract. Keeping
-              this as a native anchor also preserves expected browser behavior. */}
+          <ul className="resource-card__tags" aria-label="Topics">
+            {resource.tags.map((tag) => (
+              <li key={tag}>{tag}</li>
+            ))}
+          </ul>
+
           <a
             className="resource-card__action"
             href={resource.url}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="resource-card__action-label">
-              {resource.actionLabel}
-              <ExternalLinkIcon />
-            </span>
-            <span className="resource-card__new-tab">Opens in a new tab</span>
+            <span>Open resource</span>
+            <ExternalLinkIcon />
+            <span className="visually-hidden">: {resource.title} (opens in a new tab)</span>
           </a>
         </div>
       </article>

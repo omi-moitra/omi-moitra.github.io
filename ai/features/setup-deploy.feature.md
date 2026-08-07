@@ -57,7 +57,7 @@ and navigation render first.
 | `/journey` | Public | Journey timeline and résumé |
 | `/projects` | Public | Project collection |
 | `/projects/:projectSlug` | Public | Project case study |
-| `/links` | Public | GitHub and LinkedIn professional portals |
+| `/links` | Public | Searchable developer codex and professional portals |
 | `/contact` | Public | Supabase message form |
 | `/login` | Hidden public | Administrator authentication |
 | `/back-office` | Authenticated | Nested below `RequireSession` |

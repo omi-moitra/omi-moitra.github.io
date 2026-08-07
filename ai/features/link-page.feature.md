@@ -1,72 +1,76 @@
-# Feature Specification — Links Page
-
-## Table of Contents
-
-- [Goal](#goal)
-- [Route and Structure](#route-and-structure)
-- [Professional Portals](#professional-portals)
-- [Link Safety and Accessibility](#link-safety-and-accessibility)
-- [Responsive Behavior](#responsive-behavior)
-- [Acceptance Contract](#acceptance-contract)
+# Feature Specification — Developer Codex
 
 ## Goal
 
-Provide a focused public page for Oishieka’s verified professional profiles. The route
-presents LinkedIn and GitHub as clearly named portals without mixing them with hidden
-administration, unverified destinations, or generic placeholder links.
+Turn `/links` into a useful, searchable reference library for web development. The
+collection prioritizes official documentation, standards bodies, and primary references
+while identifying community tutorials as learning resources. LinkedIn and GitHub remain
+available as a secondary “My portals” section.
 
 ## Route and Structure
 
-`/links` is a public lazy route represented as Links / Portals in both navigation
-presentations. It uses the Links mint, cyan, blue, and violet route current.
+`/links` is a public lazy route represented as Links / Developer Codex in both navigation
+presentations. The page contains:
 
-The page contains:
+1. a “Developer Codex” introduction;
+2. a native search field and category filter controls;
+3. categorized shelves of compact external-resource cards;
+4. an accessible no-results state with a reset action; and
+5. the verified professional portals below the library.
 
-1. an eyebrow reading “Portals · Find me online”;
-2. the page heading “Professional Links”;
-3. a short invitation to connect on LinkedIn or explore work on GitHub; and
-4. one “Open a portal” section containing the verified profiles.
+The five shelves are Web Foundations, JavaScript & TypeScript, UI Frameworks, 3D &
+Graphics, and Tooling, Backend & Security.
 
-The portal collection renders only when verified records exist. There is no placeholder,
-empty wrapper, invented social network, or Login/Back Office destination.
+## Resource Entries
 
-## Professional Portals
+Each entry has a stable ID, source, title, short description, HTTPS URL, resource type,
+authority label, topic tags, and compact text mark. Official docs and standards guidance
+are labeled distinctly from third-party learning resources such as W3Schools and
+JavaScript.info.
 
-| Profile | URL | Description |
-| --- | --- | --- |
-| LinkedIn | `https://www.linkedin.com/in/oishieka-moitra-6300181b7` | Connect and explore professional experience |
-| GitHub | `https://github.com/omi-moitra` | Explore projects and source code |
+The initial collection includes primary or official sources for MDN, WHATWG, W3C WAI,
+TypeScript, Node.js, React, Bootstrap, React Router, Three.js, Vite, npm, Git, GitHub,
+Supabase, PostgreSQL, Express, and OWASP.
 
-Each profile record has a stable ID, visible label, concise description, HTTPS URL, and
-external-destination flag. The Footer independently repeats GitHub and LinkedIn as
-icon-only links; the Links page uses visible profile names and descriptions.
+## Search and Filtering
+
+- Search matches titles, publishers, descriptions, resource types, authority labels,
+  and tags without regard to letter case.
+- Category buttons use native `button` elements and expose their state with
+  `aria-pressed`.
+- The result count updates in a polite live region.
+- Search and category filters combine; categories with no matches are omitted.
+- A complete no-results message and reset button appear when nothing matches.
 
 ## Link Safety and Accessibility
 
-- Every destination is a normal anchor and remains usable without client-side event
-  handling.
+- Every destination is a normal anchor usable without custom pointer handling.
 - External links open in a new tab with `target="_blank"` and
   `rel="noopener noreferrer"`.
-- Visible labels name the destination and descriptions explain why to open it.
-- The arrow indicator is decorative because text and new-tab behavior already identify
-  the action.
-- Card links have visible hover and focus states in Light, Dark, and forced-colors modes.
-- The page heading and section heading form one logical hierarchy.
+- Each card names its publisher, destination, classification, and subject matter.
+- New-tab context is available to assistive technology without duplicating visible copy.
+- Search, filter, card, reset, and portal controls have visible focus states.
+- Page and shelf headings form a logical hierarchy.
+
+## Professional Portals
+
+The final section contains exactly the verified LinkedIn and GitHub records from the
+shared profile data. No Login, Back Office, invented social network, or placeholder link
+appears in the public collection.
 
 ## Responsive Behavior
 
-Portal links stack at narrow widths and form a balanced grid where space allows.
-Descriptions wrap, targets remain large enough for touch, focus is not clipped, and no
-card creates page-level horizontal overflow. The route remains usable at 320px, tablet,
-desktop, 200% zoom, keyboard-only input, touch, reduced motion, and forced colors.
+Resource cards render in one column at narrow widths, two at medium widths, and three
+where space permits. Filter controls wrap naturally. The route remains usable at 320px,
+tablet, desktop, 200% zoom, keyboard-only input, touch, reduced motion, and forced colors
+without clipped content or page-level horizontal overflow.
 
 ## Acceptance Contract
 
 - `/#/links` loads and refreshes locally and on GitHub Pages.
-- Exactly two verified professional portals render: LinkedIn and GitHub.
-- Both visible labels, descriptions, and URLs are correct.
-- Both anchors use safe new-tab attributes.
-- No email, Login, Back Office, placeholder resource, or unverified profile appears in
-  the portal collection.
-- No clipped text, horizontal page overflow, hidden action, or hover-only information
-  appears at supported widths and zoom.
+- Search and category filters return correct matching resources.
+- Authority labels distinguish official/primary material from learning resources.
+- Every external resource and professional portal uses safe new-tab attributes.
+- LinkedIn and GitHub remain visible below the codex.
+- No hidden action, hover-only information, clipped text, or horizontal overflow appears
+  at supported widths and zoom.
