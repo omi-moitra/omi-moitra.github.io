@@ -56,6 +56,17 @@
   pointer-events: none;
 }
 
+:root[data-theme='dark'] .home-scene {
+  background:
+    linear-gradient(
+      180deg,
+      rgb(15 13 17 / 12%),
+      rgb(15 13 17 / 28%) 64%,
+      rgb(15 13 17 / 52%)
+    ),
+    url('../assets/darkmodehomebackground.png') center top / cover no-repeat;
+}
+
 .home-scene::after {
   position: absolute;
   inset: 0;
@@ -80,6 +91,10 @@
   -webkit-mask-image: linear-gradient(to bottom, #000 0 58%, transparent 96%);
   mask-image: linear-gradient(to bottom, #000 0 58%, transparent 96%);
   transform: translateX(-50%);
+}
+
+:root[data-theme='dark'] .home-scene__creatures {
+  display: none;
 }
 
 .home-vortex-stage {
