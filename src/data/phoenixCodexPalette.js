@@ -24,6 +24,7 @@ export const phoenixCodexPalette = {
   },
   magic: {
     phoenixCoral: '#FF6559',
+    softVermilion: '#E9786A',
     solarOrange: '#FF963D',
     radiantGold: '#FFD34E',
     plasmaPink: '#F34DA0',
