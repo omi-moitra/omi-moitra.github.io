@@ -64,25 +64,39 @@ function HomePage() {
               />
             </defs>
             <use className="home-vortex-fallback__shadow" href="#home-vortex-fallback-path" />
-            <use className="home-vortex-fallback__band home-vortex-fallback__band--coral" href="#home-vortex-fallback-path" />
-            <use className="home-vortex-fallback__band home-vortex-fallback__band--gold" href="#home-vortex-fallback-path" />
-            <use className="home-vortex-fallback__band home-vortex-fallback__band--blue" href="#home-vortex-fallback-path" />
-            <use className="home-vortex-fallback__band home-vortex-fallback__band--black" href="#home-vortex-fallback-path" />
+            <use className="home-vortex-fallback__ribbon" href="#home-vortex-fallback-path" />
             <g className="home-vortex-fallback__partner">
               <use className="home-vortex-fallback__shadow" href="#home-vortex-fallback-partner-path" />
-              <use className="home-vortex-fallback__band home-vortex-fallback__band--coral" href="#home-vortex-fallback-partner-path" />
-              <use className="home-vortex-fallback__band home-vortex-fallback__band--gold" href="#home-vortex-fallback-partner-path" />
-              <use className="home-vortex-fallback__band home-vortex-fallback__band--blue" href="#home-vortex-fallback-partner-path" />
-              <use className="home-vortex-fallback__band home-vortex-fallback__band--black" href="#home-vortex-fallback-partner-path" />
+              <use className="home-vortex-fallback__ribbon" href="#home-vortex-fallback-partner-path" />
             </g>
             <text className="home-vortex-fallback__type">
               <textPath href="#home-vortex-fallback-path" startOffset="2%">
-                Code • Create • Connect • Code • Create • Connect
+                <tspan className="home-vortex-fallback__word--coral">Code</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--gold">Create</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--blue">Connect</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--violet">Code</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--coral">Create</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--gold">Connect</tspan>
               </textPath>
             </text>
             <text className="home-vortex-fallback__type home-vortex-fallback__type--partner">
               <textPath href="#home-vortex-fallback-partner-path" startOffset="4%">
-                Code • Create • Connect • Code • Create • Connect
+                <tspan className="home-vortex-fallback__word--blue">Code</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--violet">Create</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--coral">Connect</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--gold">Code</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--blue">Create</tspan>
+                <tspan> • </tspan>
+                <tspan className="home-vortex-fallback__word--violet">Connect</tspan>
               </textPath>
             </text>
           </svg>

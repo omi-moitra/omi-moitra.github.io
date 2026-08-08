@@ -1,7 +1,7 @@
 // =============================================================================
 // src/components/HomeVortex.jsx — intertwined kinetic typographic ribbons
 // -----------------------------------------------------------------------------
-// 1. Texture artwork       bold words and symbols on canonical color panels
+// 1. Texture artwork       canonical accent words on translucent black fabric
 // 2. Ribbon geometry       paired phase-offset strands forming a double helix
 // 3. Card motion           scroll-linked DOM depth driven by the Three.js loop
 // 4. Scene lifecycle       responsive rendering, motion preferences, and cleanup
@@ -44,12 +44,22 @@ const RIBBON_WORDS = [
   'Connect',
 ]
 
-const BAND_COLORS = [
+const LIGHT_WORD_COLORS = [
   phoenixCodexPalette.magic.phoenixCoral,
   phoenixCodexPalette.magic.radiantGold,
   phoenixCodexPalette.magic.portalBlue,
-  phoenixCodexPalette.foundation.inkBlack,
+  phoenixCodexPalette.magic.arcaneViolet,
 ]
+
+const DARK_WORD_COLORS = [
+  phoenixCodexPalette.foundation.inkBlack,
+  phoenixCodexPalette.magic.radiantGold,
+  phoenixCodexPalette.magic.portalBlue,
+  phoenixCodexPalette.foundation.warmIvory,
+]
+
+const LIGHT_RIBBON_BACKGROUND = `${phoenixCodexPalette.foundation.inkBlack}99`
+const DARK_RIBBON_BACKGROUND = `${phoenixCodexPalette.magic.softVermilion}99`
 
 const HOME_CARD_SELECTOR = '.home-flow-card, .skill-card, .home-project-preview'
 
@@ -82,23 +92,26 @@ function drawBurst(context, x, y, radius, color) {
   context.restore()
 }
 
-function drawRibbonTexture(canvas) {
+function drawRibbonTexture(canvas, darkMode = false) {
   const width = 1024
   const height = 4096
   const bandHeight = height / RIBBON_WORDS.length
   const context = canvas.getContext('2d')
+  const wordColors = darkMode ? DARK_WORD_COLORS : LIGHT_WORD_COLORS
+  const ribbonBackground = darkMode
+    ? DARK_RIBBON_BACKGROUND
+    : LIGHT_RIBBON_BACKGROUND
   context.clearRect(0, 0, width, height)
   context.textAlign = 'center'
   context.textBaseline = 'middle'
 
   RIBBON_WORDS.forEach((word, index) => {
     const top = index * bandHeight
-    const background = BAND_COLORS[index % BAND_COLORS.length]
-    const ink = background === phoenixCodexPalette.foundation.inkBlack
-      ? phoenixCodexPalette.foundation.warmIvory
-      : phoenixCodexPalette.foundation.inkBlack
+    const ink = wordColors[index % wordColors.length]
 
-    context.fillStyle = background
+    // Hex alpha 99 is exactly 60%, keeping the fabric translucent while the
+    // themed lettering and symbols remain fully opaque.
+    context.fillStyle = ribbonBackground
     context.fillRect(0, top, width, bandHeight + 2)
 
     context.save()
@@ -125,7 +138,7 @@ function createRibbonTexture() {
   const canvas = document.createElement('canvas')
   canvas.width = 1024
   canvas.height = 4096
-  drawRibbonTexture(canvas)
+  drawRibbonTexture(canvas, document.documentElement.dataset.theme === 'dark')
 
   const texture = new CanvasTexture(canvas)
   texture.colorSpace = SRGBColorSpace
@@ -264,8 +277,16 @@ function HomeVortex() {
       Math.PI,
       0.5,
     )
-    const frontMaterial = new MeshBasicMaterial({ map: texture, side: FrontSide })
-    const backMaterial = new MeshBasicMaterial({ map: backTexture, side: BackSide })
+    const frontMaterial = new MeshBasicMaterial({
+      map: texture,
+      side: FrontSide,
+      transparent: true,
+    })
+    const backMaterial = new MeshBasicMaterial({
+      map: backTexture,
+      side: BackSide,
+      transparent: true,
+    })
     const primaryRibbon = createReadableRibbon(primaryGeometry, frontMaterial, backMaterial)
     const partnerRibbon = createReadableRibbon(partnerGeometry, frontMaterial, backMaterial)
     const group = new Group()
@@ -383,7 +404,7 @@ function HomeVortex() {
       // panel travel into the same broad top curve without rotating the open
       // geometry and exposing its ends like an unwinding strip.
       if (!reducedMotion) {
-        const textureProgress = (time * 0.00007) % 1
+        const textureProgress = (time * 0.000035) % 1
         texture.offset.y = textureProgress
         backTexture.offset.y = textureProgress
       }
@@ -394,12 +415,25 @@ function HomeVortex() {
       if (visible && !reducedMotion) frame = window.requestAnimationFrame(render)
     }
 
-    document.fonts?.load('400 680px "Offside"').then(() => {
-      if (!active) return
-      drawRibbonTexture(texture.image)
+    const redrawRibbonTexture = () => {
+      drawRibbonTexture(
+        texture.image,
+        document.documentElement.dataset.theme === 'dark',
+      )
       texture.needsUpdate = true
       backTexture.needsUpdate = true
       if (reducedMotion) render()
+    }
+
+    const themeObserver = new MutationObserver(redrawRibbonTexture)
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    })
+
+    document.fonts?.load('400 680px "Offside"').then(() => {
+      if (!active) return
+      redrawRibbonTexture()
     })
 
     const observer = 'IntersectionObserver' in window
@@ -428,6 +462,7 @@ function HomeVortex() {
 
     return () => {
       active = false
+      themeObserver.disconnect()
       observer?.disconnect()
       cardResizeObserver?.disconnect()
       window.cancelAnimationFrame(frame)
