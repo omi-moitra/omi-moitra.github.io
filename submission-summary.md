@@ -8,7 +8,7 @@
 ## Project
 
 - **Project Name:** Phoenix Codex Portfolio
-- **Repository:** https://github.com/omi-moitra/omi-moitra.github.io
+- **Repository:** git@github.com:omi-moitra/omi-moitra.github.io.git
 - **Live Application:** https://omi-moitra.github.io/
 
 ## Required Video Links
@@ -21,16 +21,16 @@
 
 ## Required Credentials and Configuration
 
-### Environment Variables
-
-```dotenv
-VITE_SUPABASE_URL=https://qaeelecekzqxpstjjpvx.supabase.co
-VITE_SUPABASE_ANON_KEY=sb_publishable_G-9_tkqhfCou4LMNdOdTiA__dDGdtYx
-```
-
-No additional credentials are required.
-
 ### Administrator Login
 
-- **How to reach the Login page from Home:** Open https://omi-moitra.github.io/ and type **`lotus`** on the keyboard without selecting a text field. When the hidden Lotus Gate appears, start with the top petal as Petal 1 and count clockwise. Select **1 → 4 → 1 → 4 → 5 → 4 → 1**. The named sequence is **Curiosity → Kindness → Curiosity → Kindness → Perseverance → Kindness → Curiosity**. After the final petal, the portal opens and automatically takes you to the Login page.
 - **Login URL:** https://omi-moitra.github.io/#/login
+From the Home page:
+Type lotus on your keyboard.
+Starting with the top petal as 1 and counting clockwise, click:
+1 → 4 → 1 → 4 → 5 → 4 → 1
+The portal will open and take you to the Login page.
+
+### Environment Variables
+https://docs.google.com/document/d/1i9NC7LzKwONAlO-pH6mSor9d4KxmqVW_bKP8dnsZNho/edit?usp=sharing
+
+No additional credentials are required.
