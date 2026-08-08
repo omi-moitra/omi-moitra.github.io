@@ -154,3 +154,78 @@ route guard re-verifies before every protected mount.
 - Sign-out removes private UI and replaces history with Login.
 - Anonymous select/update/delete remain denied independently by RLS.
 - No private message appears in public UI, metadata, logs, or source fixtures.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Protected Back Office
+- **Related Area:** Fullstack / Private Administration
+
+## Feature Goal
+
+Allow only a server-verified authenticated administrator to review, inspect, delete, and
+sign out from the private contact-message interface.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- Protected route verification, Auth event handling, newest-first message query, explicit
+  states, full-message dialog, delete confirmation, exact-ID deletion, and logout.
+
+### Out of Scope (Excluded)
+
+- Public discovery, anonymous reads, message editing, bulk deletion, user management,
+  analytics, exports, and storage of private messages outside component memory.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Require both a stored session and server-backed user before mounting private UI.
+- Query only approved columns and validate returned record shape.
+- Support loading, retryable error, empty, ready, view, delete, and logout states.
+- Delete only the confirmed immutable UUID and clear private state on exit.
+
+## User Flow / Logic (High Level)
+
+1. The route guard checks configuration, session, and server user.
+2. An authenticated mount loads messages newest first.
+3. The administrator views a complete record or confirms deletion of one record.
+4. Logout clears private state, removes the session, and replaces the route with Login.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+`RequireSession`, `BackOfficePage`, `MessageDialog`, `DeleteMessageDialog`, and the
+protected `/back-office` route.
+
+### Backend / API
+
+Supabase Auth session/user/sign-out methods and Data API select/delete operations on
+`public.messages` under authenticated RLS policies.
+
+## Data Used or Modified
+
+Approved message fields (`id`, `name`, `email`, `message`, `created_at`), verification
+phase, dialog selection, deletion phase, and logout state.
+
+## Tech Constraints (Feature-Level)
+
+Use server-backed verification, explicit columns, descending server order, exact UUID
+filters, duplicate guards, generic errors, accessible dialogs, and RLS.
+
+## Acceptance Criteria
+
+- [ ] Signed-out users never mount private UI or query messages.
+- [ ] Verified users see approved fields newest first.
+- [ ] View and delete dialogs meet keyboard/focus requirements.
+- [ ] Successful deletion removes only the confirmed row.
+- [ ] Logout clears private state and prevents Back/refresh restoration.
+
+## Notes for the AI
+
+Never weaken `.eq('id', selectedId)`, add update/bulk-delete behavior, expose raw data or
+errors, trust route hiding, or treat local session storage as sufficient verification.

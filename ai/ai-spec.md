@@ -313,3 +313,148 @@ Before release:
 - no `.env`, password, token, private message, service-role key, or submission credential
   is tracked; and
 - the `main` GitHub Actions workflow publishes `dist` successfully.
+
+---
+
+<!-- The headings below mirror the required sections in the root ai-spec.md template. -->
+
+## Project Identity
+
+- **Project Name:** The Phoenix Codex Portfolio
+- **Short Description:** A responsive professional portfolio that presents Oishieka
+  Moitra’s skills, experience, projects, resources, and contact workflow through an
+  accessible fantasy-inspired React interface.
+- **Project Type:** Static React single-page application with external Supabase services.
+
+## Goal and Scope
+
+### Goal
+
+Publish a reliable, recruiter-friendly portfolio that demonstrates professional identity,
+verified work, full-stack reasoning, and secure handling of contact submissions.
+
+### In Scope (Build Now)
+
+- Public Home, Journey, Projects, project-detail, Links, Contact, and Not Found routes.
+- Hidden Login and session-protected Back Office routes.
+- Responsive Light, Dark, and System themes with accessible progressive enhancement.
+- Supabase contact storage, Auth, PostgreSQL constraints, and RLS.
+- Automated GitHub Pages deployment from `main`.
+
+### Out of Scope (Do NOT Build)
+
+- A custom application server, public signup, public message reading, or message editing.
+- Invented projects, résumé claims, metrics, social profiles, or private personal data.
+- Required workflows that depend on WebGL, sound, animation, hover, or pointer input.
+- Service-role credentials or administrator secrets in browser code or Git history.
+
+## Users and Use Cases
+
+- **Recruiters and hiring managers:** review skills, experience, résumé, and project work.
+- **Collaborators and professional contacts:** explore the portfolio and submit inquiries.
+- **Administrator:** authenticate, review private contact messages, delete deliberately,
+  and sign out.
+
+## Feature Index (Links Only)
+
+- [`features/setup-deploy.feature.md`](features/setup-deploy.feature.md)
+- [`features/header-footer.feature.md`](features/header-footer.feature.md)
+- [`features/home-page.feature.md`](features/home-page.feature.md)
+- [`features/portfolio-page.feature.md`](features/portfolio-page.feature.md)
+- [`features/link-page.feature.md`](features/link-page.feature.md)
+- [`features/contact-page.feature.md`](features/contact-page.feature.md)
+- [`features/login-page.feature.md`](features/login-page.feature.md)
+- [`features/back-office.feature.md`](features/back-office.feature.md)
+- [`features/styling.feature.md`](features/styling.feature.md)
+- [`features/styling-mobile.feature.md`](features/styling-mobile.feature.md)
+
+## Pages / Screens / Routes (Project Map)
+
+### If Website / Frontend Project
+
+- `/` — professional introduction and skills.
+- `/journey` — education, experience, and résumé download.
+- `/projects` and `/projects/:projectSlug` — project collection and case studies.
+- `/links` — searchable developer resources and professional portals.
+- `/contact` — validated public message submission.
+- `/login` — hidden administrator authentication.
+- `/back-office` — protected message administration.
+- `*` — accessible Not Found state.
+
+### If Backend / API Project
+
+No custom backend routes are hosted by this repository. The browser uses Supabase Auth
+and the generated Data API under the database grants and RLS policies described here.
+
+## Data and Models (Simple)
+
+### If No Database
+
+Not applicable. This project uses Supabase PostgreSQL for contact messages; public
+portfolio, navigation, resource, and project records remain static JavaScript data.
+
+### If Database Exists
+
+Supabase PostgreSQL contains `public.messages` with `id`, `name`, `email`, `message`, and
+`created_at`. Database constraints validate stored values, and RLS separates public
+insert permission from authenticated select/delete permission.
+
+## Tech Stack and Tools
+
+### Frontend
+
+React 19, JavaScript, semantic HTML, CSS, Vite 8, and React Router with `HashRouter`.
+
+### Backend
+
+No custom server. Supabase provides hosted Auth and its browser-facing Data API.
+
+### Database (if any)
+
+Supabase PostgreSQL with table grants, constraints, and Row Level Security.
+
+### Tools / Libraries
+
+Three.js, `@supabase/supabase-js`, ESLint, npm, GitHub Actions, and GitHub Pages.
+
+## Repository Structure
+
+- `src/pages/` — route-level screens.
+- `src/components/` — shared UI, dialogs, navigation, gates, and scenes.
+- `src/layouts/` — shared application shell.
+- `src/data/` — approved content records.
+- `src/utils/` and `src/hooks/` — pure validation and reusable behavior.
+- `src/lib/` — shared Supabase client boundary.
+- `src/theme/` — theme state and preference resolution.
+- `supabase/` — PostgreSQL schema, grants, and RLS.
+- `ai/features/` — feature-level implementation contracts.
+- `.github/workflows/` — Pages build and deployment.
+
+## Rules for the AI
+
+- Read this file and the relevant feature specification before changing code.
+- Preserve verified content, security boundaries, accessibility, and responsive behavior.
+- Reuse existing tokens, components, and data before creating alternatives.
+- Keep essential content in semantic HTML and treat visuals as progressive enhancement.
+- Never expose credentials, tokens, service-role keys, private messages, or raw errors.
+- Do not expand scope or refactor unrelated code without explicit approval.
+
+## How to Run / Test the Project
+
+1. Install the locked dependencies with `npm ci`.
+2. Supply the two public `VITE_SUPABASE_*` values in an ignored local environment file.
+3. Run locally with `npm run dev`.
+4. Run `npm run lint` and `npm run build` before release.
+5. Use `npm run preview` to verify the production artifact and canonical hash routes.
+6. Manually test keyboard, mobile, reduced-motion, WebGL fallback, Auth, Contact, and RLS.
+
+## Definition of Done
+
+- [ ] Every canonical route and redirect works locally and on GitHub Pages.
+- [ ] Required public content and protected administration workflows are complete.
+- [ ] Contact validation, insertion, Auth, message reading/deletion, and RLS are verified.
+- [ ] Light, Dark, System, mobile, keyboard, zoom, and reduced-motion states are usable.
+- [ ] Optional media failures preserve readable content and required controls.
+- [ ] No secret or private record is tracked, logged, or rendered publicly.
+- [ ] `npm run lint` and `npm run build` pass.
+- [ ] The reviewed `main` workflow successfully publishes `dist`.

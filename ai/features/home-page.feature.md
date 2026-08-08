@@ -135,3 +135,78 @@ the Login feature specification. Knowledge of the gesture never authorizes priva
 - Typing `lotus` opens the hidden gate only while Home is mounted.
 - No Login or Back Office link appears in Home content.
 - No content, control, focus ring, or final section is clipped at target widths or zoom.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Home Page
+- **Related Area:** Frontend / Public Portfolio
+
+## Feature Goal
+
+Introduce Oishieka’s professional identity, capabilities, strengths, and next actions in
+a memorable page whose essential content never depends on decorative effects.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- Hero, framed portrait, technical skills, professional strengths, verified project
+  preview, Journey/Contact actions, decorative spine, vortex, generated art, and hidden
+  gate integration.
+
+### Out of Scope (Excluded)
+
+- Unverified claims or projects, private administration, route-level authentication,
+  required WebGL/audio interaction, and content that exists only inside a canvas.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Render the approved identity and six skill/strength cards in semantic HTML.
+- Preserve the intended content order and canonical calls to action.
+- Load the vortex progressively with a static fallback and complete cleanup.
+- Support the decorative journey spine and route-scoped hidden lotus trigger safely.
+
+## User Flow / Logic (High Level)
+
+1. The visitor lands on Home and reads identity plus primary actions immediately.
+2. Scrolling reveals technical skills, professional strengths, and verified previews.
+3. Explicit links continue to Projects, Journey, or Contact.
+4. Optional keyboard navigation and the hidden gate enhance—but never replace—the flow.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+`HomePage`, `HomeVortex`, `HomeJourneySpine`, `SkillCard`, `KeyboardScrollHint`,
+`LotusGate`, and shared Home data modules.
+
+### Backend / API
+
+None. Home renders approved static data and does not request private or mutable records.
+
+## Data Used or Modified
+
+Identity, skills, strengths, images, and the verified featured-project record are read
+from shared modules. Only transient scene, scroll, pointer, and gate state changes.
+
+## Tech Constraints (Feature-Level)
+
+Keep meaningful content in HTML, lazy-load Three.js, honor reduced motion, use responsive
+assets, reuse theme tokens, and dispose every scene/listener resource on unmount.
+
+## Acceptance Criteria
+
+- [ ] Root route shows approved identity, three technical skills, and three strengths.
+- [ ] Calls to action resolve to canonical routes.
+- [ ] Static content remains complete without WebGL, images, audio, or motion.
+- [ ] Mobile, keyboard, zoom, and reduced-motion states preserve the reading order.
+- [ ] The hidden gate never acts as an authorization boundary.
+
+## Notes for the AI
+
+Do not move semantic copy into Three.js, invent portfolio content, make animation
+required, or weaken the Login/Back Office security boundaries when changing Home.

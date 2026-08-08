@@ -151,3 +151,80 @@ Verify every canonical route at:
 
 Also verify keyboard-only use, touch emulation, reduced motion, forced colors, system
 dark/light changes, WebGL disabled, sound blocked, and mobile browser viewport changes.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Responsive and Mobile Experience
+- **Related Area:** Frontend / Cross-Route Responsive Behavior
+
+## Feature Goal
+
+Preserve every route, workflow, label, and control at small widths while progressively
+adding space, grids, media, and atmosphere when larger viewports permit.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- Shared breakpoints, mobile navigation, responsive route layouts, reflow, touch and
+  keyboard input, safe-area/dialog behavior, responsive images/scenes, zoom, reduced
+  motion, and the verification matrix.
+
+### Out of Scope (Excluded)
+
+- Mobile-only content removal, separate mobile routes, locked orientation, hover-only
+  actions, global overflow masking, and desktop assumptions in required workflows.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Default to readable one-column flow and add columns only when space supports them.
+- Switch between modal mobile navigation and desktop navigation at `64rem`.
+- Adapt every public, hidden, and protected route without changing semantic order.
+- Keep media, motion, dialogs, tables, forms, and touch targets within safe bounds.
+- Verify target widths, zoom, keyboard, touch, reduced motion, and forced colors.
+
+## User Flow / Logic (High Level)
+
+1. The layout resolves from viewport, zoom, input, theme, and motion preferences.
+2. Navigation and route composition adapt without removing functionality.
+3. Content reflows and bounded regions scroll only where deliberately required.
+4. Preference or viewport changes preserve focus, state, and active workflows.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+Global/shared CSS, Header and mobile drawer, every route stylesheet, dialogs, forms,
+Home/Journey scenes, tables, and responsive image sources.
+
+### Backend / API
+
+None directly. Responsive UI must preserve Contact/Auth/Data API state while layout
+changes occur.
+
+## Data Used or Modified
+
+Viewport/media-query state, safe-area dimensions, input modality, motion preference,
+responsive image choice, and transient drawer/dialog/scene state.
+
+## Tech Constraints (Feature-Level)
+
+Use mobile-first CSS, semantic DOM order, the `64rem` shared breakpoint, native controls,
+bounded overflow only, responsive assets, and compact scene budgets.
+
+## Acceptance Criteria
+
+- [ ] Every canonical route works at 320px, 768px, 1023px, 1024px+, and desktop.
+- [ ] The application reflows at 200% zoom without losing controls or final content.
+- [ ] Drawer, forms, dialogs, tables, scenes, and hidden gate remain usable by touch and keyboard.
+- [ ] Reduced motion, forced colors, WebGL/audio failure, and live theme changes are safe.
+- [ ] No global overflow rule conceals a layout defect.
+
+## Notes for the AI
+
+Do not create separate mobile content, visually reorder semantic meaning, remove required
+controls, shrink targets below practical size, or hide overflow instead of fixing it.

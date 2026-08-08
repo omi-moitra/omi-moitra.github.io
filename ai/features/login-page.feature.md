@@ -205,3 +205,80 @@ The button becomes disabled and reads “Signing in…” while the form exposes
 - Valid authentication redirects to protected Back Office; invalid authentication remains
   generic and recoverable.
 - The hidden experience never substitutes for the route guard or RLS.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Hidden Lotus Gate and Login
+- **Related Area:** Fullstack / Authentication
+
+## Feature Goal
+
+Provide a memorable optional path to a directly accessible administrator Login while
+ensuring Supabase Auth—not discovery of the gate—establishes identity.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- Home key-sequence trigger, accessible musical lotus dialog, optional synthesized
+  audio, portal transition, Login form, validation, session lookup, password sign-in,
+  redirects, and safe failure states.
+
+### Out of Scope (Excluded)
+
+- Authorization by phrase or melody, public signup, password recovery, credential
+  storage, public navigation links, and access to private message rows.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Detect `lotus` only in eligible Home key events and clean up the listener.
+- Enforce the documented seven-petal sequence with accessible visual progress.
+- Keep `/login` directly loadable and check existing session state before showing form.
+- Validate credentials locally and guard duplicate `signInWithPassword` calls.
+- Keep credential, network, and configuration failure states generic and recoverable.
+
+## User Flow / Logic (High Level)
+
+1. A visitor opens Login directly or completes the optional Home lotus sequence.
+2. Login checks for an existing session and redirects an authenticated user.
+3. A signed-out user submits locally valid credentials to Supabase Auth.
+4. Success routes to protected Back Office; failure clears only the password and retries.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+`LotusGate`, `useKeySequence`, `LoginPage`, `loginValidation.js`, the `/login` route, and
+the shared Supabase client.
+
+### Backend / API
+
+Supabase Auth `getSession()` and `signInWithPassword()`; no public signup or custom auth
+endpoint.
+
+## Data Used or Modified
+
+Transient melody progress, dialog/audio state, email, password, feedback phase, and the
+Supabase-managed session. Credentials are never persisted by application code.
+
+## Tech Constraints (Feature-Level)
+
+Use native controls, focus trapping, optional Web Audio, reduced-motion fallbacks,
+generic auth errors, synchronous submit guards, and Supabase-managed sessions.
+
+## Acceptance Criteria
+
+- [ ] Home’s accepted sequence opens Login without granting authorization.
+- [ ] Direct Login loading and existing-session redirect work.
+- [ ] Invalid form data causes no Auth request.
+- [ ] Valid credentials establish a session and route to Back Office.
+- [ ] Gate, audio, timers, focus, and credentials clean up safely.
+
+## Notes for the AI
+
+Never publish credentials, treat hidden interactions as security, create public signup,
+log auth payloads, or allow visual/audio effects to block direct accessible Login use.

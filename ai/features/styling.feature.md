@@ -147,3 +147,79 @@ travel, lotus bloom sequences, and entrance effects while preserving final state
 - Reduced motion, keyboard navigation, touch, and forced colors preserve all controls.
 - Modified CSS files keep accurate comments-based tables of contents.
 - Lint and production build pass.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Phoenix Codex Styling System
+- **Related Area:** Frontend / Design System
+
+## Feature Goal
+
+Apply one accessible visual language across every route by combining cozy-fantasy
+surfaces, street-art energy, restrained cyberpunk accents, and code-inspired details.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- Canonical palette, semantic tokens, typography, Light/Dark/System themes, shared
+  component states, route currents, motion rules, progressive atmosphere, contrast, and
+  forced-colors behavior.
+
+### Out of Scope (Excluded)
+
+- Route data/content, new business features, an external UI framework, uncontrolled
+  one-off palettes, inaccessible decoration, and motion required for comprehension.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Keep JavaScript and CSS palette values aligned.
+- Use semantic tokens for surfaces, text, borders, focus, and state.
+- Support all themes and shared interactive states consistently.
+- Make decoration, motion, fonts, media, and WebGL progressively enhanced.
+- Meet contrast, focus, zoom, reduced-motion, and forced-colors requirements.
+
+## User Flow / Logic (High Level)
+
+1. Theme resolution applies before the application paints.
+2. Shared tokens style the active route and component states.
+3. Optional motion/media adds atmosphere when supported.
+4. User preference changes update the complete application and persist locally.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+Global `index.css`, shared `App.css`, page/component styles, `ThemeProvider`,
+`ThemeControl`, and `phoenixCodexPalette.js` across every route and state.
+
+### Backend / API
+
+None. Styling performs no backend operation.
+
+## Data Used or Modified
+
+CSS custom properties, route theme family, local theme preference, resolved operating-
+system mode, media queries, and transient visual state.
+
+## Tech Constraints (Feature-Level)
+
+Reuse canonical tokens, preserve semantic HTML, prefer CSS for lightweight effects,
+limit Three.js to progressive scenes, and support WCAG 2.1 AA interaction states.
+
+## Acceptance Criteria
+
+- [ ] Palette values and semantic roles remain consistent.
+- [ ] Every route/state works in Light, Dark, and System modes.
+- [ ] Focus, contrast, zoom, reduced motion, and forced colors preserve usability.
+- [ ] Optional visual failures leave complete readable workflows.
+- [ ] Lint and production build pass after styling changes.
+
+## Notes for the AI
+
+Do not introduce competing colors, hide focus, encode state only through color/motion,
+move content into decoration, or refactor unrelated components for a visual change.

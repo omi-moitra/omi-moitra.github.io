@@ -74,3 +74,78 @@ without clipped content or page-level horizontal overflow.
 - LinkedIn and GitHub remain visible below the codex.
 - No hidden action, hover-only information, clipped text, or horizontal overflow appears
   at supported widths and zoom.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Developer Codex
+- **Related Area:** Frontend / Public Resources
+
+## Feature Goal
+
+Present a searchable, trustworthy library of web-development resources while keeping
+verified professional profiles available as a clearly separate destination group.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- Links route, categorized resource cards, text search, category filters, result count,
+  no-results recovery, safe external links, and LinkedIn/GitHub portals.
+
+### Out of Scope (Excluded)
+
+- Remote search APIs, user submissions, bookmarks, accounts, analytics, hidden routes,
+  placeholder resources, and unverified professional profiles.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Render every approved resource with source, title, description, classification, tags,
+  and HTTPS destination.
+- Combine case-insensitive search with one category filter.
+- Announce result count and provide a complete resettable empty state.
+- Keep professional portals distinct and all new-tab links safe.
+
+## User Flow / Logic (High Level)
+
+1. The visitor opens the complete categorized library.
+2. Search text and category selection derive the visible shelves.
+3. The result count updates or the page offers a reset action.
+4. Selecting a resource or portal opens the verified destination safely.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+`LinksPage`, `ResourceCard`, shared resource/profile data, search field, filters, result
+status, no-results state, and professional portal list.
+
+### Backend / API
+
+None. Resources are approved static records and the feature performs no data request.
+
+## Data Used or Modified
+
+Resource collections, category IDs, authority labels, tags, professional portals, and
+transient search/category state. Shared records are filtered without mutation.
+
+## Tech Constraints (Feature-Level)
+
+Use native inputs/buttons/anchors, derived React state, safe HTTPS destinations,
+`noopener noreferrer`, visible focus, and existing data modules.
+
+## Acceptance Criteria
+
+- [ ] Search and category filters return the correct records together.
+- [ ] Result count and empty-state recovery are accessible.
+- [ ] Every resource is classified and opens safely.
+- [ ] Only verified LinkedIn and GitHub portals appear below the library.
+- [ ] Layout reflows without clipped content or hidden actions.
+
+## Notes for the AI
+
+Do not invent resources, fetch remote catalogs, mutate shared data, expose private
+routes, or replace normal anchors and form controls with custom click handlers.

@@ -129,3 +129,77 @@ uses the platform mail client with the recipient prefilled.
 - The email link opens a composed message addressed to `omoitra@gmail.com`.
 - External profile URLs are correct and safe.
 - Shared chrome remains readable at 320px, desktop widths, and 200% zoom.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Shared Header and Footer
+- **Related Area:** Frontend / Shared Layout
+
+## Feature Goal
+
+Give every route consistent branding, public navigation, theme access, contact links,
+and keyboard-safe landmark behavior.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- Main layout, skip link, sticky Header, desktop navigation, mobile drawer, theme
+  controls, route current, Footer links, and focus management.
+
+### Out of Scope (Excluded)
+
+- Route body content, hidden administrator links, authentication, message data, and
+  route-specific business logic.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Render shared semantic landmarks around the active route.
+- Expose the five public destinations on desktop and mobile.
+- Keep the drawer modal, inertness, dismissal, and focus restoration accessible.
+- Provide persistent theme choices and safe icon-only Footer destinations.
+
+## User Flow / Logic (High Level)
+
+1. The visitor loads any route inside the shared shell.
+2. Desktop links or the mobile drawer expose the same public destinations.
+3. Navigation updates the active route and closes transient mobile UI.
+4. Theme choice persists; Footer links open the intended contact destination safely.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+`Main`, `Header`, `NavigationLinks`, `MobileNavigation`, `ThemeControl`, `Footer`, and
+`RouteMetadata` across every route.
+
+### Backend / API
+
+None. This feature performs no network request and handles no private data.
+
+## Data Used or Modified
+
+Shared navigation records, public profile destinations, current pathname, current year,
+scroll state, and locally persisted theme preference.
+
+## Tech Constraints (Feature-Level)
+
+Use React Router links, native controls, semantic landmarks, existing route/theme data,
+and the `64rem` navigation breakpoint.
+
+## Acceptance Criteria
+
+- [ ] Every public destination is reachable in both navigation presentations.
+- [ ] Login and Back Office remain absent from public chrome.
+- [ ] Drawer focus, inertness, dismissal, and restoration work reliably.
+- [ ] Theme choice and active-route state are accessible without color alone.
+- [ ] Footer destinations are correct, labeled, and safe.
+
+## Notes for the AI
+
+Do not duplicate navigation data, expose hidden routes, replace native controls, or
+change modal focus behavior without updating and testing the complete shared shell.

@@ -118,3 +118,78 @@ are configured outside Git and are never copied into workflow logs or build arti
 - Test with JavaScript console errors monitored, WebGL disabled, audio blocked, and
   Supabase variables absent.
 - Confirm the signed-out public site and 404 experience remain complete.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Setup and Deployment
+- **Related Area:** Fullstack / DevOps
+
+## Feature Goal
+
+Provide a reproducible Vite application that builds from locked dependencies and deploys
+the complete static React site to the root GitHub Pages domain.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- React/Vite bootstrap, HashRouter, lazy routes, environment parsing, quality commands,
+  GitHub Actions, and Pages artifact publication.
+
+### Out of Scope (Excluded)
+
+- A custom server, server rewrites, public secrets, alternate hosting platforms, and
+  manual modification of generated `dist` files.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Maintain the approved toolchain and one application/router boundary.
+- Build with `/` as the root-site base and inject public Supabase values at build time.
+- Publish `dist` from reviewed `main` commits through GitHub Actions.
+- Preserve controlled fallbacks when optional services or media are unavailable.
+
+## User Flow / Logic (High Level)
+
+1. A developer installs dependencies and runs the application locally.
+2. Lint and production build checks pass.
+3. Reviewed feature work merges through `dev` into `main`.
+4. GitHub Actions builds with repository configuration and deploys `dist` to Pages.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+`src/main.jsx`, `src/App.jsx`, `src/layouts/Main.jsx`, every canonical hash route, and the
+shared loading/Not Found states.
+
+### Backend / API
+
+No custom endpoints. The built client may call Supabase Auth and Data API only when the
+two required public environment values are present.
+
+## Data Used or Modified
+
+Source files, static assets, package lock data, public Vite configuration, and the
+generated `dist` artifact. No private application records are modified by deployment.
+
+## Tech Constraints (Feature-Level)
+
+Use npm, the committed lockfile, Node 20 in CI, Vite, `HashRouter`, official Pages
+actions, and public `VITE_*` values only.
+
+## Acceptance Criteria
+
+- [ ] A clean checkout passes `npm ci`, `npm run lint`, and `npm run build`.
+- [ ] Canonical and alias routes load through the root Pages site.
+- [ ] Missing configuration produces safe unavailable states.
+- [ ] The `main` workflow uploads and deploys only `dist`.
+- [ ] No secret appears in source, logs, or committed environment files.
+
+## Notes for the AI
+
+Do not replace `HashRouter`, change the root base, edit `dist` manually, introduce a
+server, or expose configuration while implementing this feature.

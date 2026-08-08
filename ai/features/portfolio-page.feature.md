@@ -163,3 +163,79 @@ safely and make their destination clear.
 - Unknown project slugs fail safely.
 - Neither scene nor generated artwork is required to read, navigate, download, or open a
   case study.
+
+---
+
+<!-- Template-aligned summary; headings mirror feature-name.feature.md. -->
+
+## Feature Identity
+
+- **Feature Name:** Journey and Projects
+- **Related Area:** Frontend / Professional Portfolio
+
+## Feature Goal
+
+Present verified education, experience, résumé, and project evidence through separate
+but related Journey, Projects, and project-detail routes.
+
+## Feature Scope
+
+### In Scope (Included)
+
+- Journey timeline/content, milestone interaction, optional phoenix scene, résumé
+  download, project collection, slug-based case studies, verified external links, and
+  compatibility redirects.
+
+### Out of Scope (Excluded)
+
+- Invented work, placeholder cards, unsupported metrics, editable résumé content,
+  unverified galleries, and required Three.js interaction.
+
+## Sub-Requirements (Feature Breakdown)
+
+- Keep Journey and Projects as separate canonical routes and bundles.
+- Render approved education/experience newest first with accessible selection behavior.
+- Provide the stable approved résumé download.
+- Render only verified project records and resolve detail pages safely by slug.
+- Preserve full content without canvas or generated art.
+
+## User Flow / Logic (High Level)
+
+1. A visitor opens Journey to review chronological education and experience.
+2. Optional milestone selection coordinates details, lotus position, and scene focus.
+3. The visitor downloads the résumé or opens Projects.
+4. A project card opens its case study and verified live/source destinations.
+
+## Interfaces (Pages, Endpoints, Screens)
+
+### Frontend
+
+`JourneyPage`, `ProjectsPage`, `ProjectPage`, timeline and résumé components,
+`PortfolioExperience`, `ProjectCard`, and shared portfolio/project data.
+
+### Backend / API
+
+None. The routes read approved static content and public files only.
+
+## Data Used or Modified
+
+Education, experience, project records, route slug, selected milestone, visual path
+position, and scene focus. Source records remain immutable.
+
+## Tech Constraints (Feature-Level)
+
+Use semantic chronological content, native buttons/links, stable public résumé URL,
+safe external anchors, lazy scenes, reduced-motion handling, and Not Found fallback.
+
+## Acceptance Criteria
+
+- [ ] Journey and Projects remain distinct and refreshable.
+- [ ] Approved history and résumé download are complete and correctly ordered.
+- [ ] Timeline selection works with keyboard, touch, and reduced motion.
+- [ ] Only verified projects render and valid case-study slugs resolve.
+- [ ] Unknown slugs and optional-scene failures remain safe.
+
+## Notes for the AI
+
+Do not merge the routes, infer chronology from visual coordinates, invent portfolio
+claims, change the résumé URL casually, or make scene state the only source of content.
