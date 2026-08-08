@@ -56,6 +56,7 @@ function Header() {
             <NavigationLinks />
           </nav>
           <ThemeControl className="theme-control--desktop" />
+          <ThemeControl className="theme-control--mobile" />
           <MobileNavigation />
         </div>
       </div>

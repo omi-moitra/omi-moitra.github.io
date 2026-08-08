@@ -6,8 +6,8 @@
    3. Navigation              shared desktop/mobile link states and icons
    4. Main & Setup Route      responsive content container and route placeholder
    5. Footer                  icon contact links and copyright
-   6. Desktop ≥64rem          explicit horizontal-navigation boundary
-   7. Mobile                  accessible overlay navigation
+   6. Desktop >768px          explicit horizontal-navigation boundary
+   7. Mobile                  persistent bottom icon navigation
    8. Narrow Screens          320px brand and content refinements
    ========================================================================== */
 
@@ -15,6 +15,7 @@
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
 }
 
 .skip-link {
@@ -350,135 +351,68 @@
 }
 
 .mobile-navigation {
-  display: block;
-}
-
-.mobile-navigation__trigger,
-.mobile-navigation__close {
-  min-width: var(--target-min-size);
-  min-height: var(--target-min-size);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--aged-paper);
-  border-radius: var(--radius-small);
-  color: var(--ink-black);
-  background: var(--soft-cream);
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.mobile-navigation__trigger svg {
-  width: 1.4rem;
-  height: 1.4rem;
-  fill: none;
-  stroke: currentcolor;
-  stroke-linecap: round;
-  stroke-width: 2;
-}
-
-.mobile-navigation__backdrop {
   position: fixed;
-  inset: 0;
-  z-index: var(--layer-dialog);
-  display: flex;
-  justify-content: flex-end;
-  background: color-mix(in srgb, #000 55%, transparent);
-  animation: mobile-navigation-backdrop-in var(--duration-standard) ease-out;
-}
-
-.mobile-navigation__drawer {
-  width: min(88vw, 23rem);
-  min-height: 100%;
-  max-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  padding: calc(var(--space-5) + env(safe-area-inset-top, 0px))
-    var(--space-5) calc(var(--space-5) + env(safe-area-inset-bottom, 0px));
-  overflow-y: auto;
-  color: var(--ink-black);
-  background: var(--warm-ivory);
-  box-shadow: -1rem 0 3rem rgb(0 0 0 / 24%);
-  animation: mobile-navigation-drawer-in var(--duration-standard) var(--ease-standard);
-}
-
-.mobile-navigation__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-4);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--aged-paper);
-}
-
-.mobile-navigation__header p,
-.mobile-navigation__header h2 {
-  margin: 0;
-}
-
-.mobile-navigation__header p {
-  color: var(--arcane-violet);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.mobile-navigation__header h2 {
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-}
-
-.mobile-navigation__close span[aria-hidden='true'] {
-  font-size: 1.5rem;
-  line-height: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--layer-mobile-navigation);
+  padding: var(--space-1) max(var(--space-2), env(safe-area-inset-right, 0px))
+    calc(var(--space-1) + env(safe-area-inset-bottom, 0px))
+    max(var(--space-2), env(safe-area-inset-left, 0px));
+  border-top: 1px solid var(--aged-paper);
+  background: color-mix(in srgb, var(--color-header) 96%, transparent);
+  box-shadow: 0 -0.35rem 1.4rem rgb(0 0 0 / 16%);
+  backdrop-filter: blur(0.8rem);
 }
 
 .mobile-navigation .navigation-list {
+  width: min(100%, 40rem);
   display: grid;
-  gap: var(--space-2);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-1);
+  margin-inline: auto;
+}
+
+.mobile-navigation .navigation-list li {
+  min-width: 0;
 }
 
 .mobile-navigation .navigation-link {
   width: 100%;
-  justify-content: flex-start;
-  padding: var(--space-3) var(--space-4);
-  font-size: 1rem;
+  min-height: 3.75rem;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.35rem 0.15rem;
+  font-size: clamp(0.58rem, 2.7vw, 0.72rem);
+  line-height: 1;
+}
+
+.mobile-navigation .navigation-link__icon {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.mobile-navigation .navigation-link__text {
+  display: block;
 }
 
 .mobile-navigation .navigation-link--active::after {
-  top: var(--space-3);
-  right: auto;
-  bottom: var(--space-3);
-  left: 0.35rem;
-  width: 3px;
-  height: auto;
+  right: 25%;
+  bottom: 0.16rem;
+  left: 25%;
+  width: auto;
+  height: 3px;
 }
 
-.theme-control--drawer {
-  margin-top: auto;
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--aged-paper);
-}
-
-.theme-control--drawer .theme-control__button {
-  min-width: 0;
-  flex-direction: column;
-}
-
-.theme-control--drawer .theme-control__button-label {
-  font-size: 0.66rem;
-}
-
-@keyframes mobile-navigation-backdrop-in {
-  from { opacity: 0; }
-}
-
-@keyframes mobile-navigation-drawer-in {
-  from { transform: translateX(100%); }
+.theme-control--mobile .theme-control__label,
+.theme-control--mobile .theme-control__button-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
 }
 
 .site-main {
@@ -729,6 +663,12 @@
   }
 }
 
+@media (max-width: 24.99rem) {
+  .brand-link__text {
+    display: none;
+  }
+}
+
 @keyframes header-lotus-breathe {
   50% { transform: scale(1.08) translateY(-0.08rem); }
 }
@@ -739,7 +679,11 @@
   }
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 769px) {
+  .site-shell {
+    padding-bottom: 0;
+  }
+
   .desktop-navigation {
     display: block;
   }
@@ -759,8 +703,8 @@
     clip-path: inset(50%);
   }
 
-  .mobile-navigation,
-  .mobile-navigation__backdrop {
+  .theme-control--mobile,
+  .mobile-navigation {
     display: none;
   }
 
@@ -771,13 +715,27 @@
 
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .gradient-current {
-    animation: none;
+@media (min-width: 769px) and (max-width: 63.99rem) {
+  .site-header__content {
+    gap: var(--space-2);
   }
 
-  .mobile-navigation__backdrop,
-  .mobile-navigation__drawer {
+  .brand-link__role,
+  .desktop-navigation .navigation-link__subtitle {
+    display: none;
+  }
+
+  .desktop-navigation .navigation-list {
+    gap: 0;
+  }
+
+  .desktop-navigation .navigation-link {
+    padding-inline: var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-current {
     animation: none;
   }
 }
