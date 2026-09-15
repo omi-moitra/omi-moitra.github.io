@@ -10,6 +10,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import KeyboardScrollHint from '../components/KeyboardScrollHint.jsx'
 import LotusMarker from '../components/LotusMarker.jsx'
 import PortfolioExperience from '../components/PortfolioExperience.jsx'
+import ResumePreviewDialog from '../components/ResumePreviewDialog.jsx'
 import TimelineMilestone from '../components/TimelineMilestone.jsx'
 import {
   education,
@@ -51,8 +52,10 @@ function JourneyPage() {
   const journeyLotusRef = useRef(null)
   const lotusDistanceRef = useRef(null)
   const lotusAnimationFrameRef = useRef(0)
+  const resumeButtonRef = useRef(null)
   const [selectedMilestoneId, setSelectedMilestoneId] = useState(null)
   const [cameraResetVersion, setCameraResetVersion] = useState(0)
+  const [isResumePreviewOpen, setIsResumePreviewOpen] = useState(false)
   const selectedMilestone = timelineEntries.find(
     (entry) => entry.id === selectedMilestoneId,
   )
@@ -209,13 +212,14 @@ function JourneyPage() {
       <div className="portfolio-resume-journey">
         <div className="portfolio-journey-actions">
           {resume ? (
-            <a
+            <button
+              ref={resumeButtonRef}
               className="portfolio-resume-link"
-              href={resume.href}
-              download={resume.downloadName}
+              type="button"
+              onClick={() => setIsResumePreviewOpen(true)}
             >
-              {resume.label}
-            </a>
+              Preview resume
+            </button>
           ) : null}
           <button
             className="portfolio-timeline-reset"
@@ -227,6 +231,15 @@ function JourneyPage() {
             <span aria-hidden="true">↺</span>
           </button>
         </div>
+
+        {resume ? (
+          <ResumePreviewDialog
+            resume={resume}
+            isOpen={isResumePreviewOpen}
+            openerRef={resumeButtonRef}
+            onClose={() => setIsResumePreviewOpen(false)}
+          />
+        ) : null}
 
         <section className="portfolio-hero" aria-labelledby="journey-title">
           <div className="portfolio-hero__copy">

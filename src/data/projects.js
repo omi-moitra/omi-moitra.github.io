@@ -109,7 +109,9 @@ export const projects = [
     technologies: ['React', 'Redux/Thunk', 'Node.js', 'Express', 'MongoDB/Mongoose', 'Session Auth', 'Multer'],
     categories: ['Full Stack', 'Social', 'Authentication'],
     coverImage: null,
-    links: {},
+    links: {
+      repository: 'https://github.com/omi-moitra/Codebloggs.git',
+    },
     overview:
       'CodeBloggs is a responsive developer-focused SPA where users can register, authenticate, publish, discuss, and personalize their experience.',
     challenge:

@@ -300,6 +300,98 @@
   text-decoration: none;
 }
 
+.resume-preview-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgb(15 17 21 / 78%);
+}
+
+.resume-preview-dialog {
+  width: min(100%, 70rem);
+  max-height: min(92svh, 58rem);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-large);
+  background: var(--warm-ivory);
+  box-shadow: var(--glass-card-shadow);
+}
+
+.resume-preview-dialog__heading,
+.resume-preview-dialog__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+}
+
+.resume-preview-dialog__heading {
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.resume-preview-dialog__heading h2 {
+  margin: 0;
+  color: var(--ink-black);
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+}
+
+.resume-preview-dialog__heading .portfolio-eyebrow {
+  margin-bottom: var(--space-1);
+}
+
+.resume-preview-dialog__document {
+  width: 100%;
+  min-height: 28rem;
+  height: min(68svh, 46rem);
+  border: 0;
+  background: var(--parchment);
+}
+
+.resume-preview-dialog__actions {
+  justify-content: flex-end;
+  border-top: 1px solid var(--glass-border);
+}
+
+.resume-preview-dialog__actions a,
+.resume-preview-dialog__actions button {
+  min-height: var(--target-min-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--charcoal);
+  border-radius: var(--radius-small);
+  color: var(--warm-ivory);
+  background: var(--charcoal);
+  font: inherit;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.resume-preview-dialog__actions a:hover,
+.resume-preview-dialog__actions button:hover {
+  color: var(--ink-black);
+  background: var(--radiant-gold);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .portfolio-resume-link:hover {
   color: var(--ink-black);
   background: var(--radiant-gold);
