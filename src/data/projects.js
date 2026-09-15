@@ -123,6 +123,18 @@ export const projects = [
       'Treat nested replies, uploads, and session guards as separate API concerns.',
       'Use a shared branch and pull-request workflow to coordinate feature work.',
     ],
+    videos: [
+      {
+        id: 'codebloggs-demo-one',
+        title: 'CodeBloggs demo: community and content flows',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/JbjfAwnXPwU?rel=0&modestbranding=1&mute=1',
+      },
+      {
+        id: 'codebloggs-demo-two',
+        title: 'CodeBloggs demo: profiles and presence',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/XHaAaW2Twu0?rel=0&modestbranding=1&mute=1',
+      },
+    ],
     lessons: [],
   },
 ]

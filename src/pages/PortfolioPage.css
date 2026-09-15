@@ -976,6 +976,35 @@
   margin-block: 0;
 }
 
+.project-detail__videos {
+  grid-column: 1 / -1;
+}
+
+.project-detail__video-grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.project-detail__video {
+  margin: 0;
+}
+
+.project-detail__video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--radius-small);
+  background: var(--ink-black);
+}
+
+.project-detail__video figcaption {
+  margin-top: var(--space-2);
+  color: var(--charcoal);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
 .project-detail__actions {
   display: flex;
   flex-wrap: wrap;
@@ -999,6 +1028,10 @@
   }
 
   .project-detail__sections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-detail__video-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

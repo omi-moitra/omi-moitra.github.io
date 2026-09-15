@@ -82,6 +82,26 @@ function ProjectPage() {
             <ul>{project.lessons.map((item) => <li key={item}>{item}</li>)}</ul>
           </section>
         )}
+
+        {project.videos?.length > 0 && (
+          <section className="project-detail__videos">
+            <h2>Demo videos</h2>
+            <div className="project-detail__video-grid">
+              {project.videos.map((video) => (
+                <figure key={video.id} className="project-detail__video">
+                  <iframe
+                    src={video.embedUrl}
+                    title={video.title}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                  <figcaption>{video.title}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
 
       <footer className="project-detail__actions">
