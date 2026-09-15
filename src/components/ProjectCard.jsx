@@ -24,7 +24,7 @@ function ProjectCard({ project }) {
       ) : null}
 
       <div className="project-card__content">
-        <p className="project-card__eyebrow">Current project</p>
+        <p className="project-card__eyebrow">Selected project</p>
         <h3>{project.title}</h3>
         {project.subtitle && <p className="project-card__purpose">{project.subtitle}</p>}
         {project.summary && <p>{project.summary}</p>}
