@@ -19,7 +19,9 @@ export const projects = [
     technologies: ['React', 'Node.js', 'Express', 'MongoDB Atlas', 'Mongoose', 'Chart.js'],
     categories: ['Full Stack', 'Dashboard', 'Data Visualization'],
     coverImage: null,
-    links: {},
+    links: {
+      repository: 'https://github.com/omi-moitra/RocketElevators-Website-and-AdminDashboard',
+    },
     overview:
       'This project combines a customer-facing company website with a protected administrative experience for managing agents and recording elevator transactions.',
     challenge:
@@ -32,6 +34,23 @@ export const projects = [
       'Separate public browsing from authenticated administrative workflows.',
       'Validate transaction entry at the API boundary before persistence.',
       'Shape stored transactions into focused reports for operational review.',
+    ],
+    videos: [
+      {
+        id: 'rocket-elevators-demo-one',
+        title: 'Rocket Elevators Website + Admin Dashboard demo 1',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/cpJ_vrvDU2g?rel=0&modestbranding=1&mute=1',
+      },
+      {
+        id: 'rocket-elevators-demo-two',
+        title: 'Rocket Elevators Website + Admin Dashboard demo 2',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/c3uy35a7QXY?rel=0&modestbranding=1&mute=1',
+      },
+      {
+        id: 'rocket-elevators-demo-three',
+        title: 'Rocket Elevators Website + Admin Dashboard demo 3',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/SA5YLixKWIs?rel=0&modestbranding=1&mute=1',
+      },
     ],
     lessons: [],
   },
@@ -49,7 +68,9 @@ export const projects = [
     technologies: ['Java 21', 'Spring Boot', 'Spring MVC', 'Spring Data JPA', 'MySQL', 'JWT', 'Thymeleaf', 'MockMvc'],
     categories: ['Backend', 'API', 'Testing'],
     coverImage: null,
-    links: {},
+    links: {
+      repository: 'https://github.com/omi-moitra/RocketFoodDeliveryBackoffice',
+    },
     overview:
       'The backoffice provides a structured Spring Boot foundation for food-delivery operations, from HTTP controllers through service and repository layers to MySQL.',
     challenge:
@@ -62,6 +83,13 @@ export const projects = [
       'Keep controllers, services, repositories, and persistence responsibilities distinct.',
       'Use shared response and error shapes to make client integration predictable.',
       'Test both successful requests and validation or authorization failures.',
+    ],
+    videos: [
+      {
+        id: 'rocket-food-delivery-backoffice-demo',
+        title: 'Rocket Food Delivery Backoffice demo',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/o32qobCH_OA?rel=0&modestbranding=1&mute=1',
+      },
     ],
     lessons: [],
   },
@@ -79,7 +107,9 @@ export const projects = [
     technologies: ['React Native', 'Expo Router', 'Java', 'Spring Boot', 'MySQL', 'JWT', 'AsyncStorage', 'Jest'],
     categories: ['Mobile', 'Full Stack', 'Testing'],
     coverImage: null,
-    links: {},
+    links: {
+      repository: 'https://github.com/omi-moitra/RocketFoodDeliveryApp',
+    },
     overview:
       'The mobile app supports distinct customer and courier workflows backed by the Rocket food-delivery API.',
     challenge:
@@ -92,6 +122,18 @@ export const projects = [
       'Model customer and courier flows as separate protected navigation paths.',
       'Make every network-dependent screen account for loading, empty, error, and retry states.',
       'Test the same API flow across automated, simulator, device, and phone-network environments.',
+    ],
+    videos: [
+      {
+        id: 'rocket-food-delivery-app-demo-one',
+        title: 'Rocket Food Delivery App demo 1',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/kkajLtRzlKU?rel=0&modestbranding=1&mute=1',
+      },
+      {
+        id: 'rocket-food-delivery-app-demo-two',
+        title: 'Rocket Food Delivery App demo 2',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/5vWvrxZ7eLE?rel=0&modestbranding=1&mute=1',
+      },
     ],
     lessons: [],
   },
@@ -110,7 +152,7 @@ export const projects = [
     categories: ['Full Stack', 'Social', 'Authentication'],
     coverImage: null,
     links: {
-      repository: 'https://github.com/omi-moitra/Codebloggs.git',
+      repository: 'https://github.com/omi-moitra/Codebloggs',
     },
     overview:
       'CodeBloggs is a responsive developer-focused SPA where users can register, authenticate, publish, discuss, and personalize their experience.',
