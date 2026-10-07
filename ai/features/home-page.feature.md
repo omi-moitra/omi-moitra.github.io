@@ -80,10 +80,14 @@ all later content remain readable.
 ## Journey Spine
 
 A decorative glowing line visually connects Home sections. Its lotus markers track the
-section nearest a viewport focus line. Arrow Up and Arrow Down move between registered
-sections when focus is outside editable controls and no modifier key is active. The
-selected section scrolls to the center using smooth behavior unless reduced motion is
-requested.
+stop nearest a viewport focus line at 46% of the viewport height. Desktop stops sit at
+card centers; stacked mobile stops sit at each card's top and bottom edges. Geometry
+uses untransformed layout offsets so animated cards cannot leave stale destinations.
+Arrow Up and Arrow Down align the selected stop with that same focus line when focus
+is outside editable controls and no modifier key is active, using smooth behavior
+unless reduced motion is requested. Breakpoint changes preserve the selected section;
+a desktop center maps to its mobile top edge. Desktop's initial lotus position remains
+anchored to the portrait, while mobile starts at the hero's top edge.
 
 A visible keyboard-scroll hint communicates the arrow-key affordance without becoming a
 required navigation path. Native scrolling and all explicit links remain available.
