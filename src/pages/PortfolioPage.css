@@ -1702,3 +1702,85 @@
     width: auto;
   }
 }
+
+/* Mobile Journey shares Home's measured, scroll-driven edge stops. */
+.journey-mobile-flow {
+  position: relative;
+  padding-block: 2rem;
+  isolation: isolate;
+}
+
+.journey-mobile-cards {
+  display: grid;
+  gap: clamp(8rem, 18vh, 14rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.journey-mobile-card {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  padding: 2.75rem clamp(1rem, 4vw, 2rem);
+  border: 1px solid rgb(244 184 66 / 45%);
+  border-radius: var(--radius-large);
+  color: #fff1d1;
+  background: var(--glass-bevel-overlay), rgb(24 21 27 / 94%);
+  box-shadow: var(--glass-card-shadow);
+}
+
+.journey-mobile-card__category {
+  margin: 0 0 1rem;
+  color: #f4d889;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.journey-mobile-card .resume-entry {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.journey-mobile-card .resume-entry :is(h3, .resume-entry__dates, .resume-entry__organization) {
+  color: #f4d889;
+}
+
+.journey-mobile-card .resume-entry :is(.resume-entry__location, .resume-entry__responsibilities) {
+  color: #eee1ca;
+}
+
+.journey-mobile-hint {
+  margin: var(--space-4) 0 0;
+  color: #f4d889;
+}
+
+@media (max-width: 48.0625rem) {
+  .journey-page:has(.journey-mobile-flow) .portfolio-hero {
+    min-height: 0;
+    padding: var(--space-5) 0;
+  }
+
+  .journey-page:has(.journey-mobile-flow) .portfolio-journey-actions {
+    position: relative;
+    top: auto;
+    right: auto;
+    flex-wrap: wrap;
+  }
+
+  .journey-page:has(.journey-mobile-flow) .portfolio-timeline-reset {
+    display: none;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .journey-page:has(.journey-mobile-flow) .portfolio-keyboard-scroll-hint {
+    display: none;
+  }
+}

@@ -15,7 +15,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { measureHomeStops, getLayoutBox, remapHomeStop } from '../utils/homeSpineGeometry.js'
 
-const sectionSelector = '[data-home-spine-section]'
+import './HomeJourneySpine.css'
 
 function LotusMarker() {
   return (
@@ -145,7 +145,11 @@ function LotusMarker() {
   )
 }
 
-function HomeJourneySpine() {
+function HomeJourneySpine({
+  pageSelector = '.home-page',
+  sectionSelector = '[data-home-spine-section]',
+  stacked = false,
+}) {
   // Refs hold animation and selection state read by native event callbacks;
   // React state is reserved for geometry that affects rendering.
   const spineRef = useRef(null)
@@ -158,7 +162,7 @@ function HomeJourneySpine() {
 
   useEffect(() => {
     const spine = spineRef.current
-    const page = spine?.closest('.home-page')
+    const page = spine?.closest(pageSelector)
     if (!page) return undefined
 
     const targets = Array.from(page.querySelectorAll(sectionSelector))
@@ -198,7 +202,7 @@ function HomeJourneySpine() {
       if (!isActive) return
       const spineX = page.clientWidth / 2
       // Keep this breakpoint aligned with the alternating card layout in CSS.
-      const isStacked = !window.matchMedia('(min-width: 59.4375rem)').matches
+      const isStacked = stacked || !window.matchMedia('(min-width: 59.4375rem)').matches
 
       if (topAnchor) {
         const anchorRect = getLayoutBox(topAnchor, page)
@@ -243,7 +247,7 @@ function HomeJourneySpine() {
       const eventTarget = event.target
       if (
         eventTarget instanceof Element &&
-        eventTarget.closest('input, textarea, select, [contenteditable="true"]')
+        eventTarget.closest('input, textarea, select, [contenteditable="true"], [role="dialog"]')
       ) {
         return
       }
@@ -292,7 +296,7 @@ function HomeJourneySpine() {
       window.removeEventListener('scroll', scheduleActiveUpdate)
       window.removeEventListener('keydown', navigateSections)
     }
-  }, [])
+  }, [pageSelector, sectionSelector, stacked])
 
   const firstPoint = points[0]
   const lastPoint = points.at(-1)
