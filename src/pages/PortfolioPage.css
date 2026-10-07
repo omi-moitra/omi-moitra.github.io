@@ -245,13 +245,14 @@
 }
 
 /* Keep letter edges clear: the dark-mode ink token becomes near-white, so
-   use a stable dark shadow beneath a broad, low-opacity saffron halo. */
+   use a stable dark shadow beneath layered, diffuse saffron halos. */
 :root[data-theme='dark'] .journey-page {
   --journey-text-color: #f4d889;
   --journey-text-shadow:
-    0 0.1rem 0.25rem rgb(15 17 21 / 80%),
-    0 0 1.5rem rgb(244 184 66 / 20%),
-    0 0 3rem rgb(244 184 66 / 10%);
+    0 0.08rem 0.15rem rgb(15 17 21 / 75%),
+    0 0 0.65rem rgb(244 184 66 / 55%),
+    0 0 1.5rem rgb(244 184 66 / 40%),
+    0 0 3rem rgb(244 184 66 / 24%);
 }
 
 :root[data-theme='dark'] .journey-page .portfolio-hero :is(
