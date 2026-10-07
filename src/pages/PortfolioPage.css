@@ -244,6 +244,26 @@
   text-shadow: 0 0 0.75rem rgb(245 217 127 / 48%);
 }
 
+/* Keep letter edges clear: the dark-mode ink token becomes near-white, so
+   use a stable dark shadow beneath a broad, low-opacity saffron halo. */
+:root[data-theme='dark'] .journey-page {
+  --journey-text-color: #f4d889;
+  --journey-text-shadow:
+    0 0.1rem 0.25rem rgb(15 17 21 / 80%),
+    0 0 1.5rem rgb(244 184 66 / 20%),
+    0 0 3rem rgb(244 184 66 / 10%);
+}
+
+:root[data-theme='dark'] .journey-page .portfolio-hero :is(
+  h1,
+  .portfolio-eyebrow,
+  .portfolio-hero__introduction,
+  .portfolio-keyboard-scroll-hint
+) {
+  color: var(--journey-text-color);
+  text-shadow: var(--journey-text-shadow);
+}
+
 .projects-hero {
   position: relative;
   max-width: 64rem;
