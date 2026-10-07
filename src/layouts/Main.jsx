@@ -8,6 +8,7 @@
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer.jsx'
 import Header from '../components/Header.jsx'
+import MobileNavigation from '../components/MobileNavigation.jsx'
 import RouteMetadata from '../components/RouteMetadata.jsx'
 
 function focusMainContent(event) {
@@ -33,6 +34,7 @@ function Main() {
         </div>
       </main>
       <Footer />
+      <MobileNavigation />
     </div>
   )
 }

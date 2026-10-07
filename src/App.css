@@ -6,7 +6,7 @@
    3. Navigation              shared desktop/mobile link states and icons
    4. Main & Setup Route      responsive content container and route placeholder
    5. Footer                  icon contact links and copyright
-   6. Desktop >768px          explicit horizontal-navigation boundary
+   6. Desktop >=64rem         explicit horizontal-navigation boundary
    7. Mobile                  persistent bottom icon navigation
    8. Narrow Screens          320px brand and content refinements
    ========================================================================== */
@@ -110,13 +110,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-6);
+  gap: var(--space-3);
   margin-inline: auto;
   padding-inline: var(--page-gutter);
 }
 
 .site-header__actions {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: var(--space-2);
 }
@@ -274,8 +275,7 @@
   color: var(--arcane-violet);
 }
 
-.desktop-navigation,
-.theme-control--desktop {
+.desktop-navigation {
   display: none;
 }
 
@@ -295,6 +295,10 @@
 
 .theme-control__label {
   padding: 0;
+}
+
+.theme-control--desktop {
+  display: none;
 }
 
 .theme-control__options {
@@ -664,8 +668,20 @@
 }
 
 @media (max-width: 24.99rem) {
-  .brand-link__text {
-    display: none;
+  .site-header__content {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    padding-block: var(--space-2);
+  }
+
+  .brand-link {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .brand-link__role {
+    display: inline;
   }
 }
 
@@ -679,7 +695,7 @@
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 64rem) {
   .site-shell {
     padding-bottom: 0;
   }
@@ -715,7 +731,7 @@
 
 }
 
-@media (min-width: 769px) and (max-width: 63.99rem) {
+@media (min-width: 64rem) and (max-width: 79.99rem) {
   .site-header__content {
     gap: var(--space-2);
   }

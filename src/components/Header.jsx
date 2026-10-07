@@ -8,7 +8,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import LotusMarker from './LotusMarker.jsx'
-import MobileNavigation from './MobileNavigation.jsx'
 import NavigationLinks from './NavigationLinks.jsx'
 import ThemeControl from './ThemeControl.jsx'
 
@@ -57,7 +56,6 @@ function Header() {
           </nav>
           <ThemeControl className="theme-control--desktop" />
           <ThemeControl className="theme-control--mobile" />
-          <MobileNavigation />
         </div>
       </div>
 
