@@ -1581,3 +1581,122 @@
     transform: translate(-50%, -50%);
   }
 }
+
+/* One stable reading area for every milestone, clear of the upper trail. */
+.journey-page .portfolio-hero {
+  z-index: 5;
+}
+
+.journey-carousel {
+  margin-top: var(--space-5);
+  overflow: hidden;
+  border: 1px solid rgb(244 184 66 / 45%);
+  border-radius: var(--radius-medium);
+  color: #fff1d1;
+  background: rgb(24 21 27 / 94%);
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 25%);
+}
+
+.journey-carousel__slide {
+  height: clamp(20rem, 48svh, 28rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.journey-carousel__category {
+  margin: 0 0 1rem;
+  color: #f4d889;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.journey-carousel .resume-entry {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  color: #fff1d1;
+}
+
+.journey-carousel .resume-entry h3 {
+  color: #f4d889;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  text-wrap: balance;
+}
+
+.journey-carousel .resume-entry__dates,
+.journey-carousel .resume-entry__organization {
+  color: #f4d889;
+}
+
+.journey-carousel .resume-entry__location,
+.journey-carousel .resume-entry__responsibilities {
+  color: #eee1ca;
+}
+
+.journey-carousel .portfolio-hero__introduction {
+  margin-top: 0;
+}
+
+.journey-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid rgb(244 184 66 / 25%);
+  color: #f4d889;
+  font-size: 0.8rem;
+}
+
+.journey-carousel__controls button {
+  min-height: 2.75rem;
+  padding: 0.5rem;
+  border: 1px solid rgb(244 184 66 / 40%);
+  border-radius: 0.5rem;
+  color: #f4d889;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.journey-carousel__controls button:hover {
+  background: rgb(244 184 66 / 15%);
+}
+
+.journey-carousel__controls button:focus-visible {
+  outline: 2px solid #f4d889;
+  outline-offset: 3px;
+}
+
+@media (min-width: 48.0625rem) {
+  .journey-page .portfolio-hero {
+    width: min(34%, 28rem);
+    padding-top: 0;
+  }
+
+  .journey-page .portfolio-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+  }
+}
+
+@media (max-width: 48rem) {
+  .journey-page .resume-timeline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .journey-page .resume-timeline::before {
+    display: none;
+  }
+
+  .journey-page .resume-timeline > li {
+    width: auto;
+  }
+}

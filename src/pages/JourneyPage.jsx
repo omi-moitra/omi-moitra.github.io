@@ -3,13 +3,14 @@
 // -----------------------------------------------------------------------------
 // 1. Imports             Journey scene, timeline data, and shared route styles
 // 2. Journey stage       page introduction and progressively enhanced trail
-// 3. Resume groups       semantic Education and Experience milestone tooltips
+// 3. Resume groups       semantic milestones and a shared hero carousel
 // =============================================================================
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import KeyboardScrollHint from '../components/KeyboardScrollHint.jsx'
 import LotusMarker from '../components/LotusMarker.jsx'
 import PortfolioExperience from '../components/PortfolioExperience.jsx'
+import ResumeEntry from '../components/ResumeEntry.jsx'
 import ResumePreviewDialog from '../components/ResumePreviewDialog.jsx'
 import TimelineMilestone from '../components/TimelineMilestone.jsx'
 import {
@@ -59,24 +60,19 @@ function JourneyPage() {
   const selectedMilestone = timelineEntries.find(
     (entry) => entry.id === selectedMilestoneId,
   )
+  const selectedIndex = timelineEntries.findIndex((entry) => entry.id === selectedMilestoneId)
   const lotusTarget = selectedMilestone
+  const moveCarousel = (direction) => {
+    const nextIndex = selectedIndex < 0
+      ? (direction > 0 ? 0 : timelineEntries.length - 1)
+      : (selectedIndex + direction + timelineEntries.length) % timelineEntries.length
+    setSelectedMilestoneId(timelineEntries[nextIndex].id)
+  }
 
   useEffect(() => {
-    if (!selectedMilestoneId) return undefined
-
-    const animationFrame = window.requestAnimationFrame(() => {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      const trigger = document.getElementById(`${selectedMilestoneId}-trigger`)
-
-      trigger?.focus({ preventScroll: true })
-      trigger?.scrollIntoView({
-        behavior: prefersReducedMotion ? 'auto' : 'smooth',
-        block: 'center',
-        inline: 'nearest',
-      })
-    })
-
-    return () => window.cancelAnimationFrame(animationFrame)
+    if (!selectedMilestoneId) return
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' })
   }, [selectedMilestoneId])
 
   useEffect(() => {
@@ -164,7 +160,7 @@ function JourneyPage() {
       const eventTarget = event.target
       if (
         eventTarget instanceof Element &&
-        eventTarget.closest('input, textarea, select, [contenteditable="true"]')
+        eventTarget.closest('input, textarea, select, [contenteditable="true"], .journey-carousel')
       ) {
         return
       }
@@ -245,8 +241,37 @@ function JourneyPage() {
           <div className="portfolio-hero__copy">
             <p className="portfolio-eyebrow">Journey &amp; Experience</p>
             <h1 id="journey-title">Flight Path</h1>
-            <p className="portfolio-hero__introduction">{portfolioIntroduction}</p>
-            <KeyboardScrollHint className="portfolio-keyboard-scroll-hint" />
+            <section
+              className="journey-carousel"
+              aria-label="Journey milestones"
+              aria-roledescription="carousel"
+              onKeyDown={(event) => {
+                if (event.key === 'Escape') resetTimelineView()
+                if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+                event.preventDefault()
+                const direction = event.key === 'ArrowRight' ? 1 : -1
+                moveCarousel(direction)
+              }}
+            >
+              <div key={selectedMilestoneId ?? 'intro'} className="journey-carousel__slide" tabIndex={0} id="journey-milestone-card" aria-live="polite" aria-atomic="true">
+                {selectedMilestone ? (
+                  <div key={selectedMilestoneId} role="group" aria-roledescription="slide" aria-label={`${selectedIndex + 1} of ${timelineEntries.length}`}>
+                    <p className="journey-carousel__category">{education.some((entry) => entry.id === selectedMilestoneId) ? 'Education' : 'Professional Experience'}</p>
+                    <ResumeEntry entry={selectedMilestone} kind={education.some((entry) => entry.id === selectedMilestoneId) ? 'education' : 'experience'} />
+                  </div>
+                ) : (
+                  <div className="journey-carousel__intro">
+                    <p className="portfolio-hero__introduction">{portfolioIntroduction}</p>
+                    <KeyboardScrollHint className="portfolio-keyboard-scroll-hint" />
+                  </div>
+                )}
+              </div>
+              <nav className="journey-carousel__controls" aria-label="Milestone navigation">
+                <button type="button" onClick={() => moveCarousel(-1)} aria-label="Previous milestone">← Previous</button>
+                <span>{selectedIndex < 0 ? 'Explore' : `${selectedIndex + 1} / ${timelineEntries.length}`}</span>
+                <button type="button" onClick={() => moveCarousel(1)} aria-label="Next milestone">Next →</button>
+              </nav>
+            </section>
           </div>
         </section>
 
