@@ -150,6 +150,7 @@ function HomeJourneySpine() {
   const spineRef = useRef(null)
   const activeIndexRef = useRef(0)
   const animationFrameRef = useRef(0)
+  const pointsRef = useRef([])
   const [points, setPoints] = useState([])
   const [spineStart, setSpineStart] = useState(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -174,10 +175,14 @@ function HomeJourneySpine() {
       let nearestIndex = 0
       let nearestDistance = Number.POSITIVE_INFINITY
 
-      targets.forEach((target, index) => {
-        const targetRect = target.getBoundingClientRect()
-        const targetCenter = targetRect.top + targetRect.height / 2
-        const distance = Math.abs(targetCenter - focusLine)
+      const pageTop = page.getBoundingClientRect().top
+      pointsRef.current.forEach((point, index) => {
+        // Desktop retains its original live card-center tracking.
+        const targetRect = point.edge ? null : targets[index].getBoundingClientRect()
+        const position = targetRect
+          ? targetRect.top + targetRect.height / 2
+          : pageTop + point.y
+        const distance = Math.abs(position - focusLine)
 
         if (distance < nearestDistance) {
           nearestDistance = distance
@@ -196,6 +201,8 @@ function HomeJourneySpine() {
       if (!isActive) return
       const pageRect = page.getBoundingClientRect()
       const spineX = pageRect.left + pageRect.width / 2
+      // Keep this breakpoint aligned with the alternating card layout in CSS.
+      const isStacked = !window.matchMedia('(min-width: 59.4375rem)').matches
 
       if (topAnchor) {
         const anchorRect = topAnchor.getBoundingClientRect()
@@ -206,15 +213,24 @@ function HomeJourneySpine() {
         setSpineStart(anchorRect.bottom - pageRect.top - lotusRadius)
       }
 
-      setPoints(
-        targets.map((target, index) => {
+      const measuredPoints = targets.flatMap((target, index) => {
           const targetRect = target.getBoundingClientRect()
+          const id = target.dataset.homeSpineSection || String(index)
+          if (isStacked) {
+            return ['top', 'bottom'].map((edge) => ({
+              id: `${id}-${edge}`,
+              y: targetRect[edge] - pageRect.top,
+              edge,
+              side: 'center',
+              connectorLength: 0,
+            }))
+          }
           const targetCenter = targetRect.top - pageRect.top + targetRect.height / 2
           const targetIsLeft = targetRect.right < spineX - 4
           const targetIsRight = targetRect.left > spineX + 4
 
           return {
-            id: target.dataset.homeSpineSection || String(index),
+            id,
             y: targetCenter,
             side: targetIsLeft ? 'left' : targetIsRight ? 'right' : 'center',
             connectorLength: targetIsLeft
@@ -223,8 +239,11 @@ function HomeJourneySpine() {
                 ? Math.max(targetRect.left - spineX, 0)
                 : 0,
           }
-        }),
-      )
+        })
+      const layoutChanged = Boolean(pointsRef.current[0]?.edge) !== isStacked
+      pointsRef.current = measuredPoints
+      setPoints(measuredPoints)
+      if (layoutChanged) keyboardNavigationLockedUntil = 0
       updateActiveSection()
     }
 
@@ -256,7 +275,7 @@ function HomeJourneySpine() {
       const direction = event.key === 'ArrowDown' ? 1 : -1
       const nextIndex = Math.min(
         Math.max(activeIndexRef.current + direction, 0),
-        targets.length - 1,
+        pointsRef.current.length - 1,
       )
 
       if (nextIndex === activeIndexRef.current) return
@@ -266,11 +285,17 @@ function HomeJourneySpine() {
       activeIndexRef.current = nextIndex
       setActiveIndex(nextIndex)
       keyboardNavigationLockedUntil = prefersReducedMotion ? 0 : performance.now() + 700
-      targets[nextIndex].scrollIntoView({
-        behavior: prefersReducedMotion ? 'auto' : 'smooth',
-        block: 'center',
-        inline: 'nearest',
-      })
+      const nextPoint = pointsRef.current[nextIndex]
+      const behavior = prefersReducedMotion ? 'auto' : 'smooth'
+      if (nextPoint.edge) {
+        window.scrollTo({
+          top: window.scrollY + page.getBoundingClientRect().top + nextPoint.y
+            - window.innerHeight * 0.46,
+          behavior,
+        })
+      } else {
+        targets[nextIndex].scrollIntoView({ behavior, block: 'center', inline: 'nearest' })
+      }
     }
 
     // Images, fonts, and responsive copy can change card geometry without a
@@ -301,7 +326,9 @@ function HomeJourneySpine() {
   const lastPoint = points.at(-1)
   const activePoint = points[activeIndex] || firstPoint
   const lineStart = spineStart ?? firstPoint?.y
-  const activeLotusPosition = activeIndex === 0 ? lineStart : activePoint?.y
+  const activeLotusPosition = activeIndex === 0 && !activePoint?.edge
+    ? lineStart
+    : activePoint?.y
 
   // No semantic information lives in the generated line, connectors, or lotus;
   // the neighboring card headings and links remain the accessible interface.
