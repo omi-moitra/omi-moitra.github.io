@@ -6,6 +6,32 @@
 
 export const projects = [
   {
+    id: 'ask-my-notes',
+    slug: 'ask-my-notes',
+    title: 'Ask My Notes',
+    subtitle: 'Local answers grounded in your own notes.',
+    summary: 'Built a local Python RAG CLI that chunks notes and ranks cited passages using keyword, semantic, or hybrid retrieval, with local Ollama-based answering.',
+    featured: true,
+    status: 'published',
+    year: 2026,
+    role: ['Full Stack Developer'],
+    technologies: ['Python', 'RAG', 'CLI', 'Sentence Transformers', 'Ollama', 'Pytest'],
+    categories: ['AI', 'Retrieval', 'Testing'],
+    coverImage: null,
+    links: { repository: 'https://github.com/omi-moitra/Ask-My-Notes' },
+    overview: 'A local command-line tool for retrieving cited passages from notes and generating answers with Ollama.',
+    challenge: 'Keep answers grounded in retrieved evidence while supporting offline behavior and bounded context.',
+    solution: 'Chunk notes and rank passages with keyword, semantic, or hybrid reciprocal-rank-fusion retrieval. Validate citations and abstain when evidence is insufficient.',
+    outcome: 'Added local answering with bounded context, citation validation, evidence-based abstention, offline behavior, and 122 deterministic tests.',
+    process: [
+      'Rank note passages using keyword, semantic, or hybrid retrieval.',
+      'Bound the answering context and validate citations against the evidence.',
+      'Cover offline behavior and retrieval with deterministic tests.',
+    ],
+    videos: [],
+    lessons: [],
+  },
+  {
     id: 'rocket-elevators-website-admin-dashboard',
     slug: 'rocket-elevators-website-admin-dashboard',
     title: 'Rocket Elevators Website + Admin Dashboard',
