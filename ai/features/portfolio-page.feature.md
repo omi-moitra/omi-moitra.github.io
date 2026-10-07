@@ -62,7 +62,17 @@ chronology.
 
 ## Journey Interaction
 
-A curved SVG path runs through the Journey artwork. Each semantic timeline entry has a
+Below the desktop breakpoint of 48.0625rem, Journey shows all six milestones as
+full-height cards in newest-first order, with dates, category, and complete résumé
+details visible. It shares Home's central glowing spine, lotus artwork, stable layout
+measurements, and top/bottom card stops. Native scrolling selects the stop nearest 46%
+of the viewport; unmodified Up/Down keys scroll between stops, excluding editable
+controls and dialogs. Reduced motion disables lotus travel. The mobile flow has no
+carousel, nested detail scrolling, selection dimming, or reset button; résumé preview
+remains available. Touch devices receive a scroll instruction. Breakpoint changes swap
+the mobile flow and desktop map and clean up their respective navigation listeners.
+
+On desktop, a curved SVG path runs through the Journey artwork. Each semantic timeline entry has a
 native button milestone and associated detail content. Selecting a milestone:
 
 1. sets the selected entry;

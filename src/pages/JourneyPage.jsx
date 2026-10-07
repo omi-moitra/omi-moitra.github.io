@@ -6,7 +6,8 @@
 // 3. Resume groups       semantic milestones and a shared hero carousel
 // =============================================================================
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import HomeJourneySpine from '../components/HomeJourneySpine.jsx'
 import KeyboardScrollHint from '../components/KeyboardScrollHint.jsx'
 import LotusMarker from '../components/LotusMarker.jsx'
 import PortfolioExperience from '../components/PortfolioExperience.jsx'
@@ -48,7 +49,19 @@ function findNearestPathDistance(path, targetX, targetY) {
   return nearestDistance
 }
 
+const desktopQuery = '(min-width: 48.0625rem)'
+function subscribeToLayout(callback) {
+  const media = window.matchMedia(desktopQuery)
+  media.addEventListener('change', callback)
+  return () => media.removeEventListener('change', callback)
+}
+const getMobileSnapshot = () => !window.matchMedia(desktopQuery).matches
+const getServerSnapshot = () => false
+const mobileEntries = [...education, ...professionalExperience]
+  .sort((a, b) => b.startYear - a.startYear)
+
 function JourneyPage() {
+  const isMobile = useSyncExternalStore(subscribeToLayout, getMobileSnapshot, getServerSnapshot)
   const journeyPathRef = useRef(null)
   const journeyLotusRef = useRef(null)
   const lotusDistanceRef = useRef(null)
@@ -71,12 +84,13 @@ function JourneyPage() {
   }
 
   useEffect(() => {
-    if (!selectedMilestoneId) return
+    if (isMobile || !selectedMilestoneId) return
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     carouselRef.current?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion ? 'auto' : 'smooth' })
-  }, [selectedMilestoneId])
+  }, [isMobile, selectedMilestoneId])
 
   useEffect(() => {
+    if (isMobile) return undefined
     const path = journeyPathRef.current
     const lotus = journeyLotusRef.current
     if (!path || !lotus) return undefined
@@ -119,7 +133,7 @@ function JourneyPage() {
 
     lotusAnimationFrameRef.current = window.requestAnimationFrame(animateLotus)
     return () => window.cancelAnimationFrame(lotusAnimationFrameRef.current)
-  }, [lotusTarget])
+  }, [isMobile, lotusTarget])
 
   const resetTimelineView = useCallback(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -146,6 +160,7 @@ function JourneyPage() {
   }, [resetTimelineView, selectedMilestoneId])
 
   useEffect(() => {
+    if (isMobile) return undefined
     const navigateTimeline = (event) => {
       if (
         event.defaultPrevented ||
@@ -192,15 +207,15 @@ function JourneyPage() {
 
     window.addEventListener('keydown', navigateTimeline)
     return () => window.removeEventListener('keydown', navigateTimeline)
-  }, [resetTimelineView, selectedMilestoneId])
+  }, [isMobile, resetTimelineView, selectedMilestoneId])
 
   return (
     <article
-      className={`portfolio-page journey-page${selectedMilestone ? ' journey-page--timeline-focused' : ''}`}
+      className={`portfolio-page journey-page${!isMobile && selectedMilestone ? ' journey-page--timeline-focused' : ''}`}
       style={{ '--portfolio-journey-background': `url(${portfolioImages.journey.src})` }}
     >
       <PortfolioExperience
-        focusPoint={selectedMilestone?.trail ?? null}
+        focusPoint={isMobile ? null : selectedMilestone?.trail ?? null}
         imageSource={portfolioImages.journey.src}
         key={`journey-scene-${cameraResetVersion}`}
         resetVersion={cameraResetVersion}
@@ -219,6 +234,7 @@ function JourneyPage() {
             </button>
           ) : null}
           <button
+            hidden={isMobile}
             className="portfolio-timeline-reset"
             type="button"
             aria-label="Reset timeline view"
@@ -244,128 +260,148 @@ function JourneyPage() {
             <h1 id="journey-title">Flight Path</h1>
             <p className="portfolio-hero__introduction">{portfolioIntroduction}</p>
             <KeyboardScrollHint className="portfolio-keyboard-scroll-hint" />
+            {isMobile && <p className="journey-mobile-hint">Scroll to follow my education and experience.</p>}
           </div>
         </section>
 
-        <section
-          ref={carouselRef}
-          hidden={!selectedMilestone}
-          className="journey-carousel"
-          aria-label="Journey milestones"
-          aria-roledescription="carousel"
-          onKeyDown={(event) => {
-            if (event.key === 'Escape') resetTimelineView()
-            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
-            event.preventDefault()
-            const direction = event.key === 'ArrowRight' ? 1 : -1
-            moveCarousel(direction)
-          }}
-        >
-          <div key={selectedMilestoneId ?? 'intro'} className="journey-carousel__slide" tabIndex={0} id="journey-milestone-card" aria-live="polite" aria-atomic="true">
-            {selectedMilestone ? (
-              <div key={selectedMilestoneId} role="group" aria-roledescription="slide" aria-label={`${selectedIndex + 1} of ${timelineEntries.length}`}>
-                <p className="journey-carousel__category">{education.some((entry) => entry.id === selectedMilestoneId) ? 'Education' : 'Professional Experience'}</p>
-                <ResumeEntry entry={selectedMilestone} kind={education.some((entry) => entry.id === selectedMilestoneId) ? 'education' : 'experience'} />
-              </div>
-            ) : null}
-          </div>
-          <nav className="journey-carousel__controls" aria-label="Milestone navigation">
-            <button type="button" onClick={() => moveCarousel(-1)} aria-label="Previous milestone">← Previous</button>
-            <span>{selectedIndex < 0 ? 'Explore' : `${selectedIndex + 1} / ${timelineEntries.length}`}</span>
-            <button type="button" onClick={() => moveCarousel(1)} aria-label="Next milestone">Next →</button>
-          </nav>
-        </section>
-
-        <svg
-          className="portfolio-resume-journey__path"
-          viewBox="0 0 1000 900"
-          aria-hidden="true"
-          preserveAspectRatio="none"
-        >
-          <path
-            className="portfolio-resume-journey__path-glow"
-            d={journeyPath}
-          />
-          <path
-            className="portfolio-resume-journey__path-line"
-            d={journeyPath}
-          />
-          <path
-            className="portfolio-resume-journey__path-particles"
-            d={journeyPath}
-            ref={journeyPathRef}
-          />
-          <g
-            className="portfolio-resume-journey__lotus"
-            ref={journeyLotusRef}
-            transform="translate(710 171)"
-          >
-            <foreignObject
-              className="portfolio-resume-journey__lotus-object"
-              x="-48"
-              y="-40"
-              width="96"
-              height="80"
+        {isMobile ? (
+          <section className="journey-mobile-flow" aria-label="Education and professional experience">
+            <HomeJourneySpine pageSelector=".journey-mobile-flow" stacked />
+            <ol className="journey-mobile-cards">
+              {mobileEntries.map((entry) => {
+                const kind = education.some((item) => item.id === entry.id) ? 'education' : 'experience'
+                return (
+                  <li className="journey-mobile-card" data-home-spine-section={entry.id} key={entry.id}>
+                    <p className="journey-mobile-card__category">{kind === 'education' ? 'Education' : 'Professional Experience'}</p>
+                    <ResumeEntry entry={entry} kind={kind} />
+                  </li>
+                )
+              })}
+            </ol>
+          </section>
+        ) : (
+          <>
+            <section
+              ref={carouselRef}
+              hidden={!selectedMilestone}
+              className="journey-carousel"
+              aria-label="Journey milestones"
+              aria-roledescription="carousel"
+              onKeyDown={(event) => {
+                if (event.key === 'Escape') resetTimelineView()
+                if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+                event.preventDefault()
+                const direction = event.key === 'ArrowRight' ? 1 : -1
+                moveCarousel(direction)
+              }}
             >
-              <div className="portfolio-resume-journey__lotus-frame" xmlns="http://www.w3.org/1999/xhtml">
-                <LotusMarker
-                  className="portfolio-resume-journey__lotus-marker"
-                  idPrefix="journey-lotus"
-                />
+              <div key={selectedMilestoneId ?? 'intro'} className="journey-carousel__slide" tabIndex={0} id="journey-milestone-card" aria-live="polite" aria-atomic="true">
+                {selectedMilestone ? (
+                  <div key={selectedMilestoneId} role="group" aria-roledescription="slide" aria-label={`${selectedIndex + 1} of ${timelineEntries.length}`}>
+                    <p className="journey-carousel__category">{education.some((entry) => entry.id === selectedMilestoneId) ? 'Education' : 'Professional Experience'}</p>
+                    <ResumeEntry entry={selectedMilestone} kind={education.some((entry) => entry.id === selectedMilestoneId) ? 'education' : 'experience'} />
+                  </div>
+                ) : null}
               </div>
-            </foreignObject>
-          </g>
-        </svg>
+              <nav className="journey-carousel__controls" aria-label="Milestone navigation">
+                <button type="button" onClick={() => moveCarousel(-1)} aria-label="Previous milestone">← Previous</button>
+                <span>{selectedIndex < 0 ? 'Explore' : `${selectedIndex + 1} / ${timelineEntries.length}`}</span>
+                <button type="button" onClick={() => moveCarousel(1)} aria-label="Next milestone">Next →</button>
+              </nav>
+            </section>
 
-        <section
-          className="portfolio-journey-group portfolio-journey-group--education"
-          aria-labelledby="education-title"
-        >
-          <h2 className="portfolio-journey-group__heading" id="education-title">
-            Education
-          </h2>
-          <ol className="resume-timeline resume-timeline--education">
-            {education.map((entry) => (
-              <li
-                className={`journey-point${selectedMilestoneId === entry.id ? ' journey-point--active' : ''}`}
-                key={entry.id}
-                style={{ '--journey-x': entry.trail.x, '--journey-y': entry.trail.y }}
+            <svg
+              className="portfolio-resume-journey__path"
+              viewBox="0 0 1000 900"
+              aria-hidden="true"
+              preserveAspectRatio="none"
+            >
+              <path
+                className="portfolio-resume-journey__path-glow"
+                d={journeyPath}
+              />
+              <path
+                className="portfolio-resume-journey__path-line"
+                d={journeyPath}
+              />
+              <path
+                className="portfolio-resume-journey__path-particles"
+                d={journeyPath}
+                ref={journeyPathRef}
+              />
+              <g
+                className="portfolio-resume-journey__lotus"
+                ref={journeyLotusRef}
+                transform="translate(710 171)"
               >
-                <TimelineMilestone
-                  entry={entry}
-                  isSelected={selectedMilestoneId === entry.id}
-                  kind="education"
-                  onSelect={selectMilestone}
-                />
-              </li>
-            ))}
-          </ol>
-        </section>
+                <foreignObject
+                  className="portfolio-resume-journey__lotus-object"
+                  x="-48"
+                  y="-40"
+                  width="96"
+                  height="80"
+                >
+                  <div className="portfolio-resume-journey__lotus-frame" xmlns="http://www.w3.org/1999/xhtml">
+                    <LotusMarker
+                      className="portfolio-resume-journey__lotus-marker"
+                      idPrefix="journey-lotus"
+                    />
+                  </div>
+                </foreignObject>
+              </g>
+            </svg>
 
-        <section
-          className="portfolio-journey-group portfolio-journey-group--experience"
-          aria-labelledby="experience-title"
-        >
-          <h2 className="portfolio-journey-group__heading" id="experience-title">
-            Professional Experience
-          </h2>
-          <ol className="resume-timeline resume-timeline--experience">
-            {professionalExperience.map((entry) => (
-              <li
-                className={`journey-point${selectedMilestoneId === entry.id ? ' journey-point--active' : ''}`}
-                key={entry.id}
-                style={{ '--journey-x': entry.trail.x, '--journey-y': entry.trail.y }}
-              >
-                <TimelineMilestone
-                  entry={entry}
-                  isSelected={selectedMilestoneId === entry.id}
-                  kind="experience"
-                  onSelect={selectMilestone}
-                />
-              </li>
-            ))}
-          </ol>
-        </section>
+            <section
+              className="portfolio-journey-group portfolio-journey-group--education"
+              aria-labelledby="education-title"
+            >
+              <h2 className="portfolio-journey-group__heading" id="education-title">
+                Education
+              </h2>
+              <ol className="resume-timeline resume-timeline--education">
+                {education.map((entry) => (
+                  <li
+                    className={`journey-point${selectedMilestoneId === entry.id ? ' journey-point--active' : ''}`}
+                    key={entry.id}
+                    style={{ '--journey-x': entry.trail.x, '--journey-y': entry.trail.y }}
+                  >
+                    <TimelineMilestone
+                      entry={entry}
+                      isSelected={selectedMilestoneId === entry.id}
+                      kind="education"
+                      onSelect={selectMilestone}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section
+              className="portfolio-journey-group portfolio-journey-group--experience"
+              aria-labelledby="experience-title"
+            >
+              <h2 className="portfolio-journey-group__heading" id="experience-title">
+                Professional Experience
+              </h2>
+              <ol className="resume-timeline resume-timeline--experience">
+                {professionalExperience.map((entry) => (
+                  <li
+                    className={`journey-point${selectedMilestoneId === entry.id ? ' journey-point--active' : ''}`}
+                    key={entry.id}
+                    style={{ '--journey-x': entry.trail.x, '--journey-y': entry.trail.y }}
+                  >
+                    <TimelineMilestone
+                      entry={entry}
+                      isSelected={selectedMilestoneId === entry.id}
+                      kind="experience"
+                      onSelect={selectMilestone}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </section>
+          </>
+        )}
       </div>
     </article>
   )
