@@ -13,6 +13,7 @@
 // =============================================================================
 
 import { useEffect, useRef, useState } from 'react'
+import { measureHomeStops, getLayoutBox, remapHomeStop } from '../utils/homeSpineGeometry.js'
 
 const sectionSelector = '[data-home-spine-section]'
 
@@ -177,11 +178,7 @@ function HomeJourneySpine() {
 
       const pageTop = page.getBoundingClientRect().top
       pointsRef.current.forEach((point, index) => {
-        // Desktop retains its original live card-center tracking.
-        const targetRect = point.edge ? null : targets[index].getBoundingClientRect()
-        const position = targetRect
-          ? targetRect.top + targetRect.height / 2
-          : pageTop + point.y
+        const position = pageTop + page.clientTop + point.y
         const distance = Math.abs(position - focusLine)
 
         if (distance < nearestDistance) {
@@ -199,52 +196,31 @@ function HomeJourneySpine() {
       // Measurements are relative to the full-width Home page, allowing the
       // same spine to connect alternating cards after any responsive reflow.
       if (!isActive) return
-      const pageRect = page.getBoundingClientRect()
-      const spineX = pageRect.left + pageRect.width / 2
+      const spineX = page.clientWidth / 2
       // Keep this breakpoint aligned with the alternating card layout in CSS.
       const isStacked = !window.matchMedia('(min-width: 59.4375rem)').matches
 
       if (topAnchor) {
-        const anchorRect = topAnchor.getBoundingClientRect()
+        const anchorRect = getLayoutBox(topAnchor, page)
         const rootFontSize = Number.parseFloat(
           window.getComputedStyle(document.documentElement).fontSize,
         )
         const lotusRadius = rootFontSize * 1.8
-        setSpineStart(anchorRect.bottom - pageRect.top - lotusRadius)
+        setSpineStart(anchorRect.bottom - lotusRadius)
       }
 
-      const measuredPoints = targets.flatMap((target, index) => {
-          const targetRect = target.getBoundingClientRect()
-          const id = target.dataset.homeSpineSection || String(index)
-          if (isStacked) {
-            return ['top', 'bottom'].map((edge) => ({
-              id: `${id}-${edge}`,
-              y: targetRect[edge] - pageRect.top,
-              edge,
-              side: 'center',
-              connectorLength: 0,
-            }))
-          }
-          const targetCenter = targetRect.top - pageRect.top + targetRect.height / 2
-          const targetIsLeft = targetRect.right < spineX - 4
-          const targetIsRight = targetRect.left > spineX + 4
-
-          return {
-            id,
-            y: targetCenter,
-            side: targetIsLeft ? 'left' : targetIsRight ? 'right' : 'center',
-            connectorLength: targetIsLeft
-              ? Math.max(spineX - targetRect.right, 0)
-              : targetIsRight
-                ? Math.max(targetRect.left - spineX, 0)
-                : 0,
-          }
-        })
+      const measuredPoints = measureHomeStops(targets, page, isStacked, spineX)
       const layoutChanged = Boolean(pointsRef.current[0]?.edge) !== isStacked
+      const previousPoint = pointsRef.current[activeIndexRef.current]
       pointsRef.current = measuredPoints
       setPoints(measuredPoints)
-      if (layoutChanged) keyboardNavigationLockedUntil = 0
-      updateActiveSection()
+      if (layoutChanged && previousPoint) {
+        const nextIndex = remapHomeStop(previousPoint, measuredPoints)
+        activeIndexRef.current = nextIndex
+        setActiveIndex(nextIndex)
+      } else {
+        updateActiveSection()
+      }
     }
 
     function scheduleActiveUpdate() {
@@ -287,15 +263,11 @@ function HomeJourneySpine() {
       keyboardNavigationLockedUntil = prefersReducedMotion ? 0 : performance.now() + 700
       const nextPoint = pointsRef.current[nextIndex]
       const behavior = prefersReducedMotion ? 'auto' : 'smooth'
-      if (nextPoint.edge) {
-        window.scrollTo({
-          top: window.scrollY + page.getBoundingClientRect().top + nextPoint.y
-            - window.innerHeight * 0.46,
-          behavior,
-        })
-      } else {
-        targets[nextIndex].scrollIntoView({ behavior, block: 'center', inline: 'nearest' })
-      }
+      window.scrollTo({
+        top: window.scrollY + page.getBoundingClientRect().top + page.clientTop
+          + nextPoint.y - window.innerHeight * 0.46,
+        behavior,
+      })
     }
 
     // Images, fonts, and responsive copy can change card geometry without a
