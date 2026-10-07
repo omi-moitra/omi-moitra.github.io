@@ -54,6 +54,7 @@ function JourneyPage() {
   const lotusDistanceRef = useRef(null)
   const lotusAnimationFrameRef = useRef(0)
   const resumeButtonRef = useRef(null)
+  const carouselRef = useRef(null)
   const [selectedMilestoneId, setSelectedMilestoneId] = useState(null)
   const [cameraResetVersion, setCameraResetVersion] = useState(0)
   const [isResumePreviewOpen, setIsResumePreviewOpen] = useState(false)
@@ -72,7 +73,7 @@ function JourneyPage() {
   useEffect(() => {
     if (!selectedMilestoneId) return
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' })
+    carouselRef.current?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion ? 'auto' : 'smooth' })
   }, [selectedMilestoneId])
 
   useEffect(() => {
@@ -241,38 +242,38 @@ function JourneyPage() {
           <div className="portfolio-hero__copy">
             <p className="portfolio-eyebrow">Journey &amp; Experience</p>
             <h1 id="journey-title">Flight Path</h1>
-            <section
-              className="journey-carousel"
-              aria-label="Journey milestones"
-              aria-roledescription="carousel"
-              onKeyDown={(event) => {
-                if (event.key === 'Escape') resetTimelineView()
-                if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
-                event.preventDefault()
-                const direction = event.key === 'ArrowRight' ? 1 : -1
-                moveCarousel(direction)
-              }}
-            >
-              <div key={selectedMilestoneId ?? 'intro'} className="journey-carousel__slide" tabIndex={0} id="journey-milestone-card" aria-live="polite" aria-atomic="true">
-                {selectedMilestone ? (
-                  <div key={selectedMilestoneId} role="group" aria-roledescription="slide" aria-label={`${selectedIndex + 1} of ${timelineEntries.length}`}>
-                    <p className="journey-carousel__category">{education.some((entry) => entry.id === selectedMilestoneId) ? 'Education' : 'Professional Experience'}</p>
-                    <ResumeEntry entry={selectedMilestone} kind={education.some((entry) => entry.id === selectedMilestoneId) ? 'education' : 'experience'} />
-                  </div>
-                ) : (
-                  <div className="journey-carousel__intro">
-                    <p className="portfolio-hero__introduction">{portfolioIntroduction}</p>
-                    <KeyboardScrollHint className="portfolio-keyboard-scroll-hint" />
-                  </div>
-                )}
-              </div>
-              <nav className="journey-carousel__controls" aria-label="Milestone navigation">
-                <button type="button" onClick={() => moveCarousel(-1)} aria-label="Previous milestone">← Previous</button>
-                <span>{selectedIndex < 0 ? 'Explore' : `${selectedIndex + 1} / ${timelineEntries.length}`}</span>
-                <button type="button" onClick={() => moveCarousel(1)} aria-label="Next milestone">Next →</button>
-              </nav>
-            </section>
+            <p className="portfolio-hero__introduction">{portfolioIntroduction}</p>
+            <KeyboardScrollHint className="portfolio-keyboard-scroll-hint" />
           </div>
+        </section>
+
+        <section
+          ref={carouselRef}
+          hidden={!selectedMilestone}
+          className="journey-carousel"
+          aria-label="Journey milestones"
+          aria-roledescription="carousel"
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') resetTimelineView()
+            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+            event.preventDefault()
+            const direction = event.key === 'ArrowRight' ? 1 : -1
+            moveCarousel(direction)
+          }}
+        >
+          <div key={selectedMilestoneId ?? 'intro'} className="journey-carousel__slide" tabIndex={0} id="journey-milestone-card" aria-live="polite" aria-atomic="true">
+            {selectedMilestone ? (
+              <div key={selectedMilestoneId} role="group" aria-roledescription="slide" aria-label={`${selectedIndex + 1} of ${timelineEntries.length}`}>
+                <p className="journey-carousel__category">{education.some((entry) => entry.id === selectedMilestoneId) ? 'Education' : 'Professional Experience'}</p>
+                <ResumeEntry entry={selectedMilestone} kind={education.some((entry) => entry.id === selectedMilestoneId) ? 'education' : 'experience'} />
+              </div>
+            ) : null}
+          </div>
+          <nav className="journey-carousel__controls" aria-label="Milestone navigation">
+            <button type="button" onClick={() => moveCarousel(-1)} aria-label="Previous milestone">← Previous</button>
+            <span>{selectedIndex < 0 ? 'Explore' : `${selectedIndex + 1} / ${timelineEntries.length}`}</span>
+            <button type="button" onClick={() => moveCarousel(1)} aria-label="Next milestone">Next →</button>
+          </nav>
         </section>
 
         <svg
