@@ -1582,12 +1582,15 @@
   }
 }
 
-/* One stable reading area for every milestone, clear of the upper trail. */
+/* Milestone cards occupy a separate lower-right area, clear of the trail. */
 .journey-page .portfolio-hero {
   z-index: 5;
 }
 
 .journey-carousel {
+  position: relative;
+  z-index: 5;
+  scroll-margin-block: calc(var(--header-height) + 1rem);
   margin-top: var(--space-5);
   overflow: hidden;
   border: 1px solid rgb(244 184 66 / 45%);
@@ -1639,10 +1642,6 @@
   color: #eee1ca;
 }
 
-.journey-carousel .portfolio-hero__introduction {
-  margin-top: 0;
-}
-
 .journey-carousel__controls {
   display: flex;
   align-items: center;
@@ -1675,13 +1674,16 @@
 }
 
 @media (min-width: 48.0625rem) {
-  .journey-page .portfolio-hero {
-    width: min(34%, 28rem);
-    padding-top: 0;
+  .journey-page .portfolio-resume-journey {
+    margin-bottom: 12rem;
   }
 
-  .journey-page .portfolio-hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+  .journey-carousel {
+    position: absolute;
+    top: 60%;
+    right: 0;
+    width: min(44%, 34rem);
+    margin-top: 0;
   }
 }
 
