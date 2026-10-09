@@ -60,7 +60,7 @@
 .contact-introduction__eyebrow,
 .contact-form-panel__heading > p:first-child {
   margin: 0 0 var(--space-3);
-  color: var(--arcane-violet);
+  color: var(--color-accent-text);
   font-size: 0.82rem;
   font-weight: 850;
   letter-spacing: 0.1em;
@@ -103,7 +103,7 @@
 }
 
 .contact-introduction__signal span:nth-child(2) {
-  --signal-color: var(--arcane-violet);
+  --signal-color: var(--color-accent-text);
 }
 
 .contact-introduction__signal span:nth-child(3) {
@@ -133,7 +133,7 @@
 }
 
 .contact-form-panel__heading > p:first-child {
-  color: var(--arcane-violet);
+  color: var(--color-accent-text);
 }
 
 .contact-form-panel__heading h2 {
@@ -305,7 +305,7 @@
 }
 
 .contact-form__submit:hover:not(:disabled) {
-  color: var(--ink-black);
+  color: var(--color-on-gold);
   background: var(--radiant-gold);
   text-decoration: underline;
   text-underline-offset: 0.2rem;
