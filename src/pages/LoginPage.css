@@ -125,7 +125,7 @@
 
 .login-panel__heading > p:first-child {
   margin: 0 0 var(--space-3);
-  color: var(--arcane-violet);
+  color: var(--color-accent-text);
   font-size: 0.82rem;
   font-weight: 850;
   letter-spacing: 0.1em;
@@ -228,7 +228,7 @@
 }
 
 .login-form__submit:hover:not(:disabled) {
-  color: var(--ink-black);
+  color: var(--color-on-gold);
   background: var(--radiant-gold);
   text-decoration: underline;
   text-underline-offset: 0.2rem;
@@ -280,7 +280,7 @@
 }
 
 .login-status--configuration {
-  --status-color: var(--arcane-violet);
+  --status-color: var(--color-accent-text);
   --status-background: color-mix(in srgb, var(--arcane-violet) 8%, var(--warm-ivory));
 }
 

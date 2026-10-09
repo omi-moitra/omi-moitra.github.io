@@ -81,6 +81,10 @@
   --color-text-muted: var(--charcoal);
   --color-border: var(--aged-paper);
   --color-focus: var(--arcane-violet);
+  --color-accent-text: var(--arcane-violet);
+  --color-on-gold: #232126;
+  --color-action-violet: #6545ab;
+  --color-on-violet: #fffdf6;
   --color-on-dark: var(--warm-ivory);
   --color-disabled: color-mix(in srgb, var(--charcoal) 72%, var(--warm-ivory));
   --color-success: #176c46;
@@ -162,6 +166,8 @@
 }
 
 :root[data-theme='dark'] {
+  --color-accent-text: #c9b9f4;
+  --color-focus: #c9b9f4;
   --parchment: #151319;
   --soft-cream: #211d25;
   --warm-ivory: #29232d;
