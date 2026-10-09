@@ -643,7 +643,7 @@
 }
 
 .home-action--primary:hover {
-  color: var(--ink-black);
+  color: var(--color-on-gold);
   background: var(--radiant-gold);
   text-decoration: underline;
   text-underline-offset: 0.25rem;
@@ -655,8 +655,8 @@
 }
 
 .home-action--secondary:hover {
-  color: var(--warm-ivory);
-  background: var(--arcane-violet);
+  color: var(--color-on-violet);
+  background: var(--color-action-violet);
   text-decoration: underline;
   text-underline-offset: 0.25rem;
 }
@@ -709,7 +709,7 @@
 }
 
 .home-section--technical .home-section__eyebrow {
-  color: color-mix(in srgb, var(--arcane-violet) 82%, var(--ink-black));
+  color: var(--color-accent-text);
 }
 
 .home-strengths__introduction {
@@ -830,7 +830,7 @@
 
 .home-project-preview > p:first-child {
   margin: 0 0 var(--space-2);
-  color: color-mix(in srgb, var(--arcane-violet) 82%, var(--ink-black));
+  color: var(--color-accent-text);
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 800;
