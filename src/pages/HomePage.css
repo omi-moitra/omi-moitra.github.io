@@ -17,7 +17,7 @@
   width: 100vw;
   min-height: 100svh;
   margin-left: -50vw;
-  padding: var(--space-6) 0 var(--space-8);
+  padding: var(--space-4) 0 var(--space-8);
   overflow: clip;
   isolation: isolate;
 }
@@ -370,15 +370,15 @@
 }
 
 .home-hero h1 {
-  max-width: 10ch;
+  max-width: none;
   margin: 0 auto;
   color: var(--ink-black);
   font-family: var(--font-display);
-  font-size: var(--editorial-page-title);
+  font-size: clamp(1.5rem, 7.5vw, var(--editorial-page-title));
   font-weight: 500;
   line-height: 0.88;
   overflow-wrap: normal;
-  text-wrap: balance;
+  white-space: nowrap;
 }
 
 .home-hero__title {
@@ -673,7 +673,7 @@
 
 @media (min-width: 25rem) {
   .home-page {
-    padding-top: var(--space-7);
+    padding-top: var(--space-5);
   }
 
   .home-flow-card {
@@ -707,7 +707,7 @@
 
 @media (min-width: 75rem) {
   .home-page {
-    padding-top: clamp(5rem, 11vh, 8rem);
+    padding-top: clamp(2rem, 5vh, 4rem);
   }
 
   .home-flow-card {
