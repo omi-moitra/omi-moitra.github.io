@@ -34,7 +34,7 @@ export const technicalSkills = [
     icon: 'component-code',
     iconIsDecorative: true,
     description:
-      'Builds interactive web interfaces with JavaScript and React as part of a full stack application workflow.',
+      'Interactive interfaces built with React and JavaScript.',
   },
   {
     id: 'node-express',
@@ -42,7 +42,7 @@ export const technicalSkills = [
     icon: 'connected-nodes',
     iconIsDecorative: true,
     description:
-      'Develops server-side application behavior and RESTful APIs, with experience in role-based authentication and Jest testing.',
+      'REST APIs, role-based authentication, and Jest testing.',
   },
   {
     id: 'databases',
@@ -50,34 +50,34 @@ export const technicalSkills = [
     icon: 'database',
     iconIsDecorative: true,
     description:
-      'Works with MongoDB and relational data tools including SQL, MySQL, and DBeaver; the resume identifies SQL as a beginner-level skill.',
+      'MongoDB, MySQL, and DBeaver; foundational SQL skills.',
   },
 ]
 
 export const professionalStrengths = [
   {
     id: 'problem-solving',
-    name: 'Problem Solving & Risk Assessment',
+    name: 'Problem Solving',
     icon: 'risk-assessment',
     iconIsDecorative: true,
     description:
-      'Identifies inconsistencies, missing requirements, and system edge cases, then recommends clear corrective action.',
+      'Spot missing requirements, assess risks, and resolve edge cases.',
   },
   {
     id: 'documentation',
-    name: 'Documentation & Attention to Detail',
+    name: 'Documentation',
     icon: 'documentation',
     iconIsDecorative: true,
     description:
-      'Produces precise written analysis, reviews complex documents for accuracy, and maintains organized records that support decisions.',
+      'Produce precise analysis and keep accurate, organized records.',
   },
   {
     id: 'communication',
-    name: 'Cross-Functional Communication',
+    name: 'Communication',
     icon: 'communication',
     iconIsDecorative: true,
     description:
-      'Clarifies requirements with internal and external partners and adapts complex explanations for different audiences.',
+      'Clarify requirements and explain complex ideas across teams.',
   },
 ]
 

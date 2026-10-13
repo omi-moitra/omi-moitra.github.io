@@ -24,7 +24,7 @@ export function measureHomeStops(targets, page, isStacked, spineX) {
   return targets.flatMap((target, index) => {
     const box = getLayoutBox(target, page)
     const sectionId = target.dataset.homeSpineSection || String(index)
-    if (isStacked) {
+    if (isStacked || target.dataset.homeSpineRest === 'edges') {
       return ['top', 'bottom'].map((edge) => ({
         id: `${sectionId}-${edge}`, sectionId, edge,
         y: box[edge], side: 'center', connectorLength: 0,

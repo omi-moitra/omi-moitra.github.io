@@ -61,7 +61,7 @@ const DARK_WORD_COLORS = [
 const LIGHT_RIBBON_BACKGROUND = `${phoenixCodexPalette.foundation.inkBlack}99`
 const DARK_RIBBON_BACKGROUND = `${phoenixCodexPalette.magic.softVermilion}99`
 
-const HOME_CARD_SELECTOR = '.home-flow-card, .skill-card, .home-project-preview'
+const HOME_CARD_SELECTOR = '.home-flow-card'
 
 function getDocumentTop(element) {
   let top = 0
@@ -313,22 +313,29 @@ function HomeVortex() {
         element,
         height: 0,
         isNested,
+        focus: null,
       }
     })
     let frame = 0
     let visible = true
     let active = true
 
+    let viewportTop = 0
     const updateCardLayout = () => {
+      viewportTop = document.querySelector('.site-header')?.getBoundingClientRect().height || 0
       cardStates.forEach((card) => {
         card.documentTop = getDocumentTop(card.element)
         card.height = card.element.offsetHeight
       })
     }
 
+    let lastMotionTime = performance.now()
     const updateCardMotion = () => {
       if (!cardStates.length) return
 
+      const now = performance.now()
+      const smoothing = 1 - Math.exp(-Math.min(now - lastMotionTime, 100) / 75)
+      lastMotionTime = now
       const scrollY = window.scrollY
       const viewportHeight = Math.max(window.innerHeight, 1)
       scrollMotion.x = MathUtils.lerp(scrollMotion.x, scrollY, 0.14)
@@ -336,15 +343,16 @@ function HomeVortex() {
 
       cardStates.forEach((card) => {
         const cardTop = card.documentTop - scrollY
-        const revealStart = viewportHeight * (card.isNested ? 0.96 : 0.94)
-        const revealEnd = viewportHeight * (card.isNested ? 0.66 : 0.56)
-        const revealRange = Math.max(revealStart - revealEnd, 1)
-        const rawProgress = MathUtils.clamp(
-          (revealStart - cardTop) / revealRange,
-          0,
-          1,
-        )
-        const progress = rawProgress * rawProgress * (3 - 2 * rawProgress)
+        // Focus depends on intersection at either edge, including tall sections.
+        const visibleHeight = Math.max(0,
+          Math.min(cardTop + card.height, viewportHeight) - Math.max(cardTop, viewportTop))
+        const edgeRange = Math.max(1, Math.min(64, card.height * 0.2))
+        const rawProgress = MathUtils.clamp(visibleHeight / edgeRange, 0, 1)
+        const targetFocus = card.element.contains(document.activeElement)
+          ? 1 : rawProgress * rawProgress * (3 - 2 * rawProgress)
+        card.focus = card.focus === null ? targetFocus : MathUtils.lerp(card.focus, targetFocus, smoothing)
+        if (Math.abs(card.focus - targetFocus) < 0.002) card.focus = targetFocus
+        const progress = card.focus
         const viewportPosition = MathUtils.clamp(
           (cardTop + card.height / 2 - viewportHeight / 2) / viewportHeight,
           -1,
