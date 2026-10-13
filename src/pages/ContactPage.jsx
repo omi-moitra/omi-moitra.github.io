@@ -17,6 +17,7 @@ import {
   validateContactValues,
 } from '../utils/contactValidation.js'
 import { reportDevelopmentError } from '../utils/reportDevelopmentError.js'
+import { publicProfile } from '../data/profile.js'
 import './ContactPage.css'
 
 const feedbackCopy = {
@@ -31,15 +32,15 @@ const feedbackCopy = {
   },
   success: {
     label: 'Message sent',
-    message: 'Your message was sent successfully.',
+    message: 'Thanks—your message has been sent.',
   },
   error: {
     label: 'Unable to send',
-    message: 'Your message could not be sent. Please try again.',
+    message: 'Your message wasn’t sent. Please try again or email me directly.',
   },
   configuration: {
     label: 'Form unavailable',
-    message: 'The contact form is temporarily unavailable. Please try again later.',
+    message: 'The contact form is temporarily unavailable. Please email me directly.',
   },
 }
 
@@ -170,20 +171,15 @@ function ContactPage() {
         <p className="contact-introduction__eyebrow">Start a conversation</p>
         <h1 id="contact-title">Contact Me</h1>
         <p className="contact-introduction__lead">
-          Have a project, role, or collaboration in mind? Send me a message and share
-          what you would like to discuss.
+          Have a project, role, or collaboration in mind? Let’s talk.
         </p>
-
-        <div className="contact-introduction__signal" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
+        <p className="contact-introduction__email">
+          Prefer email? <a href={`mailto:${publicProfile.email}`}>{publicProfile.email}</a>
+        </p>
       </section>
 
       <section className="contact-form-panel" aria-labelledby="contact-form-title">
         <div className="contact-form-panel__heading">
-          <p>Professional inquiries</p>
           <h2 id="contact-form-title">Send a message</h2>
           <p>All fields are required.</p>
         </div>
@@ -200,6 +196,9 @@ function ContactPage() {
             <span>
               <strong>{feedback.label}</strong>
               <span>{feedback.message}</span>
+              {(feedbackType === 'error' || feedbackType === 'configuration') && (
+                <a className="contact-feedback__email" href={`mailto:${publicProfile.email}`}>{publicProfile.email}</a>
+              )}
             </span>
           </div>
         )}
@@ -226,11 +225,7 @@ function ContactPage() {
           <div className="contact-form__field">
             <div className="contact-form__label-row">
               <label htmlFor="contact-name">Name</label>
-              <span>Required</span>
             </div>
-            <p id="contact-name-hint" className="contact-form__hint">
-              How should I address you?
-            </p>
             <input
               id="contact-name"
               name="name"
@@ -240,7 +235,7 @@ function ContactPage() {
               maxLength={CONTACT_LIMITS.name.max}
               required
               value={values.name}
-              aria-describedby={`contact-name-hint${errors.name ? ' contact-name-error' : ''}`}
+              aria-describedby={errors.name ? 'contact-name-error' : undefined}
               aria-invalid={errors.name ? 'true' : undefined}
               onChange={handleFieldChange}
             />
@@ -254,11 +249,7 @@ function ContactPage() {
           <div className="contact-form__field">
             <div className="contact-form__label-row">
               <label htmlFor="contact-email">Email address</label>
-              <span>Required</span>
             </div>
-            <p id="contact-email-hint" className="contact-form__hint">
-              Where can I reply?
-            </p>
             <input
               id="contact-email"
               name="email"
@@ -267,7 +258,7 @@ function ContactPage() {
               maxLength={CONTACT_LIMITS.email.max}
               required
               value={values.email}
-              aria-describedby={`contact-email-hint${errors.email ? ' contact-email-error' : ''}`}
+              aria-describedby={errors.email ? 'contact-email-error' : undefined}
               aria-invalid={errors.email ? 'true' : undefined}
               onChange={handleFieldChange}
             />
@@ -281,7 +272,6 @@ function ContactPage() {
           <div className="contact-form__field contact-form__field--message">
             <div className="contact-form__label-row">
               <label htmlFor="contact-message">Message</label>
-              <span>Required</span>
             </div>
             <p id="contact-message-hint" className="contact-form__hint">
               What would you like to discuss? Use 10–2,000 characters.

@@ -160,62 +160,9 @@ function HomePage() {
       </div>
 
       <section
-        className="home-section home-section--technical home-flow-card home-flow-card--right"
-        data-home-spine-section="technical-skills"
-        aria-labelledby="technical-title"
-      >
-        <div className="home-section__heading">
-          <p className="home-section__eyebrow">Build the system</p>
-          <h2 id="technical-title">Technical Skills</h2>
-          <p>
-            A full stack foundation spanning interactive interfaces, server behavior,
-            and practical data work.
-          </p>
-        </div>
-        <ul className="skill-grid">
-          {technicalSkills.map((skill) => (
-            <SkillCard key={skill.id} skill={skill} tone="technical" />
-          ))}
-        </ul>
-      </section>
-
-      <section
-        className="home-section home-section--strengths home-flow-card home-flow-card--left"
-        data-home-spine-section="professional-strengths"
-        aria-labelledby="strengths-title"
-      >
-        <div className="home-strengths__introduction">
-          <div className="home-section__heading">
-            <p className="home-section__eyebrow">Understand the whole problem</p>
-            <h2 id="strengths-title">Professional Strengths</h2>
-            <p>
-              Disciplined analysis and clear communication help turn requirements into
-              maintainable, people-centered work.
-            </p>
-          </div>
-          <figure className="home-media home-media--bridge">
-            <img
-              src={homeImages.skillsBridge.src}
-              srcSet={homeImages.skillsBridge.srcSet}
-              sizes={homeImages.skillsBridge.sizes}
-              width={homeImages.skillsBridge.width}
-              height={homeImages.skillsBridge.height}
-              alt={homeImages.skillsBridge.alt}
-              loading={homeImages.skillsBridge.loading}
-              decoding="async"
-            />
-          </figure>
-        </div>
-        <ul className="skill-grid">
-          {professionalStrengths.map((skill) => (
-            <SkillCard key={skill.id} skill={skill} tone="strength" />
-          ))}
-        </ul>
-      </section>
-
-      <section
-        className="home-codex-preview home-flow-card home-flow-card--right"
+        className="home-codex-preview home-flow-card home-flow-card--center"
         data-home-spine-section="selected-work"
+        data-home-spine-rest="edges"
         aria-labelledby="codex-preview-title"
       >
         <div className="home-section__heading">
@@ -233,6 +180,47 @@ function HomePage() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section
+        className="home-section home-section--technical home-flow-card home-flow-card--left"
+        data-home-spine-section="technical-skills"
+        aria-labelledby="technical-title"
+      >
+        <div className="home-section__heading">
+          <p className="home-section__eyebrow">Build the system</p>
+          <h2 id="technical-title">Technical Skills</h2>
+          <p>
+            Interfaces, APIs, and data—from front end to back end.
+          </p>
+        </div>
+        <ul className="skill-grid">
+          {technicalSkills.map((skill) => (
+            <SkillCard key={skill.id} skill={skill} tone="technical" />
+          ))}
+        </ul>
+      </section>
+
+      <section
+        className="home-section home-section--strengths home-flow-card home-flow-card--right"
+        data-home-spine-section="professional-strengths"
+        aria-labelledby="strengths-title"
+      >
+        <div className="home-strengths__introduction">
+          <div className="home-section__heading">
+            <p className="home-section__eyebrow">Understand the whole problem</p>
+            <h2 id="strengths-title">Professional Strengths</h2>
+            <p>
+              Clear thinking, careful documentation, and effective collaboration.
+            </p>
+          </div>
+
+        </div>
+        <ul className="skill-grid">
+          {professionalStrengths.map((skill) => (
+            <SkillCard key={skill.id} skill={skill} tone="strength" />
+          ))}
+        </ul>
       </section>
 
       <section

@@ -7,13 +7,24 @@
 // 4. Actions             internal collection link and safe external destinations
 // =============================================================================
 
-import { Link, useParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import StatusPanel from '../components/StatusPanel.jsx'
 import { projects } from '../data/projects.js'
 import './PortfolioPage.css'
 
 function ProjectPage() {
   const { projectSlug } = useParams()
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (hash === '#project-videos') {
+      const frame = requestAnimationFrame(() => {
+        document.getElementById('project-videos')?.scrollIntoView({ block: 'start', behavior: 'instant' })
+      })
+      return () => cancelAnimationFrame(frame)
+    }
+  }, [hash, projectSlug])
   const project = projects.find((entry) => entry.slug === projectSlug)
 
   if (!project) {
@@ -48,6 +59,20 @@ function ProjectPage() {
         <h1>{project.title}</h1>
         {project.subtitle && <p className="project-detail__subtitle">{project.subtitle}</p>}
         {project.summary && <p>{project.summary}</p>}
+        {(project.links?.repository || project.links?.live) && (
+          <div className="project-detail__actions project-detail__actions--hero">
+            {project.links?.repository && (
+              <a href={project.links.repository} target="_blank" rel="noopener noreferrer">
+                View source <span aria-hidden="true">↗</span>
+              </a>
+            )}
+            {project.links?.live && (
+              <a href={project.links.live} target="_blank" rel="noopener noreferrer">
+                Visit live site <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
+        )}
       </header>
 
       {(project.role?.length > 0 || project.technologies?.length > 0) && (
@@ -84,7 +109,7 @@ function ProjectPage() {
         )}
 
         {project.videos?.length > 0 && (
-          <section className="project-detail__videos">
+          <section className="project-detail__videos" id="project-videos">
             <h2>Demo videos</h2>
             <div className="project-detail__video-grid">
               {project.videos.map((video) => (

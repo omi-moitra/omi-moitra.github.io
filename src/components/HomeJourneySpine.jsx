@@ -202,7 +202,7 @@ function HomeJourneySpine({
       if (!isActive) return
       const spineX = page.clientWidth / 2
       // Keep this breakpoint aligned with the alternating card layout in CSS.
-      const isStacked = stacked || !window.matchMedia('(min-width: 59.4375rem)').matches
+      const isStacked = stacked || !window.matchMedia('(min-width: 75rem)').matches
 
       if (topAnchor) {
         const anchorRect = getLayoutBox(topAnchor, page)

@@ -1008,9 +1008,9 @@
 .project-detail {
   width: min(100%, 64rem);
   display: grid;
-  gap: var(--space-6);
+  gap: var(--editorial-section-gap);
   margin-inline: auto;
-  padding-block: clamp(var(--space-6), 8vw, var(--space-8));
+  padding-block: var(--editorial-page-padding);
 }
 
 .project-detail__hero,
@@ -1025,18 +1025,19 @@
 }
 
 .project-detail__hero {
-  padding: clamp(var(--space-5), 7vw, var(--space-8));
+  padding: var(--editorial-panel-padding);
 }
 
 .project-detail__hero h1 {
   max-width: 13ch;
   margin: 0 0 var(--space-4);
-  font-size: clamp(3rem, 12vw, 6rem);
+  font-size: var(--editorial-page-title);
   line-height: 0.92;
 }
 
-.project-detail__hero > p:last-child {
-  max-width: var(--text-max-width);
+.project-detail p,
+.project-detail li {
+  max-width: var(--editorial-prose-width);
 }
 
 .project-detail__subtitle {
@@ -1050,7 +1051,7 @@
   display: grid;
   gap: var(--space-4);
   margin: 0;
-  padding: var(--space-5);
+  padding: var(--editorial-panel-padding);
 }
 
 .project-detail__facts div {
@@ -1072,15 +1073,15 @@
 
 .project-detail__sections {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--editorial-section-gap);
 }
 
 .project-detail__sections section {
-  padding: clamp(var(--space-5), 5vw, var(--space-6));
+  padding: var(--editorial-panel-padding);
 }
 
 .project-detail__sections h2 {
-  margin: 0 0 var(--space-3);
+  font-size: var(--editorial-section-title);  margin: 0 0 var(--space-3);
   font-family: var(--font-heading);
 }
 
@@ -1133,6 +1134,10 @@
   border-radius: var(--radius-small);
   font-weight: 800;
   text-decoration: none;
+}
+
+.project-detail__actions--hero {
+  margin-top: var(--space-5);
 }
 
 @media (min-width: 40rem) {
@@ -1784,3 +1789,11 @@
     display: none;
   }
 }
+
+/* Typography only on the positioned Journey scene; retain timeline geometry. */
+.journey-page .portfolio-hero h1 { font-size: var(--editorial-page-title); }
+.journey-page .portfolio-section__heading h2 { font-size: var(--editorial-section-title); }
+.journey-page .portfolio-hero__introduction { max-width: var(--editorial-prose-width); }
+.journey-page .portfolio-section { padding: var(--editorial-panel-padding); }
+
+.project-detail__videos { scroll-margin-top: calc(var(--header-height) + var(--space-5)); }
