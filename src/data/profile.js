@@ -6,7 +6,7 @@
 // =============================================================================
 
 export const publicProfile = {
-  email: 'omoitra@gmail.com',
+  email: 'oishieka.moitra.work@gmail.com',
   copyrightName: 'Oishieka Moitra',
   // Optional profiles remain absent until their exact public URLs are verified.
   socialLinks: [],

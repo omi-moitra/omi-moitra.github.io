@@ -357,3 +357,18 @@ h2 {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Shared editorial scale for public content pages. */
+.home-page,
+.journey-page,
+.links-page,
+.projects-showroom,
+.project-detail,
+.contact-page {
+  --editorial-page-padding: clamp(2rem, 4vw, 3rem);
+  --editorial-section-gap: clamp(2rem, 4vw, 3rem);
+  --editorial-panel-padding: clamp(1.5rem, 3vw, 2rem);
+  --editorial-page-title: clamp(2rem, 4.5vw, 3.7rem);
+  --editorial-section-title: clamp(1.28rem, 3.2vw, 2.112rem);
+  --editorial-prose-width: 65ch;
+}

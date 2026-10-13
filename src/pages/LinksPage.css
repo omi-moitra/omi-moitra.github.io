@@ -12,8 +12,8 @@
 .links-page {
   position: relative;
   display: grid;
-  gap: clamp(var(--space-7), 7vw, var(--space-8));
-  padding-block: clamp(var(--space-6), 6vw, var(--space-8));
+  gap: var(--editorial-section-gap);
+  padding-block: var(--editorial-page-padding);
   isolation: isolate;
 }
 
@@ -65,7 +65,7 @@
   margin: 0;
   color: var(--charcoal);
   font-family: var(--font-display);
-  font-size: clamp(3rem, 9vw, 6.5rem);
+  font-size: var(--editorial-page-title);
   font-weight: 500;
   line-height: 0.96;
   letter-spacing: -0.035em;
@@ -73,7 +73,7 @@
 }
 
 .links-hero__introduction {
-  max-width: 68ch;
+  max-width: var(--editorial-prose-width);
   margin: var(--space-5) 0 0;
   color: var(--color-text-muted);
   font-size: clamp(1rem, 2vw, 1.2rem);
@@ -83,7 +83,7 @@
   margin: 0;
   color: var(--charcoal);
   font-family: var(--font-heading);
-  font-size: clamp(1.8rem, 7vw, 3.1rem);
+  font-size: var(--editorial-section-title);
   line-height: 1.05;
   text-wrap: balance;
 }
@@ -92,7 +92,7 @@
 .professional-portals {
   display: grid;
   gap: var(--space-5);
-  padding: clamp(var(--space-5), 4vw, var(--space-6));
+  padding: var(--editorial-panel-padding);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-large);
   background:
@@ -203,7 +203,7 @@
 
 .codex-collections {
   display: grid;
-  gap: clamp(var(--space-7), 7vw, var(--space-8));
+  gap: var(--editorial-section-gap);
 }
 
 .links-collection {
@@ -408,7 +408,7 @@
   display: grid;
   justify-items: start;
   gap: var(--space-3);
-  padding: clamp(var(--space-5), 5vw, var(--space-7));
+  padding: var(--editorial-panel-padding);
   border: 1px dashed color-mix(in srgb, var(--arcane-violet) 50%, var(--color-border));
   border-radius: var(--radius-large);
   background: var(--glass-bevel-overlay), var(--glass-surface);
@@ -522,3 +522,8 @@
     background: Highlight;
   }
 }
+
+.links-page p { max-width: var(--editorial-prose-width); }
+.links-page .codex-empty h2 { font-size: var(--editorial-section-title); }
+.links-page .resource-card__content,
+.links-page .professional-portal { padding: var(--editorial-panel-padding); }
